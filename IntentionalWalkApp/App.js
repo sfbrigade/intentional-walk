@@ -4,7 +4,7 @@
  * Alexander Huesing
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,6 +12,8 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
+  TextInput,
 } from 'react-native';
 
 //Found a progress bar to steal
@@ -19,6 +21,12 @@ import ProgressBar from 'react-native-progress/Bar';
 
 
 const  App:() => React$Node = () => {
+  //is this where I would put the const data?
+  //will default state of empty string be appropriate here?
+  //TODO: onPressButton
+  const [buttonPress, steps] = useState('');
+
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -31,23 +39,26 @@ const  App:() => React$Node = () => {
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
+        
+        <View style={styles.progressView}>
+        
+          {/* TODO: How to increment progress bar? 
+          -progress should equal "steps / step goal" or something
+          -get feedback on width*/}
+          <ProgressBar progress={.9} width={200} />
+        </View>
+        
+        <View style={styles.sectionContainer}>
+          <Button title="Step" style = {styles.stepButton}/>
+        </View>
 
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Mission Statement</Text>
-              <Text style={styles.sectionDescription}>
-                From this rock we will build a step counter app 
-              </Text>
 
-              {/* TODO: How to increment progress bar? 
-              -progress should equal "steps / step goal" or something
-              -get feedback on width*/}
-
-              <ProgressBar progress={.9} width={200} />
+        <View style={styles.sectionContainer}>
+          <TextInput placeholder="Enter email" style = {styles.userInputText} />
+          <TextInput placeholder="Set Password" style = {styles.userInputText}/>
+        </View>
 
 
-            </View>
-          </View>
       </SafeAreaView>
     </>
   );
@@ -59,6 +70,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   
+  stepButton: {
+    justifyContent: 'center', 
+    paddingTop: 100,
+  },
+
+  userInputText: {
+    borderBottomWidth: 1, 
+    borderBottomColor: 'black',
+  },
+
   engine: {
     position: 'absolute',
     right: 0,
@@ -69,6 +90,15 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+  },
+
+  progressView: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 32,
+    paddingHorizontal: 24,
+    justifyContent: "center",
+    
   },
   sectionTitle: {
     fontSize: 24,
