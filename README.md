@@ -5,7 +5,9 @@
 1. Clone this repo to your computer.
 
 2. Make sure you have a recent version of Node.js installed.
+   
    https://nodejs.org/
+   
    Note: Mac OS users can also install Node using Homebrew (https://brew.sh/)
 
 3. Change into the IntentionalWalkApp directory and install packages
@@ -15,7 +17,9 @@
    ```
 
 4. For iOS development (Mac OS only), make sure you have CocoaPods installed.
+   
    https://cocoapods.org/
+   
    Note: You might want to use a tool like rvm (https://rvm.io/) to
    create separate ruby environments, called gemsets, for different projects
 
