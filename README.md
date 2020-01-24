@@ -16,7 +16,9 @@
    IntentionalWalkApp % npm install
    ```
 
-4. For iOS development (Mac OS only), make sure you have CocoaPods installed.
+4. For iOS development (Mac OS only), make sure you have Xcode and CocoaPods installed.
+   
+   https://developer.apple.com/xcode/
    
    https://cocoapods.org/
    
