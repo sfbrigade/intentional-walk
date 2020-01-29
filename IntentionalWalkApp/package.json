@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@ovalmoney/react-native-fitness": "^0.2.4",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-progress": "^4.0.3"

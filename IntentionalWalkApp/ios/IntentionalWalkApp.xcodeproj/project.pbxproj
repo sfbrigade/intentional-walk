@@ -16,6 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* IntentionalWalkAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IntentionalWalkAppTests.m */; };
+		45AD8B3C23E23B6B00F432F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */; };
 		8A93F8680B98EC5C611970C2 /* libPods-IntentionalWalkAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */; };
 		90C039820B2648643EB02C55 /* libPods-IntentionalWalkApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E384276A9F7D77B0250F501F /* libPods-IntentionalWalkApp-tvOS.a */; };
 		A49EA2BBC81DB16956D27E47 /* libPods-IntentionalWalkApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */; };
@@ -60,6 +61,8 @@
 		3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E87B515ADB55F161CD36908 /* Pods-IntentionalWalkApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOSTests/Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		457AA6895435D7FA65BDFEAA /* Pods-IntentionalWalkApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOS/Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntentionalWalkApp.entitlements; path = IntentionalWalkApp/IntentionalWalkApp.entitlements; sourceTree = "<group>"; };
+		45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		5B75ED87C917500E1462F544 /* Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOSTests/Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		63E8FF0727D7D1AB59B28F27 /* Pods-IntentionalWalkApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOS/Pods-IntentionalWalkApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		7488885BA91A4E06C1890A28 /* Pods-IntentionalWalkApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A49EA2BBC81DB16956D27E47 /* libPods-IntentionalWalkApp.a in Frameworks */,
+				45AD8B3C23E23B6B00F432F2 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* IntentionalWalkApp */ = {
 			isa = PBXGroup;
 			children = (
+				45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -148,13 +153,13 @@
 				35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */,
 				34208F5F70B0A6BEBBC2D0F9 /* Pods-IntentionalWalkAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */,
@@ -290,7 +295,16 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = BCKJA9Q3FW;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = BCKJA9Q3FW;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -308,6 +322,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -371,7 +386,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -583,6 +598,7 @@
 			baseConfigurationReference = 35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BCKJA9Q3FW;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -607,6 +623,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = BCKJA9Q3FW;
 				INFOPLIST_FILE = IntentionalWalkAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -626,8 +643,10 @@
 			baseConfigurationReference = CF22D1A34E44AE084C9BBB78 /* Pods-IntentionalWalkApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = IntentionalWalkApp/IntentionalWalkApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = BCKJA9Q3FW;
 				INFOPLIST_FILE = IntentionalWalkApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -646,7 +665,9 @@
 			baseConfigurationReference = 7488885BA91A4E06C1890A28 /* Pods-IntentionalWalkApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = IntentionalWalkApp/IntentionalWalkApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BCKJA9Q3FW;
 				INFOPLIST_FILE = IntentionalWalkApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -671,6 +692,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "IntentionalWalkApp-tvOS/Info.plist";
@@ -700,6 +722,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "IntentionalWalkApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
