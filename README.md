@@ -16,7 +16,7 @@
    IntentionalWalkApp % npm install
    ```
 
-4. For iOS development (Mac OS only), make sure you have Xcode and CocoaPods installed.
+4a. For iOS development (Mac OS only), make sure you have Xcode and CocoaPods installed.
    
    https://developer.apple.com/xcode/
    
@@ -29,6 +29,25 @@
    ```
    IntentionalWalkApp % cd ios
    ios % pod install
+   ```
+4b. For Android development, you'll need to set up an earlier version of the Java Development Kit (JDK), which you can do via [Homebrew](https://brew.sh)
+
+
+   ```
+   brew tap AdoptOpenJDK/openjdk
+   brew cask install adoptopenjdk8
+   ```
+
+   Then, you'll also need to setup Android Studio. Specific instructions here: https://facebook.github.io/react-native/docs/getting-started
+
+   You may need to update your `./bash_profile` to use the earlier version of Java by adding the following lines:
+   
+   ```
+   # Set JAVA_HOME system environment variable value.
+   export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+
+   # Add java bin folder in PATH system environment variable value.
+   export PATH=$PATH:$JAVA_HOME/bin
    ```
 
 5. Start the React Native Metro Bundler and leave it running.
