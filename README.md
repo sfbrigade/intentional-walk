@@ -52,6 +52,12 @@
       # Add java bin folder in PATH system environment variable value.
       export PATH=$PATH:$JAVA_HOME/bin
       ```
+      
+      You may also need to configure Gradle to use this version of JDK by adding the following line to `~/.gradle/gradle.properties`
+      
+      ```
+      org.gradle.java.home=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+      ```
 
 5. Start the React Native Metro Bundler and leave it running.
    ```
