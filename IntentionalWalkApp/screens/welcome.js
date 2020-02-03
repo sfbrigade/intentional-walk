@@ -29,17 +29,17 @@ export default function Welcome({navigation}) {
       <Text style={{fontSize: 40, bottom: 100}}>Welcome!</Text>
       <Text style={{fontSize: 25, bottom: 100}}>Select a language</Text>
       <TouchableOpacity
-        style={styles.button}
+        style={[language === 'english' ? styles.buttonPress : styles.button]}
         onPress={() => selectLanguage('english')}>
         <Text style={styles.text}>ENGLISH</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={[language === 'spanish' ? styles.buttonPress : styles.button]}
         onPress={() => selectLanguage('spanish')}>
         <Text style={styles.text}>ESPAÑOL</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
+        style={[language === 'chinese' ? styles.buttonPress : styles.button]}
         onPress={() => selectLanguage('chinese')}>
         <Text style={styles.text}>中文</Text>
       </TouchableOpacity>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
+    bottom: 50,
   },
   startButton: {
     position: 'absolute',

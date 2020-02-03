@@ -13,6 +13,10 @@ export default function SignUp({navigation}) {
   const [email, setEmail] = useState('');
   const [zip, setZip] = useState(null);
 
+  pressHandler = () => {
+    navigation.navigate('Info');
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -46,7 +50,7 @@ export default function SignUp({navigation}) {
           <TextInput style={styles.input} placeholder="enter zip"></TextInput>
         </View>
       </View>
-      <TouchableOpacity style={styles.signup}>
+      <TouchableOpacity style={styles.signup} onPress={pressHandler}>
         <Text style={styles.text}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
