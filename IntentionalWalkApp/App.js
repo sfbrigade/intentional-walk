@@ -40,22 +40,32 @@ class App extends React.Component {
               this.getSteps();
             })
             .catch((error) => {
-              console.err("error requesting fitness authorization", error);
+              console.log("error requesting fitness authorization", error);
             });
         } else {
+
           this.getSteps();
         }
       })
       .catch((error) => {
         //Do something
-        console.err("error querying fitness authorization", error);
+        console.log("error querying fitness authorization", error);
       });
   }
 
   getSteps() {
+    if (Platform.OS == 'android') {
+      //// ensure app is subscribed to activity events on Android
+      Fitness.subscribeToActivity().then(function(subscribed) {
+        console.log("subscribed", subscribed);
+      });
+    }
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
     Fitness.getSteps({
-      startDate: '2020-01-28',
-      endDate: '2020-01-29',
+      startDate: yesterday.toISOString().slice(0,10),
+      endDate: today.toISOString().slice(0,10),
       interval: 'days'
     }).then((steps) => {
       console.log("steps", steps);
