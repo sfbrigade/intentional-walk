@@ -43,6 +43,9 @@
       ```
       export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
       export ANDROID_SDK_ROOT=~/Library/Android/sdk
+      export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+      export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+      export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
       export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
       ```
 
@@ -50,7 +53,7 @@
       set the newly configured environment variables.
 
       If you are installing the tools for the very first time, you may need to
-      accept the SDK license agreements. Run: ```$ANDROID_SDK_ROOT/tools/bin/sdkmanager --licenses```
+      accept the SDK license agreements. Run: ```sdkmanager --licenses```
       to do so.
 
 5. Start the React Native Metro Bundler and leave it running.
