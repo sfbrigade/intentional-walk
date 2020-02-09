@@ -8,8 +8,20 @@ import {
   Image,
 } from 'react-native';
 import {CheckBox} from 'react-native-elements';
+import Fitness from '@ovalmoney/react-native-fitness';
 
 export default function Info({navigation}) {
+
+  const startPressed = () => {
+    Fitness.requestPermissions().then(function(isPermitted) {
+      if (isPermitted) {
+        console.log("Fitness permission allowed");
+      } else {
+        console.log("Fitness permissions not allowed");
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -50,7 +62,7 @@ export default function Info({navigation}) {
         </View>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24}}>
+        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24}} onPress={startPressed}>
           START
         </Text>
       </TouchableOpacity>
