@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.intentionalwalkapp",
+    package = "org.codeforsanfrancisco.intentionalwalk",
 )
 
 android_resource(
     name = "res",
-    package = "com.intentionalwalkapp",
+    package = "org.codeforsanfrancisco.intentionalwalk",
     res = "src/main/res",
 )
 
