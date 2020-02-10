@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 export default function MainScreen({navigation}) {
   useEffect(() => {
+    // TODO: check if user logged in
     navigation.navigate('OnboardingStack');
   });
 
