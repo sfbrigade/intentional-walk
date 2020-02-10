@@ -1,4 +1,4 @@
-package com.intentionalwalkapp;
+package org.codeforsanfrancisco.intentionalwalk;
 
 import android.app.Application;
 import android.content.Context;

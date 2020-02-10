@@ -6,10 +6,29 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import {CheckBox} from 'react-native-elements';
+import Fitness from '@ovalmoney/react-native-fitness';
 
-export default function Info({navigation}) {
+export default function InfoScreen({navigation}) {
+
+  const startPressed = () => {
+    Fitness.requestPermissions().then((permitted) => {
+      if (permitted) {
+        if (Platform.OS === 'android') {
+          Fitness.subscribeToActivity().then(function(subscribed) {
+            console.log('subscribeToActivity', subscribed);
+          });
+          Fitness.subscribeToSteps().then(function(subscribed) {
+            console.log('subscribeToSteps', subscribed);
+          });
+        }
+        navigation.navigate('MainStack');
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -50,7 +69,7 @@ export default function Info({navigation}) {
         </View>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24}}>
+        <Text style={{color: 'white', fontWeight: 'bold', fontSize: 24}} onPress={startPressed}>
           START
         </Text>
       </TouchableOpacity>

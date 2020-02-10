@@ -5,9 +5,9 @@
 1. Clone this repo to your computer.
 
 2. Make sure you have a recent version of Node.js installed.
-   
+
    https://nodejs.org/
-   
+
    Note: Mac OS users can also install Node using Homebrew (https://brew.sh/)
 
 3. Change into the IntentionalWalkApp directory and install packages
@@ -19,7 +19,7 @@
 4. Set up your mobile operating system tools
 
    - For iOS development (Mac OS only), make sure you have Xcode and CocoaPods installed.
-   
+
       https://developer.apple.com/xcode/
 
       https://cocoapods.org/
@@ -33,31 +33,28 @@
       ios % pod install
       ```
 
-   - For Android development, you'll need to set up an earlier version of the Java Development Kit (JDK), which you can do via [Homebrew](https://brew.sh)
+   - For Android development, first install Android Studio: https://developer.android.com/studio
 
-
-      ```
-      brew tap AdoptOpenJDK/openjdk
-      brew cask install adoptopenjdk8
-      ```
-
-      Then, you'll also need to setup Android Studio. Specific instructions here: https://facebook.github.io/react-native/docs/getting-started
-
-      You may need to update your `./bash_profile` to use the earlier version of Java by adding the following lines:
+      For Mac OS X, configure your shell environment to reference the newly installed
+      developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
+      your .bash_profile in your home directory and add the following (assuming
+      default installation locations):
 
       ```
-      # Set JAVA_HOME system environment variable value.
-      export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+      export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
+      export ANDROID_SDK_ROOT=~/Library/Android/sdk
+      export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+      export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+      export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+      export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+      ```
 
-      # Add java bin folder in PATH system environment variable value.
-      export PATH=$PATH:$JAVA_HOME/bin
-      ```
-      
-      You may also need to configure Gradle to use this version of JDK by adding the following line to `~/.gradle/gradle.properties`
-      
-      ```
-      org.gradle.java.home=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
-      ```
+      Close and re-open your Terminal, or run ```source ~/.bash_profile``` to
+      set the newly configured environment variables.
+
+      If you are installing the tools for the very first time, you may need to
+      accept the SDK license agreements. Run: ```sdkmanager --licenses```
+      to do so.
 
 5. Start the React Native Metro Bundler and leave it running.
    ```

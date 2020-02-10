@@ -41,13 +41,3 @@ target 'IntentionalWalkApp' do
 
   use_native_modules!
 end
-
-target 'IntentionalWalkApp-tvOS' do
-  # Pods for IntentionalWalkApp-tvOS
-
-  target 'IntentionalWalkApp-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
