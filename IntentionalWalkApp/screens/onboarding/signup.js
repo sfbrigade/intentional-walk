@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {CheckBox} from 'react-native-elements';
 
-export default function SignUp({navigation}) {
+export default function SignUpScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [zip, setZip] = useState(null);
 
@@ -29,8 +29,8 @@ export default function SignUp({navigation}) {
         iWalk
       </Text>
       <View style={{flex: 0, flexDirection: 'row', marginTop: 10}}>
-        <Image source={require('../calfresh_logo.png')} style={styles.image} />
-        <Image source={require('../sfgiants_logo.png')} style={styles.image} />
+        <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
+        <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
       </View>
       <Text style={{fontSize: 26, margin: 20}}>
         Welcome to Intentional Walk!

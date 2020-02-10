@@ -10,16 +10,10 @@ import {
 import {CheckBox} from 'react-native-elements';
 import Fitness from '@ovalmoney/react-native-fitness';
 
-export default function Info({navigation}) {
+export default function InfoScreen({navigation}) {
 
   const startPressed = () => {
-    Fitness.requestPermissions().then(function(isPermitted) {
-      if (isPermitted) {
-        console.log("Fitness permission allowed");
-      } else {
-        console.log("Fitness permissions not allowed");
-      }
-    });
+    navigation.navigate('MainStack');
   };
 
   return (

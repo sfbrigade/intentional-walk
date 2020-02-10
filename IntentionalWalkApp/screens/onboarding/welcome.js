@@ -1,7 +1,21 @@
 import React, {useState} from 'react';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
-export default function Welcome({navigation}) {
+export default function WelcomeScreen({navigation}) {
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    })
+  );
+
   const [language, setLanguage] = useState(null);
   const [startText, setStartText] = useState(null);
 
