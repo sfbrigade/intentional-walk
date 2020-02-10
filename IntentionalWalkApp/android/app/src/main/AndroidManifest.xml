@@ -2,6 +2,8 @@
   package="org.codeforsanfrancisco.intentionalwalk">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
+
 
     <application
       android:name=".MainApplication"

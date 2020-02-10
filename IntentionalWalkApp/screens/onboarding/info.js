@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import Fitness from '@ovalmoney/react-native-fitness';
@@ -13,7 +14,19 @@ import Fitness from '@ovalmoney/react-native-fitness';
 export default function InfoScreen({navigation}) {
 
   const startPressed = () => {
-    navigation.navigate('MainStack');
+    Fitness.requestPermissions().then((permitted) => {
+      if (permitted) {
+        if (Platform.OS === 'android') {
+          Fitness.subscribeToActivity().then(function(subscribed) {
+            console.log('subscribeToActivity', subscribed);
+          });
+          Fitness.subscribeToSteps().then(function(subscribed) {
+            console.log('subscribeToSteps', subscribed);
+          });
+        }
+        navigation.navigate('MainStack');
+      }
+    });
   };
 
   return (
