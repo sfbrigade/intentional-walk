@@ -10,27 +10,31 @@ export default function MainScreen({navigation}) {
     navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
+  // Do something when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
-      // Do something when the screen is focused
-      const now = new Date();
-      const yest = new Date()
-      yest.setDate(now.getDate() - 1);
-      Fitness.getSteps({
-        startDate: yest.toISOString().slice(0,10),
-        endDate: now.toISOString().slice(0,10),
-        interval: 'days'
-      }).then((steps) => {
-        console.log(steps);
-        let latest = null;
-        for (step of steps) {
-          step.endDate = new Date(step.endDate);
-          if (latest == null || step.endDate > latest.endDate) {
-            latest = step;
-          }
-        }
-        if (latest) {
-          setSteps(latest.quantity);
+      Fitness.isAuthorized().then(function(authorized) {
+        if (authorized) {
+          const now = new Date();
+          const yest = new Date()
+          yest.setDate(now.getDate() - 1);
+          Fitness.getSteps({
+            startDate: yest.toISOString().slice(0,10),
+            endDate: now.toISOString().slice(0,10),
+            interval: 'days'
+          }).then((steps) => {
+            console.log(steps);
+            let latest = null;
+            for (step of steps) {
+              step.endDate = new Date(step.endDate);
+              if (latest == null || step.endDate > latest.endDate) {
+                latest = step;
+              }
+            }
+            if (latest) {
+              setSteps(latest.quantity);
+            }
+          });
         }
       });
       return () => { };
