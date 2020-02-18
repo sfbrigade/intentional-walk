@@ -19,5 +19,7 @@ const styles = StyleSheet.create({
     color: Colors.primary.purple,
     fontSize: 20,
     textAlign: 'center',
+    marginLeft: 16,
+    marginRight: 16,
   },
 });
