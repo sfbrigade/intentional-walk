@@ -9,5 +9,9 @@ export default StyleSheet.create({
   },
   content: {
     margin: 16,
+  },
+  logoFont: {
+    fontFamily: 'ConcertOne-Regular',
+    fontWeight: 'normal',
   }
 });

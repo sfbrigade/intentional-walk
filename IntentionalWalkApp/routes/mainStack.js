@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 
 export default function MainStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{title: null}}>
       <Stack.Screen name="Main" component={MainScreen} />
     </Stack.Navigator>
   );
