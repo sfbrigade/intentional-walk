@@ -22,8 +22,8 @@ export default function MainScreen({navigation}) {
         const to = moment(date).add(1, 'days');
         setSteps(null);
         Fitness.getSteps({
-          startDate: from.format('YYYY-MM-DD'),
-          endDate: to.format('YYYY-MM-DD'),
+          startDate: from.toISOString(),
+          endDate: to.toISOString(),
           interval: 'days'
         }).then((steps) => {
           setSteps(steps);
