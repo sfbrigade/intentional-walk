@@ -1,10 +1,41 @@
+'use strict'
+
 import React, {useEffect, useState} from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Fitness from '@ovalmoney/react-native-fitness';
+import {DateNavigator} from '../../components';
+import {GlobalStyles} from '../../styles';
+import moment from 'moment';
 
 export default function MainScreen({navigation}) {
+  const [date, setDate] = useState(moment().startOf('day'));
   const [steps, setSteps] = useState(null);
+  const [authorized, setAuthorized] = useState(null);
+
+  const getSteps = (date) => {
+    setAuthorized(null);
+    Fitness.isAuthorized().then((authorized) => {
+      setAuthorized(authorized);
+      if (authorized) {
+        const from = date;
+        const to = moment(date).add(1, 'days');
+        setSteps(null);
+        Fitness.getSteps({
+          startDate: from.toISOString(),
+          endDate: to.toISOString(),
+          interval: 'days'
+        }).then((steps) => {
+          setSteps(steps);
+        });
+      }
+    });
+  };
+
+  const setDateAndRefresh = (newDate) => {
+    setDate(newDate);
+    getSteps(newDate);
+  }
 
   useEffect(() => {
     navigation.navigate('OnboardingStack');
@@ -13,37 +44,26 @@ export default function MainScreen({navigation}) {
   // Do something when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
-      Fitness.isAuthorized().then(function(authorized) {
-        if (authorized) {
-          const now = new Date();
-          const yest = new Date()
-          yest.setDate(now.getDate() - 1);
-          Fitness.getSteps({
-            startDate: yest.toISOString().slice(0,10),
-            endDate: now.toISOString().slice(0,10),
-            interval: 'days'
-          }).then((steps) => {
-            console.log(steps);
-            let latest = null;
-            for (step of steps) {
-              step.endDate = new Date(step.endDate);
-              if (latest == null || step.endDate > latest.endDate) {
-                latest = step;
-              }
-            }
-            if (latest) {
-              setSteps(latest.quantity);
-            }
-          });
-        }
-      });
+      getSteps(date);
       return () => { };
     }, [])
   );
 
+  let results;
+  if (steps == null) {
+    results = <Text>Querying step count...</Text>;
+  } else {
+    results = steps.map((s) => <Text key={s.startDate}>{JSON.stringify(s)}</Text>);
+  }
+
   return (
-    <View>
-      <Text>{steps} steps</Text>
+    <View style={GlobalStyles.content}>
+      <DateNavigator style={GlobalStyles.content} date={date} setDate={setDateAndRefresh}/>
+      { authorized === false ? (
+        <Text>Fitness API access not authorized.</Text>
+      ) : (authorized ? (
+        results
+      ) : null) }
     </View>
   );
 }

@@ -19,15 +19,6 @@ export default function SignUpScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: 'bold',
-          color: 'purple',
-          marginTop: 20,
-        }}>
-        iWalk
-      </Text>
       <View style={{flex: 0, flexDirection: 'row', marginTop: 10}}>
         <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
         <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />

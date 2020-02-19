@@ -31,15 +31,6 @@ export default function InfoScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: 'bold',
-          color: 'purple',
-          marginTop: 20,
-        }}>
-        iWalk
-      </Text>
       <Text style={{marginTop: 50, fontSize: 26}}>You're Signed Up!</Text>
       <View style={{flex: 1, margin: 20, alignSelf: 'stretch'}}>
         <Text style={{alignSelf: 'flex-start', margin: 10, fontSize: 16}}>
