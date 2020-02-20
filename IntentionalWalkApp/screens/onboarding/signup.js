@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Platform,
   SafeAreaView,
   StyleSheet,
   View,
@@ -8,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Button, CheckBox, Input} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 
@@ -45,12 +46,12 @@ export default function SignUpScreen({navigation}) {
             <Text style={GlobalStyles.p1}>
               Intentional Walk is a FREE community walking program that runs from July 1 - July 31, 2020. The program is open to CalFresh/MediCal-eligible San Francisco residents. Top walkers will be eligible for prizes from the San Francisco Giants including game tickets, signed team gear, and a special grand prize! Sign up below to get started!
             </Text>
-            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder="Name" autoCapitalize="words" autoCompleteType="name"></Input>
-            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder="Email" autoCompleteType="email" keyboardType="email-address"></Input>
+            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder="Name" autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
+            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder="Email" autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
             <View style={styles.row}>
-              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder="Zip Code" keyboardType="number-pad"></Input>
+              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder="Zip Code" keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})}></Input>
               <View style={styles.spacer} />
-              <Input focused={focus == 'age'} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder="Age" keyboardType="number-pad"></Input>
+              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder="Age" keyboardType="number-pad"></Input>
             </View>
             <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>* all fields required</Text>
             <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title="By signing up, I agree to the Terms of Service" />
