@@ -7,16 +7,16 @@ import {Button} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 
 export default function WelcomeScreen({navigation}) {
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const onBackPress = () => {
-  //       BackHandler.exitApp();
-  //       return true;
-  //     };
-  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
-  //     return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  //   })
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    })
+  );
 
   const [language, setLanguage] = useState(null);
   const [startText, setStartText] = useState(null);
@@ -44,7 +44,7 @@ export default function WelcomeScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={styles.title}>Welcome to Intentional Walk!!</Text>
+          <Text style={GlobalStyles.h1}>Welcome to Intentional Walk!!</Text>
           <Text style={styles.subtitle}>Please Select a language</Text>
           <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
@@ -65,13 +65,6 @@ const styles = StyleSheet.create({
   content: {
     ...GlobalStyles.content,
     alignItems: 'center',
-  },
-  title: {
-    color: Colors.primary.purple,
-    fontSize: 36,
-    fontWeight: '500',
-    textAlign: 'center',
-    marginBottom: 15,
   },
   subtitle: {
     color: Colors.primary.purple,

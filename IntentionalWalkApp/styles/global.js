@@ -1,7 +1,7 @@
 'use strict'
 
 import {StyleSheet} from 'react-native';
-import {Colors} from './colors';
+import Colors from './colors';
 
 export default StyleSheet.create({
   androidNavHeaderCentered: {
@@ -17,5 +17,18 @@ export default StyleSheet.create({
   logoFont: {
     fontFamily: 'ConcertOne-Regular',
     fontWeight: 'normal',
+  },
+  h1: {
+    color: Colors.primary.purple,
+    fontSize: 36,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  p: {
+    color: Colors.primary.gray2,
+    fontSize: 12,
+    textAlign: 'center',
+    marginBottom: 16,
   }
 });

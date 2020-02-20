@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 export default function OnboardingStack() {
   return (
-    <Stack.Navigator screenOptions={{title: null, gesturesEnabled: false, headerTitle: props => <Logo />, headerTitleContainerStyle: Platform.select({android: GlobalStyles.androidNavHeaderCentered})}}>
+    <Stack.Navigator screenOptions={{title: null, headerTitle: props => <Logo />, headerTitleContainerStyle: Platform.select({android: GlobalStyles.androidNavHeaderCentered})}}>
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />

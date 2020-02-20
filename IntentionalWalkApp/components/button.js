@@ -5,8 +5,9 @@ import {Colors, GlobalStyles} from '../styles';
 export default function Button(props) {
   return (
     <TouchableOpacity
-      style={[styles.button, props.style, props.isToggle && !props.isSelected ? styles.buttonToggle : {}]}
-      onPress={props.onPress}>
+      style={[styles.button, props.style, props.isToggle && !props.isSelected ? styles.buttonToggle : {}, props.isEnabled === false ? styles.buttonDisabled : {}]}
+      disabled={props.isEnabled === false}
+      onPress={() => props.onPress()}>
       {React.Children.map(props.children, c => typeof c === 'string' ? (
         <Text style={[styles.text, props.isToggle && !props.isSelected ? styles.textToggle: {}]}>{c}</Text>
       ) : c)}
@@ -24,6 +25,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: Colors.primary.purple,
     borderWidth: 0.5,
+  },
+  buttonDisabled: {
+    borderWidth: 0,
+    backgroundColor: '#DADADA',
   },
   text: {
     color: 'white',
