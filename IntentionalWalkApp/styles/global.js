@@ -25,10 +25,23 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
-  p: {
+  h2: {
+    color: Colors.primary.gray2,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginBottom: 10,
+  },
+  p1: {
     color: Colors.primary.gray2,
     fontSize: 12,
     textAlign: 'center',
     marginBottom: 16,
-  }
+  },
+  p2: {
+    color: Colors.primary.gray2,
+    fontSize: 15,
+    textAlign: 'left',
+    marginBottom: 10,
+  },
 });

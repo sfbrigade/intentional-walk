@@ -42,7 +42,7 @@ export default function SignUpScreen({navigation}) {
               <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
               <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
             </View>
-            <Text style={GlobalStyles.p}>
+            <Text style={GlobalStyles.p1}>
               Intentional Walk is a FREE community walking program that runs from July 1 - July 31, 2020. The program is open to CalFresh/MediCal-eligible San Francisco residents. Top walkers will be eligible for prizes from the San Francisco Giants including game tickets, signed team gear, and a special grand prize! Sign up below to get started!
             </Text>
             <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder="Name" autoCapitalize="words" autoCompleteType="name"></Input>
@@ -52,7 +52,7 @@ export default function SignUpScreen({navigation}) {
               <View style={styles.spacer} />
               <Input focused={focus == 'age'} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder="Age" keyboardType="number-pad"></Input>
             </View>
-            <Text style={[GlobalStyles.p]}>* all fields required</Text>
+            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>* all fields required</Text>
             <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title="By signing up, I agree to the Terms of Service" />
             <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>Submit</Button>
           </View>
