@@ -6,7 +6,9 @@ import {CheckBox} from 'react-native-elements';
 export default function CustomCheckBox(props) {
   return (
     <CheckBox checked={props.checked}
-              checkedIcon="check-square"
+              iconType="material"
+              uncheckedIcon="check-box-outline-blank"
+              checkedIcon="check-box"
               uncheckedColor={Colors.primary.purple}
               checkedColor={Colors.primary.purple}
               containerStyle={[styles.container, props.style]}
