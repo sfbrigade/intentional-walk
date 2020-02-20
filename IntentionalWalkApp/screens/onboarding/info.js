@@ -16,20 +16,8 @@ import Fitness from '@ovalmoney/react-native-fitness';
 
 export default function InfoScreen({navigation}) {
 
-  const startPressed = () => {
-    Fitness.requestPermissions().then((permitted) => {
-      if (permitted) {
-        if (Platform.OS === 'android') {
-          Fitness.subscribeToActivity().then(function(subscribed) {
-            console.log('subscribeToActivity', subscribed);
-          });
-          Fitness.subscribeToSteps().then(function(subscribed) {
-            console.log('subscribeToSteps', subscribed);
-          });
-        }
-        navigation.navigate('MainStack');
-      }
-    });
+  const onNextPress = () => {
+    navigation.navigate('Permissions');
   };
 
   return (
@@ -58,7 +46,7 @@ export default function InfoScreen({navigation}) {
               At the end of the program, the top 10 walkers will be contacted by email to claim their prize. Prizes include SF Giants game tickets, signed team gear, and a special grand prize!
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={startPressed}>Next</Button>
+          <Button style={styles.button} onPress={onNextPress}>Next</Button>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -78,16 +66,6 @@ const styles = StyleSheet.create({
     marginBottom: 48,
     fontSize: 17,
     color: Colors.primary.gray2,
-  },
-  whiteText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  box: {
-    ...GlobalStyles.rounded,
-    height: 140,
-    padding: 16,
-    marginBottom: 16,
   },
   button: {
     width: 180,

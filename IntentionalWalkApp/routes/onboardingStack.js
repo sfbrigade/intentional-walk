@@ -1,7 +1,7 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {WelcomeScreen, SignUpScreen, InfoScreen} from '../screens/onboarding';
+import {WelcomeScreen, SignUpScreen, InfoScreen, PermissionsScreen} from '../screens/onboarding';
 import {Logo} from '../components';
 import {GlobalStyles} from '../styles';
 
@@ -13,6 +13,7 @@ export default function OnboardingStack() {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
+      <Stack.Screen name="Permissions" component={PermissionsScreen} />
     </Stack.Navigator>
   );
 };
