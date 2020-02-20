@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import { BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import {BackHandler} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Button} from '../../components';
+import {Colors, GlobalStyles} from '../../styles';
 
 export default function WelcomeScreen({navigation}) {
   useFocusEffect(
@@ -21,69 +23,73 @@ export default function WelcomeScreen({navigation}) {
 
   const selectLanguage = lang => {
     let str;
-    if (lang === 'english') {
-      str = 'START';
+    if (lang === 'en') {
+      str = 'Start';
     }
-    if (lang === 'spanish') {
-      str = 'COMENZAR';
+    if (lang === 'es') {
+      str = 'Comenzar';
     }
-    if (lang === 'chinese') {
+    if (lang === 'zh') {
       str = '开始';
     }
     setLanguage(lang);
     setStartText(str);
   };
 
-  const continuePress = () => {
+  const continuePressed = () => {
     navigation.navigate('SignUp');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={{fontSize: 40, bottom: 100}}>Welcome!</Text>
-      <Text style={{fontSize: 25, bottom: 100}}>Select a language</Text>
-      <TouchableOpacity
-        style={[language === 'english' ? styles.buttonPress : styles.button]}
-        onPress={() => selectLanguage('english')}>
-        <Text style={styles.text}>ENGLISH</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[language === 'spanish' ? styles.buttonPress : styles.button]}
-        onPress={() => selectLanguage('spanish')}>
-        <Text style={styles.text}>ESPAÑOL</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[language === 'chinese' ? styles.buttonPress : styles.button]}
-        onPress={() => selectLanguage('chinese')}>
-        <Text style={styles.text}>中文</Text>
-      </TouchableOpacity>
-
-      {!language ? null : (
-        <TouchableOpacity style={styles.startButton} onPress={continuePress}>
-          <Text style={styles.text}>{startText}</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.content}>
+          <Text style={GlobalStyles.h1}>Welcome to Intentional Walk!!</Text>
+          <Text style={styles.subtitle}>Please Select a language</Text>
+          <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
+          <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
+          <Button style={styles.button} isToggle={true} isSelected={language === 'zh'} onPress={() => selectLanguage('zh')}>中文</Button>
+          {!language ? null : (
+            <Button style={[styles.button, {marginTop: 32}]} onPress={continuePressed}>{startText}</Button>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
+    ...GlobalStyles.content,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  subtitle: {
+    color: Colors.primary.purple,
+    fontSize: 18,
+    fontWeight: 'normal',
+    textAlign: 'center',
+    marginBottom: 40,
   },
   button: {
-    backgroundColor: 'limegreen',
-    borderRadius: 7,
-    height: 50,
-    width: 190,
+    width: 180,
+    height: 48,
+    marginBottom: 16,
+  },
+  toggleButton: {
+    ...GlobalStyles.rounded,
+    backgroundColor: 'white',
+    borderColor: Colors.primary.purple,
+    borderWidth: .5,
+    height: 48,
+    width: 180,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
-    bottom: 50,
+    margin: 16,
   },
-  buttonPress: {
+  toggleButtonPressed: {
     backgroundColor: 'purple',
     borderRadius: 7,
     height: 50,
@@ -91,17 +97,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-    bottom: 50,
   },
   startButton: {
-    position: 'absolute',
     backgroundColor: 'purple',
     borderRadius: 7,
     height: 50,
     width: 190,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 100,
   },
   none: {
     display: 'none',

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {
+  Platform,
+  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -7,83 +9,85 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {CheckBox} from 'react-native-elements';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import {Button, CheckBox, Input} from '../../components';
+import {Colors, GlobalStyles} from '../../styles';
 
 export default function SignUpScreen({navigation}) {
-  const [email, setEmail] = useState('');
-  const [zip, setZip] = useState(null);
+  const [focus, setFocus] = useState('');
 
-  pressHandler = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [zip, setZip] = useState('');
+  const [age, setAge] = useState('');
+  const [termsAgreed, setTermsAgreed] = useState(false);
+
+  const pressHandler = () => {
     navigation.navigate('Info');
   };
 
+  const isValid = () => {
+    return name != '' &&
+           email != '' &&
+           zip != '' &&
+           age != '' &&
+           termsAgreed;
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={{flex: 0, flexDirection: 'row', marginTop: 10}}>
-        <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
-        <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
-      </View>
-      <Text style={{fontSize: 26, margin: 20}}>
-        Welcome to Intentional Walk!
-      </Text>
-      <Text style={styles.info}>
-        Intentional Walk is a FREE community walking program that runs from July
-        1 - July 31, 2020. The program is open to all San Francisco residents.
-        Top Walkers will be elligible for prizes form the San Francisco Giants
-        including game tickets and team gear. Get started by signing in below!
-      </Text>
-      <View style={{marginTop: 20, alignItems: 'center'}}>
-        <View>
-          <TextInput style={styles.input} placeholder="enter email"></TextInput>
-        </View>
-        <Text>please send me program updates via email</Text>
-        <View>
-          <TextInput style={styles.input} placeholder="enter zip"></TextInput>
-        </View>
-      </View>
-      <TouchableOpacity style={styles.signup} onPress={pressHandler}>
-        <Text style={styles.text}>SIGN UP</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container}>
+          <View style={styles.content}>
+            <Text style={GlobalStyles.h1}>Welcome to Intentional Walk!!</Text>
+            <View style={styles.row}>
+              <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
+              <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
+            </View>
+            <Text style={GlobalStyles.p1}>
+              Intentional Walk is a FREE community walking program that runs from July 1 - July 31, 2020. The program is open to CalFresh/MediCal-eligible San Francisco residents. Top walkers will be eligible for prizes from the San Francisco Giants including game tickets, signed team gear, and a special grand prize! Sign up below to get started!
+            </Text>
+            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder="Name" autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
+            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder="Email" autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
+            <View style={styles.row}>
+              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder="Zip Code" keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})}></Input>
+              <View style={styles.spacer} />
+              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder="Age" keyboardType="number-pad"></Input>
+            </View>
+            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>* all fields required</Text>
+            <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title="By signing up, I agree to the Terms of Service" />
+            <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>Submit</Button>
+          </View>
+        </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
+    ...GlobalStyles.content,
     alignItems: 'center',
   },
-  info: {
-    margin: 10,
-    fontSize: 18,
-    fontFamily: 'Arial',
+  button: {
+    width: 180,
+    height: 48,
   },
   input: {
-    height: 60,
-    width: 320,
-    borderWidth: 0.5,
-    borderRadius: 5,
-    margin: 20,
-  },
-  signup: {
-    position: 'absolute',
-    backgroundColor: 'grey',
-    borderRadius: 7,
-    height: 60,
-    width: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 100,
-  },
-  text: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
+    flex: 1,
   },
   image: {
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
     height: 75,
     width: 150,
     margin: 10,
   },
+  row: {
+    flex: 0,
+    flexDirection: 'row',
+  },
+  spacer: {
+    width: 16,
+  }
 });
