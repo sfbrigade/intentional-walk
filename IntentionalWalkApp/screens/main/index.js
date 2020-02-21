@@ -1,1 +1,1 @@
-export MainScreen from './main';
+export HomeScreen from './home';

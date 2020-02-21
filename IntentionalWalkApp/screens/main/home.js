@@ -8,7 +8,7 @@ import {DateNavigator} from '../../components';
 import {GlobalStyles} from '../../styles';
 import moment from 'moment';
 
-export default function MainScreen({navigation}) {
+export default function HomeScreen({navigation}) {
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
   const [dailySteps, setDailySteps] = useState(null);
@@ -64,7 +64,7 @@ export default function MainScreen({navigation}) {
   };
 
   useEffect(() => {
-    // navigation.navigate('OnboardingStack');
+    navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
   // Do something when the screen is focused
