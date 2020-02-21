@@ -64,7 +64,7 @@ export default function MainScreen({navigation}) {
   };
 
   useEffect(() => {
-    navigation.navigate('OnboardingStack');
+    // navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
   // Do something when the screen is focused
