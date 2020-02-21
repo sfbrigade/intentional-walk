@@ -10,6 +10,7 @@ import moment from 'moment';
 
 export default function MainScreen({navigation}) {
   const dateRef = useRef(moment().startOf('day'));
+  const [date, setDate] = useState(dateRef.current);
   const [dailySteps, setDailySteps] = useState(null);
   const [dailyDistance, setDailyDistance] = useState(null);
   const [totalSteps, setTotalSteps] = useState(null);
@@ -37,15 +38,19 @@ export default function MainScreen({navigation}) {
   }
 
   const setDateAndGetDailySteps = (newDate) => {
+    const oldDate = dateRef.current;
     dateRef.current = newDate;
+    setDate(newDate);
     getDailySteps(newDate);
     getDailyDistance(newDate);
+    if (!oldDate.startOf('month').isSame(moment(newDate).startOf('month'))) {
+      getTotalSteps();
+    }
   };
 
   const getTotalSteps = () => {
     setTotalSteps(null);
-    const now = moment();
-    Fitness.getTotalSteps(moment(now).startOf('month'), now).then(steps => {
+    Fitness.getTotalSteps(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month')).then(steps => {
       setTotalSteps(steps);
     }).catch(error => {
       console.log(error);
@@ -72,9 +77,9 @@ export default function MainScreen({navigation}) {
 
   return (
     <View style={GlobalStyles.content}>
-      <DateNavigator style={{marginBottom: 16}} date={dateRef.current} setDate={setDateAndGetDailySteps}/>
+      <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
       {dailySteps ? (
-        <Text>Daily steps: {Math.round(dailySteps.quantity)}</Text>
+        <Text>Daily steps: {Math.round(dailySteps.quantity)} steps</Text>
       ) : (
         <Text>Querying daily step count...</Text>
       )}
@@ -84,9 +89,9 @@ export default function MainScreen({navigation}) {
         <Text>Querying daily distance...</Text>
       )}
       {totalSteps ? (
-        <Text>Total steps: {Math.round(totalSteps.quantity)}</Text>
+        <Text>Monthly steps: {Math.round(totalSteps.quantity)} steps</Text>
       ) : (
-        <Text>Querying total step count...</Text>
+        <Text>Querying monthly step count...</Text>
       )}
     </View>
   );
