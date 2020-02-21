@@ -12,10 +12,17 @@ export function getActiveRouteName(state) {
   return route.name;
 };
 
-export function isActiveRoute(routeName) {
-  return routeNameRef.current == routeName;
+export function onStateChange(state) {
+  const previousRouteName = routeNameRef.current;
+  const currentRouteName = getActiveRouteName(state);
+  if (previousRouteName !== currentRouteName) {
+    // can do screen tracking here if desired
+    // console.log(previousRouteName, currentRouteName);
+    // Save the current route name for later comparision
+    routeNameRef.current = currentRouteName;
+  }
 }
 
-export function navigate(name, params) {
-  navigationRef.current?.navigate(name, params);
+export function isActiveRoute(routeName) {
+  return routeNameRef.current == routeName;
 }

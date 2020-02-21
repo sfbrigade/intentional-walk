@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
-import { isActiveRoute, navigate } from '../screens/tracker';
+import { isActiveRoute, navigationRef } from '../screens/tracker';
 
 function HamburgerMenuItem(props) {
   const color = isActiveRoute(props.route) ? Colors.primary.purple : Colors.primary.gray2
@@ -21,7 +21,11 @@ function HamburgerMenuItem(props) {
 export default function HamburgerMenu(props) {
   const onPress = (route) => {
     if (!isActiveRoute(route)) {
-      //navigate(route);
+      if (route == 'Home' || isActiveRoute('Home')) {
+        navigationRef.current?.navigate(route);
+      } else {
+        navigationRef.current?.dispatch({type: 'REPLACE', payload: {name: route}});
+      }
     }
     props.onDone();
   }
@@ -32,7 +36,7 @@ export default function HamburgerMenu(props) {
       </View>
       <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">Home</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">My Recorded Walks</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('Info')} icon="info" route="Info">iWalk Information</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">iWalk Information</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">Where to Walk</HamburgerMenuItem>
     </View>
   );
