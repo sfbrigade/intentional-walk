@@ -1,41 +1,62 @@
 'use strict'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import Fitness from '@ovalmoney/react-native-fitness';
+import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
 import {GlobalStyles} from '../../styles';
 import moment from 'moment';
 
 export default function MainScreen({navigation}) {
-  const [date, setDate] = useState(moment().startOf('day'));
-  const [steps, setSteps] = useState(null);
-  const [authorized, setAuthorized] = useState(null);
+  const dateRef = useRef(moment().startOf('day'));
+  const [dailySteps, setDailySteps] = useState(null);
+  const [dailyDistance, setDailyDistance] = useState(null);
+  const [totalSteps, setTotalSteps] = useState(null);
 
-  const getSteps = (date) => {
-    setAuthorized(null);
-    Fitness.isAuthorized().then((authorized) => {
-      setAuthorized(authorized);
-      if (authorized) {
-        const from = date;
-        const to = moment(date).add(1, 'days');
-        setSteps(null);
-        Fitness.getSteps({
-          startDate: from.toISOString(),
-          endDate: to.toISOString(),
-          interval: 'days'
-        }).then((steps) => {
-          setSteps(steps);
-        });
+  const getDailySteps = (queryDate) => {
+    setDailySteps(null);
+    Fitness.getDailySteps(queryDate).then(steps => {
+      if (dateRef.current.isSame(queryDate)) {
+        setDailySteps(steps);
       }
+    }).catch(error => {
+      console.log(error);
     });
   };
 
-  const setDateAndRefresh = (newDate) => {
-    setDate(newDate);
-    getSteps(newDate);
+  const getDailyDistance = (queryDate) => {
+    setDailyDistance(null);
+    Fitness.getDailyDistance(queryDate).then(distance => {
+      if (dateRef.current.isSame(queryDate)) {
+        setDailyDistance(distance);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
   }
+
+  const setDateAndGetDailySteps = (newDate) => {
+    dateRef.current = newDate;
+    getDailySteps(newDate);
+    getDailyDistance(newDate);
+  };
+
+  const getTotalSteps = () => {
+    setTotalSteps(null);
+    const now = moment();
+    Fitness.getTotalSteps(moment(now).startOf('month'), now).then(steps => {
+      setTotalSteps(steps);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  const refresh = () => {
+    getDailySteps(dateRef.current);
+    getDailyDistance(dateRef.current);
+    getTotalSteps();
+  };
 
   useEffect(() => {
     navigation.navigate('OnboardingStack');
@@ -44,26 +65,29 @@ export default function MainScreen({navigation}) {
   // Do something when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
-      getSteps(date);
+      refresh();
       return () => { };
     }, [])
   );
 
-  let results;
-  if (steps == null) {
-    results = <Text>Querying step count...</Text>;
-  } else {
-    results = steps.map((s) => <Text key={s.startDate}>{JSON.stringify(s)}</Text>);
-  }
-
   return (
     <View style={GlobalStyles.content}>
-      <DateNavigator style={GlobalStyles.content} date={date} setDate={setDateAndRefresh}/>
-      { authorized === false ? (
-        <Text>Fitness API access not authorized.</Text>
-      ) : (authorized ? (
-        results
-      ) : null) }
+      <DateNavigator style={{marginBottom: 16}} date={dateRef.current} setDate={setDateAndGetDailySteps}/>
+      {dailySteps ? (
+        <Text>Daily steps: {Math.round(dailySteps.quantity)}</Text>
+      ) : (
+        <Text>Querying daily step count...</Text>
+      )}
+      {dailyDistance ? (
+        <Text>Daily distance: {dailyDistance.quantity / 1609.0} mi</Text>
+      ) : (
+        <Text>Querying daily distance...</Text>
+      )}
+      {totalSteps ? (
+        <Text>Total steps: {Math.round(totalSteps.quantity)}</Text>
+      ) : (
+        <Text>Querying total step count...</Text>
+      )}
     </View>
   );
 }

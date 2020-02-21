@@ -23,7 +23,7 @@ export default function DateNavigator(props) {
     prev = moment(props.date).subtract(1, 'day');
   }
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, props.style]}>
       <TouchableOpacity style={styles.headerButton} onPress={() => props.setDate(prev)}>
         <Icon name="chevron-left" size={30} color="white" />
       </TouchableOpacity>
