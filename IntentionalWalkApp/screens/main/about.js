@@ -15,15 +15,11 @@ import {Colors, GlobalStyles} from '../../styles';
 
 export default function InfoScreen({navigation}) {
 
-  const onNextPress = () => {
-    navigation.navigate('Permissions');
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>You’re signed up!</Text>
+          <Text style={GlobalStyles.h1}>iWalk Info</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
             <Text style={styles.subtitle}>From here, participation is easy:</Text>
             <InfoBox title="Walk!"
@@ -45,7 +41,6 @@ export default function InfoScreen({navigation}) {
               At the end of the program, the top 10 walkers will be contacted by email to claim their prize. Prizes include SF Giants game tickets, signed team gear, and a special grand prize!
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={onNextPress}>Next</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

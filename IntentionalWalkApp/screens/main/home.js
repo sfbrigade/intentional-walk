@@ -8,7 +8,7 @@ import {DateNavigator} from '../../components';
 import {GlobalStyles} from '../../styles';
 import moment from 'moment';
 
-export default function MainScreen({navigation}) {
+export default function HomeScreen({navigation}) {
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
   const [dailySteps, setDailySteps] = useState(null);
