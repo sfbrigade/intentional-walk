@@ -10,10 +10,9 @@
 
    Note: Mac OS users can also install Node using Homebrew (https://brew.sh/)
 
-3. Change into the IntentionalWalkApp directory and install packages
+3. Install packages.
    ```
-   intentional-walk % cd IntentionalWalkApp
-   IntentionalWalkApp % npm install
+   intentional-walk % npm install
    ```
 
 4. Set up your mobile operating system tools
@@ -29,7 +28,7 @@
 
       Install pod dependencies in the iOS directory
       ```
-      IntentionalWalkApp % cd ios
+      intentional-walk % cd ios
       ios % pod install
       ```
 
@@ -58,11 +57,11 @@
 
 5. Start the React Native Metro Bundler and leave it running.
    ```
-   IntentionalWalkApp % npm start
+   intentional-walk % npm start
    ```
 
 6. In another shell, build and run the app for your target platform.
    ```
-   IntentionalWalkApp % npm run ios
-   IntentionalWalkApp % npm run android
+   intentional-walk % npm run ios
+   intentional-walk % npm run android
    ```

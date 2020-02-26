@@ -1,0 +1,77 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+def get_build_gradle_version(options)
+  File.readlines(options[:path]).each do |line|
+    if m = line.match(/versionCode ([0-9]+)/)
+      return m[1]
+    end
+  end
+  raise Exception
+end
+
+def set_build_gradle_version(options)
+  `sed -i '' -E 's/versionCode [0-9]+/versionCode #{options[:version]}/' #{options[:path]}`
+end
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Deploy a new Beta version to the Google Play internal track"
+  lane :deploy do
+    # get (prev?) version of app
+    prev_version = get_build_gradle_version(path: "../app/build.gradle").to_i
+    new_version = prev_version + 1
+    # check if we're deploying a new version
+    head_commit = `git rev-parse HEAD`
+    prev_commit = `git rev-parse And-#{prev_version}`
+    changelog = nil
+    commit_after_upload = true
+    if head_commit != prev_commit
+      # increment build
+      set_build_gradle_version(path: "../app/build.gradle", version: new_version)
+    else
+      # adjust version numbers
+      prev_version -= 1
+      new_version -= 1
+      commit_after_upload = false
+    end
+    # generate a changelog from previous version to head
+    filename = "metadata/android/en-US/changelogs/#{new_version}.txt"
+    `mkdir -p metadata/android/en-US/changelogs`
+    changelog = `git log --pretty=format:'%s' And-#{prev_version}..HEAD`
+    changelog = changelog.gsub(/(Android|iOS) build \d+\n?/, '')
+    File.write(filename, changelog)
+    while File.size(filename) > 500
+      puts "Changelog greater than 500 characters- please edit #{filename} before continuing!"
+      STDIN.getch
+    end
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store(track: 'internal')
+    # if successful, commit build version changes and tag
+    if commit_after_upload
+      `git add ../..`
+      `git commit -m "Android build #{new_version}"`
+      `git tag And-#{new_version}`
+      `git push`
+      `git push --tag`
+    end
+  end
+end

@@ -1,6 +1,3 @@
-# template from Facebook's react-native repo:
-# https://github.com/facebook/react-native/blob/master/template/_gitignore
-
 # OSX
 #
 .DS_Store
@@ -54,9 +51,17 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+*/fastlane/key.json
 
 # Bundle artifact
 *.jsbundle
 
 # CocoaPods
 /ios/Pods/
+
+.env
+*.cer
+*.certSigningRequest
+*.p12
+*.dSYM.zip
+*.mobileprovision
