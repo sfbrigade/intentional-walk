@@ -35,7 +35,7 @@ platform :android do
   end
 
   desc "Deploy a new Beta version to the Google Play internal track"
-  lane :deploy do
+  lane :beta do
     # get (prev?) version of app
     prev_version = get_build_gradle_version(path: "../app/build.gradle").to_i
     new_version = prev_version + 1
@@ -64,7 +64,7 @@ platform :android do
       STDIN.getch
     end
     gradle(task: "clean assembleRelease")
-    upload_to_play_store(track: 'internal')
+    upload_to_play_store(track: 'internal', release_status: 'draft')
     # if successful, commit build version changes and tag
     if commit_after_upload
       `git add ../..`

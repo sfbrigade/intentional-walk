@@ -1,0 +1,5 @@
+[#19 #49] First pass, fastlane build automation, code reorganization into root of repo
+[#17] Hamburger menu in main screen stack with placeholders for other screens (#48)
+[#10] Refactor Fitness API access to get steps/total steps/distance (#47)
+[#20] Refactored and re-styled Onboarding screens (#46)
+[#35] User can navigate between days to see step history (#45)
