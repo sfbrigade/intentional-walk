@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 
-export default function PageTitle(props) {
+export default function PageTitle({title}) {
   return (
     <View style={styles.content}>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
 }
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     ...GlobalStyles.content,
     ...GlobalStyles.rounded,
     alignItems: 'center',
-    backgroundColor: Colors.primary.white,
+    backgroundColor: 'white',
     justifyContent: 'center',
     height: 64,
     textAlign: 'center',

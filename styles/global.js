@@ -19,7 +19,7 @@ export default StyleSheet.create({
     fontWeight: 'normal',
   },
   boxShadow: {
-    shadowColor: Colors.primary.black,
+    shadowColor: 'black',
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 1
