@@ -6,3 +6,4 @@ export HamburgerMenu from './hamburgerMenu';
 export InfoBox from './infoBox';
 export Input from './input';
 export Logo from './logo';
+export DataBox from './dataBox';
