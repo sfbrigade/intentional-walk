@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import {Button, InfoBox} from '../../components';
+import {Button, InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 
 export default function InfoScreen({navigation}) {
@@ -18,10 +18,9 @@ export default function InfoScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>iWalk Info</Text>
+        <View>
+          <PageTitle title="iWalk Information" />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <Text style={styles.subtitle}>From here, participation is easy:</Text>
             <InfoBox title="Walk!"
                      icon="directions-walk"
                      iconSize={80}
@@ -50,19 +49,5 @@ export default function InfoScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  content: {
-    ...GlobalStyles.content,
-    alignItems: 'center',
-  },
-  subtitle: {
-    textAlign: 'center',
-    marginBottom: 48,
-    fontSize: 17,
-    color: Colors.primary.gray2,
-  },
-  button: {
-    width: 180,
-    height: 48,
-  },
+  }
 });

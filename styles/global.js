@@ -18,6 +18,12 @@ export default StyleSheet.create({
     fontFamily: 'ConcertOne-Regular',
     fontWeight: 'normal',
   },
+  boxShadow: {
+    shadowColor: Colors.primary.black,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1
+  },
   h1: {
     color: Colors.primary.purple,
     fontSize: 36,

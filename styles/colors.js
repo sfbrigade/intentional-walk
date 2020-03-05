@@ -4,6 +4,8 @@ export default {
     lightGreen: '#86C03F',
     darkGreen: '#008F4D',
     gray2: '#4F4F4F',
+    white: '#FFFFFF',
+    black: '#000000'
   },
   secondary: {
     blue: '#2B388A',
