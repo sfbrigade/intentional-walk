@@ -25,7 +25,7 @@ export default function WhereToWalkScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <PageTitle title="Where to Walk" />
-        { LinkBoxes }
+        { linkBoxes }
       </ScrollView>
     </SafeAreaView>
   );
