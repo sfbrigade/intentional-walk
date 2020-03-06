@@ -17,7 +17,7 @@ export default function RecordedWalksScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <PageTitle title={"My Recorded Walks"} />
+        <PageTitle title="My Recorded Walks" />
       </ScrollView>
     </SafeAreaView>
   );
