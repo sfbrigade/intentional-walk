@@ -5,4 +5,6 @@ export HamburgerButton from './hamburgerButton';
 export HamburgerMenu from './hamburgerMenu';
 export InfoBox from './infoBox';
 export Input from './input';
+export LinkButton from './linkButton';
 export Logo from './logo';
+export PageTitle from './pageTitle';
