@@ -5,23 +5,29 @@ import {Colors, GlobalStyles} from '../styles';
 
 export default function DataBox(props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.mainText}>4,976</Text>
-      <Text style={styles.subText}>steps today</Text>
-      <Icon style={styles.icon} name='directions-walk' size={170} color='white'/>
+    <View style={[styles.box, props.boxStyle]}>
+      <Text style={styles.mainText}>{props.mainText}</Text>
+      <Text style={styles.subText}>{props.subText}</Text>
+      <Icon
+        style={[styles.icon, props.iconStyle]}
+        name={props.icon}
+        size={props.iconSize}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  box: {
     ...GlobalStyles.rounded,
-    backgroundColor: Colors.primary.lightGreen,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     height: 140,
     width: 180,
+    shadowColor: 'black',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   mainText: {
     color: 'white',
@@ -35,7 +41,6 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     opacity: 0.15,
-    top: -20,
-    right: -50,
+    color: 'white',
   },
 });
