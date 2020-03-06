@@ -5,7 +5,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
-import {GlobalStyles} from '../../styles';
+import {GlobalStyles, Colors} from '../../styles';
+import {DataBox} from '../../components';
 import moment from 'moment';
 
 export default function HomeScreen({navigation}) {
@@ -78,6 +79,14 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={GlobalStyles.content}>
       <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
+      <DataBox
+        mainText={dailySteps ? Math.round(dailySteps.quantity) : 0}
+        subText="steps today"
+        icon="directions-walk"
+        iconSize={170}
+        iconStyle={{top: -20, right: -40}}
+        boxStyle={{backgroundColor: Colors.primary.lightGreen}}
+      />
       {dailySteps ? (
         <Text>Daily steps: {Math.round(dailySteps.quantity)} steps</Text>
       ) : (
