@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Colors, GlobalStyles} from '../styles';
+import {GlobalStyles} from '../styles';
 
 export default function StatBox(props) {
   return (
