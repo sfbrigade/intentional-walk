@@ -6,7 +6,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
-import {DataBox} from '../../components';
+import {StatBox} from '../../components';
 import moment from 'moment';
 
 export default function HomeScreen({navigation}) {
@@ -79,7 +79,7 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={GlobalStyles.content}>
       <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-      <DataBox
+      <StatBox
         mainText={dailySteps ? Math.round(dailySteps.quantity) : 0}
         subText="steps today"
         icon="directions-walk"

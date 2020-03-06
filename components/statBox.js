@@ -3,7 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
 
-export default function DataBox(props) {
+export default function StatBox(props) {
   return (
     <View style={[styles.box, props.boxStyle]}>
       <Text style={styles.mainText}>{props.mainText}</Text>
