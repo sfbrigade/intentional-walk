@@ -6,8 +6,9 @@ import {Colors, GlobalStyles} from '../styles';
 export default function DataBox(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>4,976</Text>
-      <Text style={[styles.text, styles.subText]}>steps today</Text>
+      <Text style={styles.mainText}>4,976</Text>
+      <Text style={styles.subText}>steps today</Text>
+      <Icon style={styles.icon} name='directions-walk' size={170} color='white'/>
     </View>
   );
 }
@@ -19,17 +20,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 140,
+    width: 180,
   },
-  text: {
+  mainText: {
     color: 'white',
-    fontSize: 50,
+    fontSize: 36,
     fontWeight: 'bold',
   },
   subText: {
+    color: 'white',
     fontSize: 20,
   },
   icon: {
-    width: 100,
-    alignItems: 'center',
+    position: 'absolute',
+    opacity: 0.15,
+    top: -20,
+    right: -50,
   },
 });
