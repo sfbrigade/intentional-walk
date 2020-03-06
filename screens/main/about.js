@@ -49,10 +49,6 @@ export default function InfoScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  pageTitle: {
-    ...GlobalStyles.boxShadow,
     ...GlobalStyles.content,
-    ...GlobalStyles.rounded
-  }
+  },
 });

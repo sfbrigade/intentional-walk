@@ -90,6 +90,5 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 180,
-    height: 48,
   },
 });

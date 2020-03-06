@@ -11,10 +11,13 @@ export default function PageTitle({style, title}) {
 }
 const styles = StyleSheet.create({
   content: {
+    ...GlobalStyles.boxShadow,
+    ...GlobalStyles.rounded,
     alignItems: 'center',
     backgroundColor: 'white',
     justifyContent: 'center',
     height: 64,
+    marginBottom: 16,
     textAlign: 'center',
   },
   title: {

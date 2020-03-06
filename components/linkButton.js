@@ -5,13 +5,6 @@ import {Colors, GlobalStyles} from '../styles';
 
 export default function LinkButton({style, title, url}) {
   return (
-    <Button style={{...style, ...styles.content}} onPress={() => {Linking.openURL(url)} }>{title}</Button>
+    <Button style={style} onPress={() => {Linking.openURL(url)} }>{title}</Button>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {
-    marginVertical: 8,
-    height: 48,
-  }
-});
