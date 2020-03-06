@@ -22,7 +22,7 @@ export default StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 1
+    shadowRadius: 10
   },
   h1: {
     color: Colors.primary.purple,
