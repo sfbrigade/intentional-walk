@@ -19,7 +19,7 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
-          <PageTitle title="iWalk Information" />
+          <PageTitle style={styles.pageTitle} title="iWalk Information" />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
             <InfoBox title="Walk!"
                      icon="directions-walk"
@@ -49,5 +49,10 @@ export default function InfoScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  pageTitle: {
+    ...GlobalStyles.boxShadow,
+    ...GlobalStyles.content,
+    ...GlobalStyles.rounded
   }
 });

@@ -2,18 +2,15 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 
-export default function PageTitle({title}) {
+export default function PageTitle({style, title}) {
   return (
-    <View style={styles.content}>
+    <View style={{...style, ...styles.content}}>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
   content: {
-    ...GlobalStyles.boxShadow,
-    ...GlobalStyles.content,
-    ...GlobalStyles.rounded,
     alignItems: 'center',
     backgroundColor: 'white',
     justifyContent: 'center',
