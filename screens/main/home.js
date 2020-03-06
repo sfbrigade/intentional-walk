@@ -84,7 +84,7 @@ export default function HomeScreen({navigation}) {
         subText="steps today"
         icon="directions-walk"
         iconSize={170}
-        iconStyle={{top: -20, right: -40}}
+        iconStyle={{top: -20, right: -35}}
         boxStyle={{backgroundColor: Colors.primary.lightGreen}}
       />
       {dailySteps ? (
