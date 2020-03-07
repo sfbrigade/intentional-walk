@@ -2,7 +2,7 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
@@ -65,7 +65,7 @@ export default function HomeScreen({navigation}) {
   };
 
   useEffect(() => {
-    navigation.navigate('OnboardingStack');
+    // navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
   // Do something when the screen is focused
@@ -100,15 +100,12 @@ export default function HomeScreen({navigation}) {
         />
       </View>
       <View style={styles.row}>
-        <StatBox
-          mainText={totalSteps ? Math.round(totalSteps.quantity) : "*"}
-          subText="overall step total"
-          icon="star-border"
-          iconSize={200}
-          iconStyle={{top: -10, right: -50}}
-          style={styles.box}
-          boxColor={Colors.accent.orange}
-        />
+        <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
+          <View style={styles.photoBox}>
+            <Image style={styles.photo} source={require('../../assets/dolorespark.jpg')} />
+            <Text style={styles.photoText}>Where to Walk?</Text>
+          </View>
+        </TouchableOpacity>
         <StatBox
           mainText={totalSteps ? Math.round(totalSteps.quantity) : "*"}
           subText="overall step total"
@@ -134,5 +131,23 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 8,
     marginRight: 8,
+  },
+  photoBox: {
+    ...GlobalStyles.rounded,
+    ...GlobalStyles.boxShadow,
+  },
+  photo: {
+    ...GlobalStyles.rounded,
+    resizeMode: 'cover',
+    width: '100%',
+    height: 140,
+    position: 'absolute',
+  },
+  photoText: {
+    ...GlobalStyles.h2,
+    ...GlobalStyles.boxShadow,
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 20
   }
 });
