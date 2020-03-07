@@ -4,11 +4,14 @@
 
 1. Clone this repo to your computer.
 
-2. Make sure you have a recent version of Node.js installed.
+2. Make sure you have Node.js _10_ installed (newer versions are not compatible).
 
    https://nodejs.org/
 
-   Note: Mac OS users can also install Node using Homebrew (https://brew.sh/)
+   Note: Mac OS users can also install Node using Homebrew (https://brew.sh/):
+   ```
+   intentional-walk % brew install node@10
+   ```
 
 3. Install packages.
    ```

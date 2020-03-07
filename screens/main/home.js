@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
-import Fitness from '../../lib/fitness';
+import {Fitness, Realm} from '../../lib';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {StatBox} from '../../components';
@@ -68,8 +68,13 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     SplashScreen.hide();
-    navigation.navigate('OnboardingStack');
-  }, [/* TODO: add state to check for account log in */]);
+    Realm.open().then(realm => {
+      let users = realm.objects('AppUser');
+      if (users.length == 0) {
+        navigation.navigate('OnboardingStack');
+      }
+    })
+  }, []);
 
   // Do something when the screen is focused
   useFocusEffect(
