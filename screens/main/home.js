@@ -3,6 +3,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
@@ -66,7 +67,8 @@ export default function HomeScreen({navigation}) {
   };
 
   useEffect(() => {
-    // navigation.navigate('OnboardingStack');
+    SplashScreen.hide();
+    navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
   // Do something when the screen is focused
