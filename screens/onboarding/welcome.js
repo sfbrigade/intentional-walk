@@ -75,15 +75,12 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 180,
-    height: 48,
-    marginBottom: 16,
   },
   toggleButton: {
     ...GlobalStyles.rounded,
     backgroundColor: 'white',
     borderColor: Colors.primary.purple,
     borderWidth: .5,
-    height: 48,
     width: 180,
     alignItems: 'center',
     justifyContent: 'center',

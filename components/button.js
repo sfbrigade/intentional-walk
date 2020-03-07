@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'purple',
+    height: 48,
+    marginBottom: 16,
   },
   buttonToggle: {
     backgroundColor: 'white',
