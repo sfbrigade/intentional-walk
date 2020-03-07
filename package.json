@@ -15,6 +15,7 @@
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "react": "16.9.0",
     "react-moment": "^0.9.7",
     "react-native": "0.61.5",

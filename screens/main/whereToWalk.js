@@ -25,9 +25,11 @@ export default function WhereToWalkScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <PageTitle title="Where to Walk" />
-        <Image source={require('../../assets/sfrecparks_logo.png')} style={styles.image} />
-        { linkBoxes }
+        <View style={GlobalStyles.content}>
+          <PageTitle title="Where to Walk" />
+          <Image source={require('../../assets/sfrecparks_logo.png')} style={styles.image} />
+          { linkBoxes }
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -36,7 +38,6 @@ export default function WhereToWalkScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...GlobalStyles.content,
   },
   image: {
     marginTop: 16,

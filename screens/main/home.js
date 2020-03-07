@@ -8,6 +8,7 @@ import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {StatBox} from '../../components';
 import moment from 'moment';
+import numeral from 'numeral';
 
 export default function HomeScreen({navigation}) {
   const dateRef = useRef(moment().startOf('day'));
@@ -81,7 +82,7 @@ export default function HomeScreen({navigation}) {
       <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
       <View style={styles.row}>
         <StatBox
-          mainText={dailySteps ? Math.round(dailySteps.quantity) : "*"}
+          mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
           subText="steps today"
           icon="directions-walk"
           iconSize={170}
@@ -90,7 +91,7 @@ export default function HomeScreen({navigation}) {
           boxColor={Colors.accent.teal}
         />
         <StatBox
-          mainText={dailyDistance ? dailyDistance.quantity / 1609.0 : "*"}
+          mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
           subText="miles today"
           icon="swap-calls"
           iconSize={240}
@@ -107,7 +108,7 @@ export default function HomeScreen({navigation}) {
           </View>
         </TouchableOpacity>
         <StatBox
-          mainText={totalSteps ? Math.round(totalSteps.quantity) : "*"}
+          mainText={totalSteps ? numeral(totalSteps.quantity).format('0,0') : "*"}
           subText="overall step total"
           icon="star-border"
           iconSize={200}
