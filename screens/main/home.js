@@ -7,7 +7,7 @@ import SplashScreen from 'react-native-splash-screen'
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
-import {StatBox} from '../../components';
+import {StatBox, RecordedWalk} from '../../components';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -119,6 +119,7 @@ export default function HomeScreen({navigation}) {
           boxColor={Colors.accent.orange}
         />
       </View>
+      <RecordedWalk />
     </View>
   );
 }

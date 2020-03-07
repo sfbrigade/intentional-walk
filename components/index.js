@@ -1,3 +1,5 @@
+import RecordedWalk from "./recordedWalk";
+
 export Button from './button';
 export CheckBox from './checkBox';
 export DateNavigator from './dateNavigator';
@@ -9,3 +11,4 @@ export LinkButton from './linkButton';
 export Logo from './logo';
 export PageTitle from './pageTitle';
 export StatBox from './statBox';
+export RecordedWalk from './recordedWalk';
