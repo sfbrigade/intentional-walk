@@ -119,7 +119,7 @@ export default function HomeScreen({navigation}) {
           boxColor={Colors.accent.orange}
         />
       </View>
-      <RecordedWalk />
+      <RecordedWalk title="No Recorded Walks" subtitle={undefined}/>
     </View>
   );
 }
