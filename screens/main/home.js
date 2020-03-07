@@ -2,11 +2,13 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import Fitness from '../../lib/fitness';
 import {DateNavigator} from '../../components';
-import {GlobalStyles} from '../../styles';
+import {GlobalStyles, Colors} from '../../styles';
+import {StatBox} from '../../components';
 import moment from 'moment';
+import numeral from 'numeral';
 
 export default function HomeScreen({navigation}) {
   const dateRef = useRef(moment().startOf('day'));
@@ -64,7 +66,7 @@ export default function HomeScreen({navigation}) {
   };
 
   useEffect(() => {
-    navigation.navigate('OnboardingStack');
+    // navigation.navigate('OnboardingStack');
   }, [/* TODO: add state to check for account log in */]);
 
   // Do something when the screen is focused
@@ -78,21 +80,75 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={GlobalStyles.content}>
       <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-      {dailySteps ? (
-        <Text>Daily steps: {Math.round(dailySteps.quantity)} steps</Text>
-      ) : (
-        <Text>Querying daily step count...</Text>
-      )}
-      {dailyDistance ? (
-        <Text>Daily distance: {dailyDistance.quantity / 1609.0} mi</Text>
-      ) : (
-        <Text>Querying daily distance...</Text>
-      )}
-      {totalSteps ? (
-        <Text>Monthly steps: {Math.round(totalSteps.quantity)} steps</Text>
-      ) : (
-        <Text>Querying monthly step count...</Text>
-      )}
+      <View style={styles.row}>
+        <StatBox
+          mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
+          subText="steps today"
+          icon="directions-walk"
+          iconSize={170}
+          iconStyle={{top: -20, right: -35}}
+          style={styles.box}
+          boxColor={Colors.accent.teal}
+        />
+        <StatBox
+          mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
+          subText="miles today"
+          icon="swap-calls"
+          iconSize={240}
+          iconStyle={{top: -30, left: -40, width: '200%'}}
+          style={styles.box}
+          boxColor={Colors.primary.lightGreen}
+        />
+      </View>
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
+          <View style={styles.photoBox}>
+            <Image style={styles.photo} source={require('../../assets/dolorespark.jpg')} />
+            <Text style={styles.photoText}>Where to Walk?</Text>
+          </View>
+        </TouchableOpacity>
+        <StatBox
+          mainText={totalSteps ? numeral(totalSteps.quantity).format('0,0') : "*"}
+          subText="overall step total"
+          icon="star-border"
+          iconSize={200}
+          iconStyle={{top: -10, right: -30}}
+          style={styles.box}
+          boxColor={Colors.accent.orange}
+        />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    marginLeft: -8,
+    marginRight: -8,
+    marginBottom: 16,
+  },
+  box: {
+    flex: 1,
+    marginLeft: 8,
+    marginRight: 8,
+  },
+  photoBox: {
+    ...GlobalStyles.rounded,
+    ...GlobalStyles.boxShadow,
+  },
+  photo: {
+    ...GlobalStyles.rounded,
+    resizeMode: 'cover',
+    width: '100%',
+    height: 140,
+    position: 'absolute',
+  },
+  photoText: {
+    ...GlobalStyles.h2,
+    ...GlobalStyles.boxShadow,
+    color: 'white',
+    textAlign: 'center',
+    marginTop: 20
+  }
+});

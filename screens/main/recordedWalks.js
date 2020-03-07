@@ -17,7 +17,9 @@ export default function RecordedWalksScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
+        <View style={GlobalStyles.content}>
+          <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -26,6 +28,5 @@ export default function RecordedWalksScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...GlobalStyles.content,
   },
 });

@@ -44,6 +44,7 @@ export default function DateNavigator(props) {
 const styles = StyleSheet.create({
   header: {
     ...GlobalStyles.rounded,
+    ...GlobalStyles.boxShadow,
     backgroundColor: Colors.primary.purple,
     flexDirection: 'row',
     justifyContent: 'space-between',

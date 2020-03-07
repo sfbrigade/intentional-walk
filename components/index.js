@@ -8,3 +8,4 @@ export Input from './input';
 export LinkButton from './linkButton';
 export Logo from './logo';
 export PageTitle from './pageTitle';
+export StatBox from './statBox';
