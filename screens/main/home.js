@@ -79,29 +79,60 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={GlobalStyles.content}>
       <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-      <StatBox
-        mainText={dailySteps ? Math.round(dailySteps.quantity) : 0}
-        subText="steps today"
-        icon="directions-walk"
-        iconSize={170}
-        iconStyle={{top: -20, right: -35}}
-        boxStyle={{backgroundColor: Colors.primary.lightGreen}}
-      />
-      {dailySteps ? (
-        <Text>Daily steps: {Math.round(dailySteps.quantity)} steps</Text>
-      ) : (
-        <Text>Querying daily step count...</Text>
-      )}
-      {dailyDistance ? (
-        <Text>Daily distance: {dailyDistance.quantity / 1609.0} mi</Text>
-      ) : (
-        <Text>Querying daily distance...</Text>
-      )}
-      {totalSteps ? (
-        <Text>Monthly steps: {Math.round(totalSteps.quantity)} steps</Text>
-      ) : (
-        <Text>Querying monthly step count...</Text>
-      )}
+      <View style={styles.row}>
+        <StatBox
+          mainText={dailySteps ? Math.round(dailySteps.quantity) : "*"}
+          subText="steps today"
+          icon="directions-walk"
+          iconSize={170}
+          iconStyle={{top: -20, right: -35}}
+          style={styles.box}
+          boxColor={Colors.accent.teal}
+        />
+        <StatBox
+          mainText={dailyDistance ? dailyDistance.quantity / 1609.0 : "*"}
+          subText="miles today"
+          icon="swap-calls"
+          iconSize={240}
+          iconStyle={{top: -30, left: -40, width: '200%'}}
+          style={styles.box}
+          boxColor={Colors.primary.lightGreen}
+        />
+      </View>
+      <View style={styles.row}>
+        <StatBox
+          mainText={totalSteps ? Math.round(totalSteps.quantity) : "*"}
+          subText="overall step total"
+          icon="star-border"
+          iconSize={200}
+          iconStyle={{top: -10, right: -50}}
+          style={styles.box}
+          boxColor={Colors.accent.orange}
+        />
+        <StatBox
+          mainText={totalSteps ? Math.round(totalSteps.quantity) : "*"}
+          subText="overall step total"
+          icon="star-border"
+          iconSize={200}
+          iconStyle={{top: -10, right: -30}}
+          style={styles.box}
+          boxColor={Colors.accent.orange}
+        />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    marginLeft: -8,
+    marginRight: -8,
+    marginBottom: 16,
+  },
+  box: {
+    flex: 1,
+    marginLeft: 8,
+    marginRight: 8,
+  }
+});
