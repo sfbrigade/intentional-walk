@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     width: 260,
     flex: 2,
     justifyContent: 'space-between',
-    overflow: 'hidden',
   },
   stats: {
     justifyContent: 'center',
