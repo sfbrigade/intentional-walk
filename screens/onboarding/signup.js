@@ -12,6 +12,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Button, CheckBox, Input} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
+import {Realm} from '../../lib';
 
 export default function SignUpScreen({navigation}) {
   const [focus, setFocus] = useState('');
@@ -23,7 +24,20 @@ export default function SignUpScreen({navigation}) {
   const [termsAgreed, setTermsAgreed] = useState(false);
 
   const pressHandler = () => {
-    navigation.navigate('Info');
+    // TODO: validate form fields
+    // TODO: contact server
+    Realm.open().then(realm => {
+      try {
+        realm.write(() => {
+          realm.create('AppUser', {
+            name, email, zip, age: parseInt(age)
+          });
+          navigation.navigate('Info');
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    });
   };
 
   const isValid = () => {

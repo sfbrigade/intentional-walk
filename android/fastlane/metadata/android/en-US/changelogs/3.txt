@@ -1,0 +1,6 @@
+[#51] Add Realm datastore, store user after signup flow
+[#54] Android icon added
+[#50] Splash screen displayed upon launch
+[#10] Home screen stat box styling (#53)
+[#33] Add SF Rec & Parks logo to Where to Walk screen
+[#33] New components PageTitle, Link Button. Where to Walk screen content mostly completed (#52)

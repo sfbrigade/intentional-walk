@@ -12,7 +12,7 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   content: {
-    margin: 16,
+    padding: 16,
   },
   logoFont: {
     fontFamily: 'ConcertOne-Regular',
@@ -22,7 +22,8 @@ export default StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 10
+    shadowRadius: 10,
+    elevation: 10,
   },
   h1: {
     color: Colors.primary.purple,
