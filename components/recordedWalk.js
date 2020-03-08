@@ -8,44 +8,36 @@ export default function RecordedWalk(props) {
     <View style={styles.container}>
       <View style={styles.row1}>
         <Text style={styles.mainTitle}>{props.title}</Text>
+        {props.date &&
+          <View style={styles.dateContainer}>
+            <Text style={styles.statsTitle}>{props.date}</Text>
+          </View>}
       </View>
-      {/* {props.subtitle ?
+      {props.steps === undefined ?
         <View style={styles.row2}>
           <Text style={styles.subtitle}>{props.subtitle}</Text>
         </View>
         :
-        <View style={styles.row2}> 
-          <View style={styles.stats}>
-          <Text>0Steps today</Text>
-        </View>
-        <View style={styles.stats}>
-          <Text>12 miles</Text>
-        </View>
-        <View style={styles.stats}>
-          <Text>125 miles</Text>
-        </View>
-        </View>
-      } */}
-      <View style={styles.row2}>
-        {props.subtitle && (
-          <Text style={styles.subtitle}>{props.subtitle}</Text>
-        )}
-        <View style={styles.stats}>
-          <Text style={styles.statsTitle}>{props.steps}</Text>
-          <Text style={styles.subtitle}>steps</Text>
-        </View>
-        <View style={styles.stats}>
-          <Text style={styles.statsTitle}>{props.miles}</Text>
-          <Text style={styles.subtitle}>miles</Text>
-        </View>
-        <View style={styles.stats}>
-          <Text style={styles.statsTitle}>{props.minutes}</Text>
-          <Text style={styles.subtitle}>mins</Text>
-        </View>
-      </View>
-      <View style={styles.iconContainer}>
-        <Icon style={styles.icon} name="timer" size={100} />
-      </View>
+        <>
+          <View style={styles.row2}>
+            <View style={styles.stats}>
+              <Text style={styles.statsTitle}>{props.steps}</Text>
+              <Text style={styles.subtitle}>steps</Text>
+            </View>
+            <View style={styles.stats}>
+              <Text style={styles.statsTitle}>{props.miles}</Text>
+              <Text style={styles.subtitle}>miles</Text>
+            </View>
+            <View style={styles.stats}>
+              <Text style={styles.statsTitle}>{props.minutes}</Text>
+              <Text style={styles.subtitle}>mins</Text>
+            </View>
+          </View>
+          <View style={styles.iconContainer}>
+            <Icon style={styles.icon} name="timer" size={100} />
+          </View>
+        </>
+      }
     </View>
   );
 }
@@ -69,7 +61,12 @@ const styles = StyleSheet.create({
   subtitle: {
     color: Colors.primary.purple,
     fontSize: 12.5,
-    flex: 0.75,
+  },
+  dateContainer: {
+    paddingLeft: 16,
+    marginLeft: 16,
+    borderLeftColor: Colors.primary.purple,
+    borderLeftWidth: 1,
   },
   row1: {
     flexDirection: 'row',
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 8,
     paddingTop: 4,
-    width: 264,
+    width: 260,
     flex: 2,
     justifyContent: 'space-between',
     overflow: 'hidden',

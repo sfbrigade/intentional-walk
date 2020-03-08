@@ -121,8 +121,10 @@ export default function HomeScreen({navigation}) {
       </View>
       <RecordedWalk
         title="Afternoon Walk"
+        date={"July 12"}
+        // subtitle="Start a new walk by pressing the record button at the bottom of the screen."
         subtitle={undefined}
-        steps={2139}
+        steps={4096}
         miles={2.1}
         minutes={58}
       />
