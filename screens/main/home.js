@@ -17,6 +17,7 @@ export default function HomeScreen({navigation}) {
   const [dailySteps, setDailySteps] = useState(null);
   const [dailyDistance, setDailyDistance] = useState(null);
   const [totalSteps, setTotalSteps] = useState(null);
+  const [recordedWalks, setRecordedWalks] = useState(null);
 
   const getDailySteps = (queryDate) => {
     setDailySteps(null);
@@ -40,6 +41,15 @@ export default function HomeScreen({navigation}) {
     });
   }
 
+  const getRecordedWalks = (queryDate) => {
+    Realm.open().then(realm => {
+      const recordedWalks = realm.objects('IntentionalWalk').filtered('start>=$0 AND end<$1', queryDate.toDate(), moment(queryDate).add(1, 'd').toDate());
+      if (dateRef.current.isSame(queryDate)) {
+        setRecordedWalks(recordedWalks);
+      }
+    });
+  }
+
   const setDateAndGetDailySteps = (newDate) => {
     const oldDate = dateRef.current;
     dateRef.current = newDate;
@@ -49,6 +59,7 @@ export default function HomeScreen({navigation}) {
     if (!oldDate.startOf('month').isSame(moment(newDate).startOf('month'))) {
       getTotalSteps();
     }
+    getRecordedWalks(newDate);
   };
 
   const getTotalSteps = () => {
@@ -64,6 +75,7 @@ export default function HomeScreen({navigation}) {
     getDailySteps(dateRef.current);
     getDailyDistance(dateRef.current);
     getTotalSteps();
+    getRecordedWalks(dateRef.current);
   };
 
   useEffect(() => {
@@ -83,6 +95,9 @@ export default function HomeScreen({navigation}) {
       return () => { };
     }, [])
   );
+
+  const today = moment().startOf('day');
+  const dateString = date.isSame(today) ? 'Today' : date.format('MMMM D');
 
   return (
     <View style={GlobalStyles.content}>
@@ -124,15 +139,18 @@ export default function HomeScreen({navigation}) {
           boxColor={Colors.accent.orange}
         />
       </View>
-      <RecordedWalk
-        title="Afternoon Walk"
-        date={"July 12"}
-        // subtitle="Start a new walk by pressing the record button at the bottom of the screen."
-        subtitle={undefined}
-        steps={4096}
-        miles={2.1}
-        minutes={58}
-      />
+      <View style={[styles.row, styles.subtitle]}>
+        <Text style={styles.subtitleHeader}>My Recorded Walks {dateString}</Text>
+        <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>All Recorded Walks</Text>
+      </View>
+      { recordedWalks && recordedWalks.length == 0 &&
+        <RecordedWalk
+          title="No Walks Yet"
+          subtitle="Start a new walk by pressing the record button at the bottom of the screen." />
+      }
+      { recordedWalks && recordedWalks.length > 0 &&
+          recordedWalks.map(walk => <RecordedWalk walk={walk} />)
+      }
     </View>
   );
 }
@@ -166,5 +184,22 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginTop: 20
+  },
+  subtitle: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 12
+  },
+  subtitleHeader: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: Colors.primary.gray2
+  },
+  subtitleLink: {
+    fontSize: 12,
+    color: Colors.primary.gray2,
+    textDecorationLine: 'underline'
   }
 });

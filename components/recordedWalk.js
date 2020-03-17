@@ -2,34 +2,64 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {GlobalStyles, Colors} from '../styles';
+import moment from 'moment';
+import numeral from 'numeral';
 
 export default function RecordedWalk(props) {
+  let {title, date, subtitle, steps, miles, minutes} = props;
+  const walk = props.walk;
+  if (walk) {
+    const start = moment(walk.start);
+    const noon = moment(start).startOf('day').add(12, 'h');
+    if (start.isBefore(noon)) {
+      title = "Morning Walk";
+    } else {
+      const evening = moment(noon).add(6, 'h');
+      if (start.isBefore(evening)) {
+        title = "Afternoon Walk";
+      } else {
+        title = "Evening Walk";
+      }
+    }
+    const today = moment().startOf('day');
+    const yesterday = moment(today).subtract(1, 'd');
+    if (start.isSameOrAfter(today)) {
+      date = "Today";
+    } else if (start.isSameOrAfter(yesterday)) {
+      date = "Yesterday";
+    } else {
+      date = start.format('MMMM D');
+    }
+    steps = numeral(walk.steps).format('0,0');
+    miles = numeral(walk.distance).format('0,0.0');
+    minutes = Math.round(moment(walk.end).diff(start, 'seconds') / 60.0);
+  }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.style]}>
       <View style={styles.row1}>
-        <Text style={styles.mainTitle}>{props.title}</Text>
-        {props.date &&
+        <Text style={styles.mainTitle}>{title}</Text>
+        {date &&
           <View style={styles.dateContainer}>
-            <Text style={styles.statsTitle}>{props.date}</Text>
+            <Text style={styles.statsTitle}>{date}</Text>
           </View>}
       </View>
-      {props.steps === undefined ?
+      {steps === undefined ?
         <View style={styles.row2}>
-          <Text style={styles.subtitle}>{props.subtitle}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
         :
         <>
-          <View style={styles.row2}>
+          <View style={[styles.row2, {paddingRight: 100}]}>
             <View style={styles.stats}>
-              <Text style={styles.statsTitle}>{props.steps}</Text>
+              <Text style={styles.statsTitle}>{steps}</Text>
               <Text style={styles.subtitle}>steps</Text>
             </View>
             <View style={styles.stats}>
-              <Text style={styles.statsTitle}>{props.miles}</Text>
+              <Text style={styles.statsTitle}>{miles}</Text>
               <Text style={styles.subtitle}>miles</Text>
             </View>
             <View style={styles.stats}>
-              <Text style={styles.statsTitle}>{props.minutes}</Text>
+              <Text style={styles.statsTitle}>{minutes}</Text>
               <Text style={styles.subtitle}>mins</Text>
             </View>
           </View>
@@ -48,6 +78,7 @@ const styles = StyleSheet.create({
     ...GlobalStyles.boxShadow,
     backgroundColor: 'white',
     height: 80,
+    marginBottom: 16,
   },
   mainTitle: {
     color: Colors.primary.purple,
@@ -78,7 +109,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 8,
     paddingTop: 4,
-    width: 260,
     flex: 2,
     justifyContent: 'space-between',
   },
