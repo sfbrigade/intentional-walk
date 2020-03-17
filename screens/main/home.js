@@ -7,7 +7,7 @@ import SplashScreen from 'react-native-splash-screen'
 import {Fitness, Realm} from '../../lib';
 import {DateNavigator} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
-import {StatBox} from '../../components';
+import {StatBox, RecordedWalk} from '../../components';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -124,6 +124,15 @@ export default function HomeScreen({navigation}) {
           boxColor={Colors.accent.orange}
         />
       </View>
+      <RecordedWalk
+        title="Afternoon Walk"
+        date={"July 12"}
+        // subtitle="Start a new walk by pressing the record button at the bottom of the screen."
+        subtitle={undefined}
+        steps={4096}
+        miles={2.1}
+        minutes={58}
+      />
     </View>
   );
 }
