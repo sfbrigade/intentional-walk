@@ -4,7 +4,7 @@ import {Colors, GlobalStyles} from '../styles';
 
 export default function PageTitle({style, title}) {
   return (
-    <View style={{...style, ...styles.content}}>
+    <View style={[styles.content, style]}>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
