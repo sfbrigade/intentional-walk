@@ -13,6 +13,7 @@ import {
 import {Button, InfoBox, PageTitle, RecordedWalk} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm} from '../../lib';
+import {TLRecordedWalks} from '../../translations/';
 
 export default function RecordedWalksScreen({navigation}) {
   const [recordedWalks, setRecordedWalks] = useState(null);
@@ -25,9 +26,9 @@ export default function RecordedWalksScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
+      <PageTitle style={styles.pageTitle} title={TLRecordedWalks.myWalks} />
       { recordedWalks && recordedWalks.length == 0 &&
-        <RecordedWalk style={styles.walk} title="No Recorded Walks" />
+        <RecordedWalk style={styles.walk} title={TLRecordedWalks.noWalks} />
       }
       { recordedWalks && recordedWalks.length > 0 &&
         <VirtualizedList
