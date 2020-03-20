@@ -25,17 +25,23 @@ export default function RecordedWalksScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
-      { recordedWalks && recordedWalks.length == 0 &&
-        <RecordedWalk style={styles.walk} title="No Recorded Walks" />
-      }
-      { recordedWalks && recordedWalks.length > 0 &&
+      { recordedWalks &&
         <VirtualizedList
           style={styles.list}
           data={recordedWalks}
-          getItemCount={(data) => data.length}
-          getItem={(data, i) => data[i]}
-          renderItem={({item}) => <RecordedWalk style={styles.walk} key={item.id} walk={item} />}
+          getItemCount={(data) => data.length + 1}
+          getItem={(data, i) => i == 0 ? {id: ""} : data[i - 1]}
+          renderItem={({item}) => {
+            if (item.id != "") {
+              return <RecordedWalk style={styles.walk} key={item.id} walk={item} />;
+            } else {
+              return <>
+                <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
+                { recordedWalks.length == 0 &&
+                  <RecordedWalk style={styles.walk} title="No Recorded Walks" /> }
+              </>;
+            }
+          }}
           keyExtractor={item => item.id} />
       }
     </SafeAreaView>
