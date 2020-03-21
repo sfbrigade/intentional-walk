@@ -1,0 +1,6 @@
+[#11 #12] First pass, recording intentional walks
+[#28] More component and model set up for displaying Recorded Walks on Home screen and on dedicated screen
+[#28] Recorded walk component (#57)
+Create privacy.md
+Set theme jekyll-theme-minimal
+Create index.md
