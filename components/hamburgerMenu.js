@@ -23,10 +23,9 @@ export default function HamburgerMenu(props) {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    Realm.open().then(realm => {
-      let users = realm.objects('AppUser');
-      if (users.length > 0) {
-        setEmail(users[0].email);
+    Realm.getUser().then(user => {
+      if (user) {
+        setEmail(user.email);
       }
     });
   });
@@ -43,20 +42,13 @@ export default function HamburgerMenu(props) {
   };
 
   const logout = () => {
-    Realm.open().then(realm => {
-      try {
-        realm.write(() => {
-          realm.delete(realm.objects('AppUser'));
-          if (!isActiveRoute('Home')) {
-            navigationRef.current?.navigate('Home');
-          }
-          props.onDone();
-          navigationRef.current?.navigate('OnboardingStack');
-        });
-      } catch (e) {
-        console.log(e);
+    Realm.destroyUser().then(() => {
+      if (!isActiveRoute('Home')) {
+        navigationRef.current?.navigate('Home');
       }
-    });
+      props.onDone();
+      navigationRef.current?.navigate('OnboardingStack');
+    })
   };
 
   return (
