@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Button, InfoBox} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {TLInformation} from '../../translations';
+import {TLEntries, TLText} from '../../translations';
 
 export default function InfoScreen({navigation}) {
 
@@ -24,29 +24,29 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>{TLInformation.youreSignedUp}</Text>
+          <Text style={GlobalStyles.h1}>{TLText.youreSignedUp + "!"}</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <Text style={styles.subtitle}>{TLInformation.subtitle}</Text>
-            <InfoBox title={TLInformation.walk}
+            <Text style={styles.subtitle}>{TLEntries.fromHereText}</Text>
+            <InfoBox title={TLText.walk + "!"}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              {TLInformation.walkText}
+              {TLEntries.walkText}
             </InfoBox>
-            <InfoBox title={TLInformation.record}
+            <InfoBox title={TLText.record + "!"}
                      icon="play-circle-filled"
                      iconSize={80}
                      iconColor={Colors.primary.purple}>
-              {TLInformation.recordText}
+              {TLEntries.recordText}
             </InfoBox>
-            <InfoBox title={TLInformation.win}
+            <InfoBox title={TLText.win + "!"}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              {TLInformation.winText}
+              {TLEntries.winText}
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{TLInformation.next}</Button>
+          <Button style={styles.button} onPress={onNextPress}>{TLText.next}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

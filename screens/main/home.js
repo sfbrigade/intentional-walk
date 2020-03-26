@@ -9,7 +9,7 @@ import {Fitness, Realm} from '../../lib';
 import {DateNavigator, Recorder} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {StatBox, RecordedWalk} from '../../components';
-import {TLHome} from '../../translations';
+import {TLEntries, TLText} from '../../translations';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -110,7 +110,7 @@ export default function HomeScreen({navigation}) {
   );
 
   const today = moment().startOf('day');
-  const dateString = date.isSame(today) ? TLHome.today : date.format('MMMM D');
+  const dateString = date.isSame(today) ? TLText.today : date.format('MMMM D');
 
   return (
     <View style={{flex: 1}}>
@@ -122,7 +122,7 @@ export default function HomeScreen({navigation}) {
             <View style={styles.row}>
               <StatBox
                 mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
-                subText={TLHome.stepsToday}
+                subText={TLText.stepsToday}
                 icon="directions-walk"
                 iconSize={170}
                 iconStyle={{top: -20, right: -35}}
@@ -131,7 +131,7 @@ export default function HomeScreen({navigation}) {
               />
               <StatBox
                 mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
-                subText={TLHome.milesToday}
+                subText={TLText.milesToday}
                 icon="swap-calls"
                 iconSize={240}
                 iconStyle={{top: -30, left: -40, width: '200%'}}
@@ -143,12 +143,12 @@ export default function HomeScreen({navigation}) {
               <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
                 <View style={styles.photoBox}>
                   <Image style={styles.photo} source={require('../../assets/dolorespark.jpg')} />
-                  <Text style={styles.photoText}>Where to Walk?</Text>
+                  <Text style={styles.photoText}>{TLText.whereToWalk}?</Text>
                 </View>
               </TouchableOpacity>
               <StatBox
                 mainText={totalSteps ? numeral(totalSteps.quantity).format('0,0') : "*"}
-                subText={TLHome.overallStepTotal}
+                subText={TLText.overallStepTotal}
                 icon="star-border"
                 iconSize={200}
                 iconStyle={{top: -10, right: -30}}
@@ -157,13 +157,13 @@ export default function HomeScreen({navigation}) {
               />
             </View>
             <View style={[styles.row, styles.subtitle]}>
-              <Text style={styles.subtitleHeader}>My Recorded Walks {dateString}</Text>
-              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>All Recorded Walks</Text>
+              <Text style={styles.subtitleHeader}>{TLText.myRecordedWalks} {dateString}</Text>
+              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>{TLText.allRecordedWalks}</Text>
             </View>
             { recordedWalks && recordedWalks.length == 0 &&
               <RecordedWalk
-                title={TLHome.noWalksYet}
-                subtitle={TLHome.noWalksYetText} />
+                title={TLText.noWalksYet}
+                subtitle={TLEntries.noWalksYetText} />
             }
             { recordedWalks && recordedWalks.length > 0 &&
                 recordedWalks.map(walk => <RecordedWalk key={walk.id} walk={walk} />)

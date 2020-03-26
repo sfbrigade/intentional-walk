@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {TLInformation} from '../../translations/';
+import {TLEntries, TLText} from '../../translations/';
 
 export default function InfoScreen({navigation}) {
 
@@ -20,25 +20,25 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
-          <PageTitle style={styles.pageTitle} title={TLInformation.title} />
+          <PageTitle style={styles.pageTitle} title={TLText.iWalkInformation} />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <InfoBox title={TLInformation.walk}
+            <InfoBox title={TLText.walk + "!"}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              {TLInformation.walkText}
+              {TLEntries.walkText}
             </InfoBox>
-            <InfoBox title={TLInformation.record}
+            <InfoBox title={TLText.record + "!"}
                      icon="play-circle-filled"
                      iconSize={80}
                      iconColor={Colors.primary.purple}>
-              {TLInformation.recordText}
+              {TLEntries.recordText}
             </InfoBox>
-            <InfoBox title={TLInformation.win}
+            <InfoBox title={TLText.win + "!"}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              {TLInformation.winText}
+              {TLEntries.winText}
             </InfoBox>
           </View>
         </View>

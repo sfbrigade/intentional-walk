@@ -13,7 +13,7 @@ import {
 import {Button, InfoBox} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import Fitness from '@ovalmoney/react-native-fitness';
-import {TLPermissions} from '../../translations';
+import {TLEntries, TLText} from '../../translations';
 
 export default function InfoScreen({navigation}) {
 
@@ -37,28 +37,28 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-        <Text style={GlobalStyles.h1}>{TLPermissions.title}</Text>
+        <Text style={GlobalStyles.h1}>{TLText.thingsToKnow + "."}</Text>
         <View style={{flex: 1, alignSelf: 'stretch'}}>
-          <Text style={styles.subtitle}>{TLPermissions.subtitle}</Text>
+          <Text style={styles.subtitle}>{TLEntries.takeALookText}</Text>
             <InfoBox icon="settings"
                      iconSize={64}
                      iconColor={Colors.primary.purple}>
-             {TLPermissions.settingsText}
+             {TLEntries.settingsText}
             </InfoBox>
             <InfoBox icon="lock"
                      iconSize={64}
                      iconColor={Colors.secondary.blue}>
-              {TLPermissions.prizeText}
+              {TLEntries.prizeText}
             </InfoBox>
             { Platform.OS == 'android' ? (
               <InfoBox icon="account-circle"
                        iconSize={64}
                        iconColor={Colors.primary.darkGreen}>
-                {TLPermissions.googleText}
+                {TLEntries.googleText}
               </InfoBox>
             ) : null }
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{TLPermissions.next}</Button>
+          <Button style={styles.button} onPress={onNextPress}>{TLText.next}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

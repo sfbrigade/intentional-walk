@@ -4,17 +4,18 @@ import moment from 'moment';
 import Moment from 'react-moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
+import {TLEntries, TLText} from '../translations';
 
 export default function DateNavigator(props) {
   const today = moment().startOf('day');
   const yesterday = moment().startOf('day').subtract(1, 'days');
   let title, prev, next;
   if (props.date.isSame(today)) {
-    title = <Text style={styles.title}>Today</Text>;
+    title = <Text style={styles.title}>{TLText.today}</Text>;
     next = null;
     prev = yesterday;
   } else if (props.date.isSame(yesterday)) {
-    title = <Text style={styles.title}>Yesterday</Text>;
+    title = <Text style={styles.title}>{TLText.yesterday}</Text>;
     next = today;
     prev = moment().startOf('day').subtract(2, 'days');
   } else {
