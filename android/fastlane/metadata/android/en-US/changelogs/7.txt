@@ -1,0 +1,1 @@
+[#61] Start step observer in addition to activity sample tracking in attempt to address Android tracking issues
