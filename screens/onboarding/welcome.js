@@ -6,6 +6,7 @@ import {SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from
 import {Button} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
+import moment from 'moment';
 
 export default function WelcomeScreen({navigation}) {
   useFocusEffect(
@@ -23,6 +24,7 @@ export default function WelcomeScreen({navigation}) {
 
   const selectLanguage = lang => {
     setLanguage(lang);
+    moment.locale(lang);
     Strings.setLanguage(lang);
     Realm.getSettings().then(settings => Realm.write(() => settings.lang = lang));
   };
@@ -39,7 +41,7 @@ export default function WelcomeScreen({navigation}) {
           <Text style={styles.subtitle}>{Strings.welcome.select}</Text>
           <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
-          <Button style={styles.button} isToggle={true} isSelected={language === 'zh'} onPress={() => selectLanguage('zh')}>中文</Button>
+          <Button style={styles.button} isToggle={true} isSelected={language === 'zh-cn'} onPress={() => selectLanguage('zh-cn')}>中文</Button>
           {!language ? null : (
             <Button style={[styles.button, {marginTop: 32}]} onPress={continuePressed}>{Strings.welcome.start}</Button>
           )}

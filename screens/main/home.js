@@ -77,6 +77,8 @@ export default function HomeScreen({navigation}) {
   }
 
   const refresh = () => {
+    dateRef.current = moment(date.toDate());
+    setDate(dateRef.current);
     getDailySteps(dateRef.current);
     getDailyDistance(dateRef.current);
     getTotalSteps();
@@ -95,7 +97,15 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     SplashScreen.hide();
-    Realm.getSettings().then(settings => Strings.setLanguage(settings.lang));
+    Realm.getSettings().then(settings => {
+      const lang = settings.lang;
+      if (lang) {
+        Strings.setLanguage(lang);
+        moment.locale(lang);
+        dateRef.current = moment(date.toDate());
+        setDate(dateRef.current);
+      }
+    });
     Realm.getUser().then(user => {
       if (!user) {
         navigation.navigate('OnboardingStack');

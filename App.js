@@ -5,6 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { MainStack, OnboardingStack } from './routes';
 import { navigationRef, routeNameRef, onStateChange } from './screens/tracker';
 
+//// load locales, set defaults
+import {Strings} from './lib';
+import moment from 'moment';
+import 'moment/locale/es';
+import 'moment/locale/zh-cn';
+moment.locale(Strings.getLanguage());
+
 const RootStack = createStackNavigator();
 
 //// initialize first route
