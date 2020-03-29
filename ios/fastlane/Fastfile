@@ -39,6 +39,8 @@ platform :ios do
     # generate a changelog from previous version to head
     changelog = `git log --pretty=format:'%s' iOS-#{prev_version}..HEAD`
     changelog = changelog.gsub(/(Android|iOS) build \d+\n?/, '')
+    changelog = "iOS build #{new_version}\n\n#{changelog}"
+    puts "\n\n#{changelog}\n\n"
     build_app(
       workspace: "IntentionalWalkApp.xcworkspace",
       scheme: "IntentionalWalkApp",
@@ -48,7 +50,7 @@ platform :ios do
         }
       }
     )
-    upload_to_testflight
+    upload_to_testflight(changelog: changelog)
     # if successful, commit build version changes and tag
     if commit_after_upload
       `git add ../..`
