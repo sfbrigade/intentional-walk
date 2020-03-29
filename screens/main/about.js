@@ -12,32 +12,32 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
+import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
-          <PageTitle style={styles.pageTitle} title="iWalk Information" />
+          <PageTitle style={styles.pageTitle} title={Strings.common.about} />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <InfoBox title="Walk!"
+            <InfoBox title={Strings.about.what}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              This app will count your total steps taken each day, just carry your phone with you when you’re walking.
+              {Strings.about.whatText}
             </InfoBox>
-            <InfoBox title="Record!"
-                     icon="play-circle-filled"
+            <InfoBox title={Strings.about.dates}
+                     icon="date-range"
                      iconSize={80}
-                     iconColor={Colors.primary.purple}>
-              Use this feature to track your walks. Challenge yourself to increase distance and time!
+                     iconColor={Colors.primary.lightGreen}>
+              {Strings.about.datesText}
             </InfoBox>
-            <InfoBox title="Win!"
+            <InfoBox title={Strings.about.prize}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              At the end of the program, the top 10 walkers will be contacted by email to claim their prize. Prizes include SF Giants game tickets, signed team gear, and a special grand prize!
+              {Strings.about.prizeText}
             </InfoBox>
           </View>
         </View>

@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from './button';
 import {Colors, GlobalStyles} from '../styles';
-import {Fitness, Pedometer, Realm} from '../lib';
+import {Fitness, Pedometer, Realm, Strings} from '../lib';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -87,13 +87,13 @@ export default function Recorder(props) {
   elapsedTime = `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`
 
   let headerColor = Colors.primary.lightGreen;
-  let headerText = 'Recording';
+  let headerText = Strings.common.recording;
   if (pause) {
     headerColor = Colors.accent.yellow;
-    headerText = 'Paused';
+    headerText = Strings.common.paused;
   } else if (end) {
     headerColor = Colors.secondary.red;
-    headerText = `Save ${activeWalk.timeOfWalk}`;
+    headerText = Strings.formatString(Strings.common.save, activeWalk.timeOfWalk);
   }
   return (
     <View pointerEvents="box-none" style={[styles.container, props.style]}>
@@ -103,18 +103,18 @@ export default function Recorder(props) {
       <View style={styles.body}>
         <View>
           <Text style={styles.count}>{elapsedTime}</Text>
-          <Text style={styles.label}>min</Text>
+          <Text style={styles.label}>{Strings.common.mins}</Text>
         </View>
         <View>
           <Text style={styles.count}>{activeWalk.distance ? numeral(activeWalk.distance).format('0.0') : '0.0'}</Text>
-          <Text style={styles.label}>miles</Text>
+          <Text style={styles.label}>{Strings.common.miles}</Text>
         </View>
         <View>
           <Text style={styles.count}>{activeWalk.steps ? (activeWalk.steps || 0) : 0}</Text>
-          <Text style={styles.label}>steps</Text>
+          <Text style={styles.label}>{Strings.common.steps}</Text>
         </View>
         <View style={{opacity: end ? 1 : 0}}>
-          <Button onPress={onFinish} style={styles.finishButton}>Finish</Button>
+          <Button onPress={onFinish} style={styles.finishButton}>{Strings.common.finish}</Button>
         </View>
       </View>
       { !end &&
@@ -126,7 +126,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onResume}>
                 <Image style={styles.primaryButton} source={require('../assets/record.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.resumeText]}>Resume</Text>
+              <Text style={[styles.buttonText, styles.resumeText]}>{Strings.common.resume}</Text>
             </View>
           }
           { !pause &&
@@ -134,7 +134,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop}>
                 <Image style={styles.primaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>Stop & Save</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.common.stopAndSave}</Text>
             </View>
           }
           { pause &&
@@ -142,7 +142,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>Stop</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.common.stop}</Text>
             </View>
           }
           { !pause &&
@@ -150,7 +150,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onPause} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/pause.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.pauseText]}>Pause</Text>
+              <Text style={[styles.buttonText, styles.pauseText]}>{Strings.common.pause}</Text>
             </View>
           }
         </View>

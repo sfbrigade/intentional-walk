@@ -36,9 +36,9 @@ export default function RecordedWalksScreen({navigation}) {
               return <RecordedWalk style={styles.walk} key={item.id} walk={item} />;
             } else {
               return <>
-                <PageTitle style={styles.pageTitle} title="My Recorded Walks" />
+                <PageTitle style={styles.pageTitle} title={Strings.common.myRecordedWalks} />
                 { recordedWalks.length == 0 &&
-                  <RecordedWalk style={styles.walk} title="No Recorded Walks" /> }
+                  <RecordedWalk style={styles.walk} title={Strings.common.noWalksYet} /> }
               </>;
             }
           }}

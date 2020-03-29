@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {Button, InfoBox} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
+import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
 
@@ -23,29 +24,29 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>You’re signed up!</Text>
+          <Text style={GlobalStyles.h1}>{Strings.info.youreSignedUp}</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <Text style={styles.subtitle}>From here, participation is easy:</Text>
-            <InfoBox title="Walk!"
+            <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
+            <InfoBox title={Strings.info.walk}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              This app will count your total steps taken each day, just carry your phone with you when you’re walking.
+              {Strings.info.walkText}
             </InfoBox>
-            <InfoBox title="Record!"
+            <InfoBox title={Strings.info.record}
                      icon="play-circle-filled"
                      iconSize={80}
                      iconColor={Colors.primary.purple}>
-              Use this feature to track your walks. Challenge yourself to increase distance and time!
+              {Strings.info.recordText}
             </InfoBox>
-            <InfoBox title="Win!"
+            <InfoBox title={Strings.info.win}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              At the end of the program, the top 10 walkers will be contacted by email to claim their prize. Prizes include SF Giants game tickets, signed team gear, and a special grand prize!
+              {Strings.info.winText}
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={onNextPress}>Next</Button>
+          <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

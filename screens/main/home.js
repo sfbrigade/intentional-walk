@@ -5,7 +5,7 @@ import {useSafeArea} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import {ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
-import {Fitness, Realm} from '../../lib';
+import {Fitness, Realm, Strings} from '../../lib';
 import {DateNavigator, Recorder} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {StatBox, RecordedWalk} from '../../components';
@@ -77,6 +77,8 @@ export default function HomeScreen({navigation}) {
   }
 
   const refresh = () => {
+    dateRef.current = moment(date.toDate());
+    setDate(dateRef.current);
     getDailySteps(dateRef.current);
     getDailyDistance(dateRef.current);
     getTotalSteps();
@@ -95,6 +97,15 @@ export default function HomeScreen({navigation}) {
 
   useEffect(() => {
     SplashScreen.hide();
+    Realm.getSettings().then(settings => {
+      const lang = settings.lang;
+      if (lang) {
+        Strings.setLanguage(lang);
+        moment.locale(lang);
+        dateRef.current = moment(date.toDate());
+        setDate(dateRef.current);
+      }
+    });
     Realm.getUser().then(user => {
       if (!user) {
         navigation.navigate('OnboardingStack');
@@ -109,7 +120,7 @@ export default function HomeScreen({navigation}) {
   );
 
   const today = moment().startOf('day');
-  const dateString = date.isSame(today) ? 'Today' : date.format('MMMM D');
+  const dateString = date.isSame(today) ? Strings.common.today : date.format('MMMM D');
 
   return (
     <View style={{flex: 1}}>
@@ -121,7 +132,7 @@ export default function HomeScreen({navigation}) {
             <View style={styles.row}>
               <StatBox
                 mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
-                subText="steps today"
+                subText={Strings.home.stepsToday}
                 icon="directions-walk"
                 iconSize={170}
                 iconStyle={{top: -20, right: -35}}
@@ -130,7 +141,7 @@ export default function HomeScreen({navigation}) {
               />
               <StatBox
                 mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
-                subText="miles today"
+                subText={Strings.home.milesToday}
                 icon="swap-calls"
                 iconSize={240}
                 iconStyle={{top: -30, left: -40, width: '200%'}}
@@ -142,12 +153,12 @@ export default function HomeScreen({navigation}) {
               <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
                 <View style={styles.photoBox}>
                   <Image style={styles.photo} source={require('../../assets/dolorespark.jpg')} />
-                  <Text style={styles.photoText}>Where to Walk?</Text>
+                  <Text style={styles.photoText}>{Strings.home.whereToWalk}</Text>
                 </View>
               </TouchableOpacity>
               <StatBox
                 mainText={totalSteps ? numeral(totalSteps.quantity).format('0,0') : "*"}
-                subText="overall step total"
+                subText={Strings.home.overallStepTotal}
                 icon="star-border"
                 iconSize={200}
                 iconStyle={{top: -10, right: -30}}
@@ -156,13 +167,13 @@ export default function HomeScreen({navigation}) {
               />
             </View>
             <View style={[styles.row, styles.subtitle]}>
-              <Text style={styles.subtitleHeader}>My Recorded Walks {dateString}</Text>
-              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>All Recorded Walks</Text>
+              <Text style={styles.subtitleHeader}>{Strings.home.myRecordedWalks} {dateString}</Text>
+              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>{Strings.home.allRecordedWalks}</Text>
             </View>
             { recordedWalks && recordedWalks.length == 0 &&
               <RecordedWalk
-                title="No Walks Yet"
-                subtitle="Start a new walk by pressing the record button at the bottom of the screen." />
+                title={Strings.common.noWalksYet}
+                subtitle={Strings.home.noWalksYetText} />
             }
             { recordedWalks && recordedWalks.length > 0 &&
                 recordedWalks.map(walk => <RecordedWalk key={walk.id} walk={walk} />)
@@ -173,7 +184,7 @@ export default function HomeScreen({navigation}) {
           <TouchableOpacity onPress={() => Realm.startWalk()}>
             <Image style={styles.recordButton} source={require('../../assets/record.png')} />
           </TouchableOpacity>
-          <Text style={styles.recordText}>Record a Walk</Text>
+          <Text style={styles.recordText}>{Strings.home.recordAWalk}</Text>
         </View>
       </> }
       { activeWalk &&
