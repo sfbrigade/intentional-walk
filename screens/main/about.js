@@ -15,7 +15,6 @@ import {Colors, GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
-  Strings.setLanguage('zh');
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
