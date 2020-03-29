@@ -28,9 +28,9 @@ export default function InfoScreen({navigation}) {
               {Strings.about.whatText}
             </InfoBox>
             <InfoBox title={Strings.about.dates}
-                     icon="play-circle-filled"
+                     icon="date-range"
                      iconSize={80}
-                     iconColor={Colors.primary.purple}>
+                     iconColor={Colors.primary.lightGreen}>
               {Strings.about.datesText}
             </InfoBox>
             <InfoBox title={Strings.about.prize}
