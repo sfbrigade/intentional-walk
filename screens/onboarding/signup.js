@@ -12,7 +12,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, CheckBox, Input} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {Realm} from '../../lib';
+import {Realm, Strings} from '../../lib';
 
 export default function SignUpScreen({navigation}) {
   const [focus, setFocus] = useState('');
@@ -46,24 +46,22 @@ export default function SignUpScreen({navigation}) {
     <SafeAreaView style={styles.container}>
         <KeyboardAwareScrollView style={styles.container}>
           <View style={styles.content}>
-            <Text style={GlobalStyles.h1}>Welcome to Intentional Walk!!</Text>
+            <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
             <View style={styles.row}>
               <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
               <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
             </View>
-            <Text style={GlobalStyles.p1}>
-              Intentional Walk is a FREE community walking program that runs from July 1 - July 31, 2020. The program is open to CalFresh/MediCal-eligible San Francisco residents. Top walkers will be eligible for prizes from the San Francisco Giants including game tickets, signed team gear, and a special grand prize! Sign up below to get started!
-            </Text>
-            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder="Name" autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
-            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder="Email" autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
+            <Text style={GlobalStyles.p1}>{Strings.signUp.about}</Text>
+            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
+            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
             <View style={styles.row}>
-              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder="Zip Code" keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})}></Input>
+              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder={Strings.signUp.zipCode} keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})}></Input>
               <View style={styles.spacer} />
-              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder="Age" keyboardType="number-pad"></Input>
+              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad"></Input>
             </View>
-            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>* all fields required</Text>
-            <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title="By signing up, I agree to the Terms of Service" />
-            <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>Submit</Button>
+            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
+            <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title={Strings.formatString(Strings.signUp.agree, Strings.signUp.policy)} />
+            <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>{Strings.signUp.submit}</Button>
           </View>
         </KeyboardAwareScrollView>
     </SafeAreaView>

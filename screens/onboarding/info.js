@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Button, InfoBox} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {TLEntries, TLText} from '../../translations';
+import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
 
@@ -24,29 +24,29 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>{TLText.youreSignedUp + "!"}</Text>
+          <Text style={GlobalStyles.h1}>{Strings.info.youreSignedUp}</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <Text style={styles.subtitle}>{TLEntries.fromHereText}</Text>
-            <InfoBox title={TLText.walk + "!"}
+            <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
+            <InfoBox title={Strings.info.walk}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              {TLEntries.walkText}
+              {Strings.info.walkText}
             </InfoBox>
-            <InfoBox title={TLText.record + "!"}
+            <InfoBox title={Strings.info.record}
                      icon="play-circle-filled"
                      iconSize={80}
                      iconColor={Colors.primary.purple}>
-              {TLEntries.recordText}
+              {Strings.info.recordText}
             </InfoBox>
-            <InfoBox title={TLText.win + "!"}
+            <InfoBox title={Strings.info.win}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              {TLEntries.winText}
+              {Strings.info.winText}
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{TLText.next}</Button>
+          <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

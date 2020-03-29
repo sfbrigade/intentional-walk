@@ -13,7 +13,6 @@ import {
 import {Button, InfoBox, PageTitle, RecordedWalk} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm} from '../../lib';
-import {TLEntries, TLText} from '../../translations/';
 
 export default function RecordedWalksScreen({navigation}) {
   const [recordedWalks, setRecordedWalks] = useState(null);
@@ -37,9 +36,9 @@ export default function RecordedWalksScreen({navigation}) {
               return <RecordedWalk style={styles.walk} key={item.id} walk={item} />;
             } else {
               return <>
-                <PageTitle style={styles.pageTitle} title={TLText.myRecordedWalks} />
+                <PageTitle style={styles.pageTitle} title={Strings.common.myRecordedWalks} />
                 { recordedWalks.length == 0 &&
-                  <RecordedWalk style={styles.walk} title={TLText.noRecordedWalks} /> }
+                  <RecordedWalk style={styles.walk} title={Strings.common.noWalksYet} /> }
               </>;
             }
           }}

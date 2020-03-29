@@ -13,7 +13,7 @@ import {
 import {Button, InfoBox} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import Fitness from '@ovalmoney/react-native-fitness';
-import {TLEntries, TLText} from '../../translations';
+import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
 
@@ -37,28 +37,28 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-        <Text style={GlobalStyles.h1}>{TLText.thingsToKnow + "."}</Text>
+        <Text style={GlobalStyles.h1}>{Strings.permissions.thingsToKnow}</Text>
         <View style={{flex: 1, alignSelf: 'stretch'}}>
-          <Text style={styles.subtitle}>{TLEntries.takeALookText}</Text>
+          <Text style={styles.subtitle}>{Strings.permissions.takeALookText}</Text>
             <InfoBox icon="settings"
                      iconSize={64}
                      iconColor={Colors.primary.purple}>
-             {TLEntries.settingsText}
+             {Strings.permissions.settingsText}
             </InfoBox>
             <InfoBox icon="lock"
                      iconSize={64}
                      iconColor={Colors.secondary.blue}>
-              {TLEntries.prizeText}
+              {Strings.permissions.prizeText}
             </InfoBox>
             { Platform.OS == 'android' ? (
               <InfoBox icon="account-circle"
                        iconSize={64}
                        iconColor={Colors.primary.darkGreen}>
-                {TLEntries.googleText}
+                {Strings.permissions.googleText}
               </InfoBox>
             ) : null }
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{TLText.next}</Button>
+          <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
         </View>
       </ScrollView>
     </SafeAreaView>

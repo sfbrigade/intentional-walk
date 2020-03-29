@@ -5,6 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Button} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
+import {Realm, Strings} from '../../lib';
 
 export default function WelcomeScreen({navigation}) {
   useFocusEffect(
@@ -19,21 +20,11 @@ export default function WelcomeScreen({navigation}) {
   );
 
   const [language, setLanguage] = useState(null);
-  const [startText, setStartText] = useState(null);
 
   const selectLanguage = lang => {
-    let str;
-    if (lang === 'en') {
-      str = 'Start';
-    }
-    if (lang === 'es') {
-      str = 'Comenzar';
-    }
-    if (lang === 'zh') {
-      str = '开始';
-    }
     setLanguage(lang);
-    setStartText(str);
+    Strings.setLanguage(lang);
+    Realm.getSettings().then(settings => Realm.write(() => settings.lang = lang));
   };
 
   const continuePressed = () => {
@@ -44,13 +35,13 @@ export default function WelcomeScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>Welcome to Intentional Walk!!</Text>
-          <Text style={styles.subtitle}>Please Select a language</Text>
+          <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
+          <Text style={styles.subtitle}>{Strings.welcome.select}</Text>
           <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'zh'} onPress={() => selectLanguage('zh')}>中文</Button>
           {!language ? null : (
-            <Button style={[styles.button, {marginTop: 32}]} onPress={continuePressed}>{startText}</Button>
+            <Button style={[styles.button, {marginTop: 32}]} onPress={continuePressed}>{Strings.welcome.start}</Button>
           )}
         </View>
       </ScrollView>

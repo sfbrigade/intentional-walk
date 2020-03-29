@@ -56,11 +56,11 @@ export default function HamburgerMenu(props) {
       <View style={styles.header}>
         <Text style={styles.headerEmail}>{email}</Text>
       </View>
-      <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">Home</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">My Recorded Walks</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">iWalk Information</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">Where to Walk</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">Sign out</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">{Strings.common.myRecordedWalks}</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
+      <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
     </View>
   );
 }

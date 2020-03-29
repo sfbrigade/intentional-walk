@@ -12,33 +12,33 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {TLEntries, TLText} from '../../translations/';
+import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
-
+  Strings.setLanguage('zh');
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
-          <PageTitle style={styles.pageTitle} title={TLText.iWalkInformation} />
+          <PageTitle style={styles.pageTitle} title={Strings.common.about} />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <InfoBox title={TLText.walk + "!"}
+            <InfoBox title={Strings.about.what}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
-              {TLEntries.walkText}
+              {Strings.about.whatText}
             </InfoBox>
-            <InfoBox title={TLText.record + "!"}
+            <InfoBox title={Strings.about.dates}
                      icon="play-circle-filled"
                      iconSize={80}
                      iconColor={Colors.primary.purple}>
-              {TLEntries.recordText}
+              {Strings.about.datesText}
             </InfoBox>
-            <InfoBox title={TLText.win + "!"}
+            <InfoBox title={Strings.about.prize}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
-              {TLEntries.winText}
+              {Strings.about.prizeText}
             </InfoBox>
           </View>
         </View>
