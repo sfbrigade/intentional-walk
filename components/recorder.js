@@ -87,13 +87,13 @@ export default function Recorder(props) {
   elapsedTime = `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`
 
   let headerColor = Colors.primary.lightGreen;
-  let headerText = Strings.common.recording;
+  let headerText = Strings.recorder.recording;
   if (pause) {
     headerColor = Colors.accent.yellow;
-    headerText = Strings.common.paused;
+    headerText = Strings.recorder.paused;
   } else if (end) {
     headerColor = Colors.secondary.red;
-    headerText = Strings.formatString(Strings.common.save, activeWalk.timeOfWalk);
+    headerText = Strings.formatString(Strings.recorder.save, activeWalk.timeOfWalk);
   }
   return (
     <View pointerEvents="box-none" style={[styles.container, props.style]}>
@@ -114,7 +114,7 @@ export default function Recorder(props) {
           <Text style={styles.label}>{Strings.common.steps}</Text>
         </View>
         <View style={{opacity: end ? 1 : 0}}>
-          <Button onPress={onFinish} style={styles.finishButton}>{Strings.common.finish}</Button>
+          <Button onPress={onFinish} style={styles.finishButton}>{Strings.recorder.finish}</Button>
         </View>
       </View>
       { !end &&
@@ -126,7 +126,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onResume}>
                 <Image style={styles.primaryButton} source={require('../assets/record.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.resumeText]}>{Strings.common.resume}</Text>
+              <Text style={[styles.buttonText, styles.resumeText]}>{Strings.recorder.resume}</Text>
             </View>
           }
           { !pause &&
@@ -134,7 +134,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop}>
                 <Image style={styles.primaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>{Strings.common.stopAndSave}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stopAndSave}</Text>
             </View>
           }
           { pause &&
@@ -142,7 +142,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>{Strings.common.stop}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stop}</Text>
             </View>
           }
           { !pause &&
@@ -150,7 +150,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onPause} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/pause.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.pauseText]}>{Strings.common.pause}</Text>
+              <Text style={[styles.buttonText, styles.pauseText]}>{Strings.recorder.pause}</Text>
             </View>
           }
         </View>
