@@ -1,0 +1,1 @@
+[#21] Fix localized strings on walk recorder component
