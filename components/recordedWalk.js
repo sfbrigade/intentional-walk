@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {GlobalStyles, Colors} from '../styles';
+import {Strings} from '../lib';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -14,9 +15,9 @@ export default function RecordedWalk(props) {
     const today = moment().startOf('day');
     const yesterday = moment(today).subtract(1, 'd');
     if (start.isSameOrAfter(today)) {
-      date = "Today";
+      date = Strings.common.today;
     } else if (start.isSameOrAfter(yesterday)) {
-      date = "Yesterday";
+      date = Strings.common.yesterday;
     } else {
       date = start.format('MMMM D');
     }
@@ -43,15 +44,15 @@ export default function RecordedWalk(props) {
             <View style={[styles.row2, {paddingRight: 100}]}>
               <View style={styles.stats}>
                 <Text style={styles.statsTitle}>{steps}</Text>
-                <Text style={styles.subtitle}>steps</Text>
+                <Text style={styles.subtitle}>{Strings.common.steps}</Text>
               </View>
               <View style={styles.stats}>
                 <Text style={styles.statsTitle}>{miles}</Text>
-                <Text style={styles.subtitle}>miles</Text>
+                <Text style={styles.subtitle}>{Strings.common.miles}</Text>
               </View>
               <View style={styles.stats}>
                 <Text style={styles.statsTitle}>{minutes}</Text>
-                <Text style={styles.subtitle}>mins</Text>
+                <Text style={styles.subtitle}>{Strings.common.mins}</Text>
               </View>
             </View>
             <View style={styles.iconContainer}>
