@@ -1,0 +1,1 @@
+[#21] First pass i18n and l10n (#59)
