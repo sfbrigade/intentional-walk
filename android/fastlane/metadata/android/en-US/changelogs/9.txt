@@ -1,0 +1,3 @@
+[#61] More defensive coding to try and address Android pedometer walk stat issues
+[#61] More defensive coding to try and address Android pedometer walk stat issues
+[#61] Attempt to ignore undefined data zeroing out walk stats
