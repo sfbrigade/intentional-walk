@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
 import {isActiveRoute, navigationRef} from '../screens/tracker';
@@ -61,6 +62,7 @@ export default function HamburgerMenu(props) {
       <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
+      <Text style={styles.aboutText}>{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
     </View>
   );
 }
@@ -96,5 +98,14 @@ const styles = StyleSheet.create({
   menuItemText: {
     fontSize: 14,
     fontWeight: '500',
+  },
+  aboutText: {
+    position: 'absolute',
+    bottom: 24,
+    right: 0,
+    fontSize: 12,
+    color: Colors.primary.gray2,
+    textAlign: 'right',
+    paddingRight: 24
   }
 });
