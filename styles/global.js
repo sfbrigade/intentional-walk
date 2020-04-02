@@ -11,6 +11,10 @@ export default StyleSheet.create({
   rounded: {
     borderRadius: 10,
   },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.primary.lightGray
+  },
   content: {
     padding: 16,
   },
@@ -47,7 +51,8 @@ export default StyleSheet.create({
   },
   p2: {
     color: Colors.primary.gray2,
-    fontSize: 15,
+    fontSize: 17,
+    lineHeight: 20,
     textAlign: 'left',
     marginBottom: 10,
   },

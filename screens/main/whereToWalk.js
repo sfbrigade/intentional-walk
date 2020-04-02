@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Dimensions,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -23,13 +24,15 @@ export default function WhereToWalkScreen({navigation}) {
     { title: Strings.whereToWalk.exerciseAndFitnessActivities, url: "https://apm.activecommunities.com/sfrecpark/Activity_Search?detailskeyword=&IsAdvanced=True&ddlSortBy=Activity+name&ActivityCategoryID=29&DaysOfWeek=0000000&SearchFor=2&SearchLevelID=2&maxAge=100&NumberOfItemsPerPage=20&IsSearch=true" }
   ]
   const linkBoxes = links.map( (link, index) => <LinkButton key={index} style={styles.button} title={link.title} url={link.url} /> );
-
+  const screenDims = Dimensions.get('screen');
+  const width = Math.round(screenDims.width / 3);
+  const height = Math.round(width * 763 / 500);
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
           <PageTitle title={Strings.common.whereToWalk} />
-          <Image source={require('../../assets/sfrecparks_logo.png')} style={styles.image} />
+          <Image source={require('../../assets/sfrecparks_logo.png')} style={[styles.image, {width: width, height: height}]} />
           <Text style={[GlobalStyles.p2, styles.options]}>{Strings.whereToWalk.options}</Text>
           { linkBoxes }
         </View>
@@ -39,15 +42,10 @@ export default function WhereToWalkScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   image: {
-    marginTop: 16,
-    marginBottom: 16,
+    marginTop: 24,
+    marginBottom: 24,
     resizeMode: 'contain',
-    width: 64,
-    height: 98,
     alignSelf: 'center'
   },
   options: {

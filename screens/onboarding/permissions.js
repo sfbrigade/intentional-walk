@@ -34,7 +34,7 @@ export default function InfoScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
         <Text style={GlobalStyles.h1}>{Strings.permissions.thingsToKnow}</Text>
@@ -66,9 +66,6 @@ export default function InfoScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     ...GlobalStyles.content,
     alignItems: 'center',

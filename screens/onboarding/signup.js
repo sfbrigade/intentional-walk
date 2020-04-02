@@ -43,8 +43,8 @@ export default function SignUpScreen({navigation}) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-        <KeyboardAwareScrollView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
+        <KeyboardAwareScrollView style={GlobalStyles.container}>
           <View style={styles.content}>
             <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
             <View style={styles.row}>
@@ -69,9 +69,6 @@ export default function SignUpScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     ...GlobalStyles.content,
     alignItems: 'center',

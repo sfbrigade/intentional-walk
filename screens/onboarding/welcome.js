@@ -34,7 +34,7 @@ export default function WelcomeScreen({navigation}) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
           <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
@@ -52,9 +52,6 @@ export default function WelcomeScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     ...GlobalStyles.content,
     alignItems: 'center',

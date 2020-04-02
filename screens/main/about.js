@@ -16,10 +16,10 @@ import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
-          <PageTitle style={styles.pageTitle} title={Strings.common.about} />
+          <PageTitle title={Strings.common.about} />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
             <InfoBox title={Strings.about.what}
                      icon="directions-walk"
@@ -45,9 +45,3 @@ export default function InfoScreen({navigation}) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});

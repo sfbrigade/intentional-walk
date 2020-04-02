@@ -24,7 +24,7 @@ export default function RecordedWalksScreen({navigation}) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={GlobalStyles.container}>
       { recordedWalks &&
         <VirtualizedList
           style={styles.list}
@@ -49,9 +49,6 @@ export default function RecordedWalksScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   pageTitle: {
     marginTop: 16,
     marginLeft: 16,

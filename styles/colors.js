@@ -3,7 +3,8 @@ export default {
     purple: '#702B80',
     lightGreen: '#86C03F',
     darkGreen: '#008F4D',
-    gray2: '#4F4F4F'
+    gray2: '#4F4F4F',
+    lightGray: '#F3F3F3',
   },
   secondary: {
     blue: '#2B388A',
