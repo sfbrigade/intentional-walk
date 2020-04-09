@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import SideMenu from 'react-native-side-menu';
 import {TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HomeScreen, AboutScreen, RecordedWalksScreen, WhereToWalkScreen} from '../screens/main';
 import {HamburgerButton, HamburgerMenu, Logo} from '../components';
+import {Strings} from '../lib';
+import {Colors} from '../styles';
 
 const Stack = createStackNavigator();
 
@@ -16,10 +19,15 @@ export default function MainStack() {
               menu={<HamburgerMenu onDone={() => setIsMenuOpen(false)} />}>
       <Stack.Navigator screenOptions={{
           title: null,
-          headerLeft: () => <HamburgerButton onPress={() => setIsMenuOpen(!isMenuOpen)} />,
+          headerBackImage: () => <Icon name="chevron-left" size={28} color={Colors.primary.purple} />,
+          headerBackTitle: Strings.common.back.toUpperCase(),
+          headerBackTitleVisible: true,
+          headerTintColor: Colors.primary.purple,
           headerRight: props => <Logo />,
         }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+          headerLeft: () => <HamburgerButton onPress={() => setIsMenuOpen(!isMenuOpen)} />,
+        }} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="RecordedWalks" component={RecordedWalksScreen} />
         <Stack.Screen name="WhereToWalk" component={WhereToWalkScreen} />
