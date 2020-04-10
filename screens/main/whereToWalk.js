@@ -33,7 +33,7 @@ export default function WhereToWalkScreen({navigation}) {
         <View style={GlobalStyles.content}>
           <PageTitle title={Strings.common.whereToWalk} />
           <Image source={require('../../assets/sfrecparks_logo.png')} style={[styles.image, {width: width, height: height}]} />
-          <Text style={[GlobalStyles.p2, styles.options]}>{Strings.whereToWalk.options}</Text>
+          <Text style={[GlobalStyles.p2, styles.options]} textBreakStrategy="simple">{Strings.whereToWalk.options}</Text>
           { linkBoxes }
         </View>
       </ScrollView>

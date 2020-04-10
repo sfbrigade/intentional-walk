@@ -29,30 +29,30 @@ export default function RecordedWalk(props) {
     <View style={[styles.container, props.style]}>
       <View style={styles.clipContainer}>
         <View style={styles.row1}>
-          <Text style={styles.mainTitle}>{title}</Text>
+          <Text style={styles.mainTitle} textBreakStrategy="simple">{title}</Text>
           {date &&
             <View style={styles.dateContainer}>
-              <Text style={styles.statsTitle}>{date}</Text>
+              <Text style={styles.statsTitle} textBreakStrategy="simple">{date}</Text>
             </View>}
         </View>
         {steps === undefined ?
           <View style={styles.row2}>
-            <Text style={styles.subtitle}>{subtitle}</Text>
+            <Text style={styles.subtitle} textBreakStrategy="simple">{subtitle}</Text>
           </View>
           :
           <>
             <View style={[styles.row2, {paddingRight: 100}]}>
               <View style={styles.stats}>
-                <Text style={styles.statsTitle}>{steps}</Text>
-                <Text style={styles.subtitle}>{Strings.common.steps}</Text>
+                <Text style={styles.statsTitle} textBreakStrategy="simple">{steps}</Text>
+                <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.common.steps}</Text>
               </View>
               <View style={styles.stats}>
-                <Text style={styles.statsTitle}>{miles}</Text>
-                <Text style={styles.subtitle}>{Strings.common.miles}</Text>
+                <Text style={styles.statsTitle} textBreakStrategy="simple">{miles}</Text>
+                <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.common.miles}</Text>
               </View>
               <View style={styles.stats}>
-                <Text style={styles.statsTitle}>{minutes}</Text>
-                <Text style={styles.subtitle}>{Strings.common.mins}</Text>
+                <Text style={styles.statsTitle} textBreakStrategy="simple">{minutes}</Text>
+                <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.common.mins}</Text>
               </View>
             </View>
             <View style={styles.iconContainer}>

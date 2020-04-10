@@ -164,14 +164,14 @@ export default function HomeScreen({navigation}) {
             <View style={[styles.row, isToday ? null : styles.hidden]} pointerEvents={isToday? 'auto' : 'none'}>
               <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
                 <View style={styles.walkBox}>
-                  <Text style={styles.walkText}>{Strings.home.whereToWalk}</Text>
+                  <Text style={styles.walkText} textBreakStrategy="simple">{Strings.home.whereToWalk}</Text>
                   <Icon style={styles.walkChevron} name="chevron-right" size={30} />
                 </View>
               </TouchableOpacity>
             </View>
             <View style={[styles.subtitle]}>
-              <Text style={styles.subtitleHeader}>{Strings.home.myRecordedWalks}</Text>
-              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>{Strings.home.allRecordedWalks}</Text>
+              <Text style={styles.subtitleHeader} textBreakStrategy="simple">{Strings.home.myRecordedWalks}</Text>
+              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')} textBreakStrategy="simple">{Strings.home.allRecordedWalks}</Text>
             </View>
             { recordedWalks && recordedWalks.length == 0 &&
               <RecordedWalk
@@ -187,7 +187,7 @@ export default function HomeScreen({navigation}) {
           <TouchableOpacity onPress={() => Realm.startWalk()}>
             <Image style={styles.recordButton} source={require('../../assets/record.png')} />
           </TouchableOpacity>
-          <Text style={styles.recordText}>{Strings.home.recordAWalk}</Text>
+          <Text style={styles.recordText} textBreakStrategy="simple">{Strings.home.recordAWalk}</Text>
         </View>
       </> }
       { activeWalk &&

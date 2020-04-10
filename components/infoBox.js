@@ -16,9 +16,9 @@ export default function InfoBox(props) {
       </View>
       <View style={styles.text}>
         { props.title ? (
-          <Text style={GlobalStyles.h2}>{props.title}</Text>
+          <Text style={GlobalStyles.h2} textBreakStrategy="simple">{props.title}</Text>
         ) : null }
-        <Text style={GlobalStyles.p2}>{props.children}</Text>
+        <Text style={GlobalStyles.p2} textBreakStrategy="simple">{props.children}</Text>
       </View>
     </View>
   );

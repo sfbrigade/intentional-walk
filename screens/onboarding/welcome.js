@@ -37,8 +37,8 @@ export default function WelcomeScreen({navigation}) {
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
-          <Text style={styles.subtitle}>{Strings.welcome.select}</Text>
+          <Text style={GlobalStyles.h1} textBreakStrategy="simple">{Strings.common.welcome}</Text>
+          <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.welcome.select}</Text>
           <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'zh-cn'} onPress={() => selectLanguage('zh-cn')}>中文</Button>

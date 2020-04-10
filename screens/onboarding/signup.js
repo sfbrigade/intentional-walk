@@ -46,12 +46,12 @@ export default function SignUpScreen({navigation}) {
     <SafeAreaView style={GlobalStyles.container}>
         <KeyboardAwareScrollView style={GlobalStyles.container}>
           <View style={styles.content}>
-            <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
+            <Text style={GlobalStyles.h1} textBreakStrategy="simple">{Strings.common.welcome}</Text>
             <View style={[styles.row, styles.logos]}>
               <Image source={require('../../assets/sfdph_logo.png')} style={[styles.logo, styles.sfdphLogo]} />
               <Image source={require('../../assets/sfgiants_logo.png')} style={[styles.logo, styles.giantsLogo]} />
             </View>
-            <Text style={GlobalStyles.p1}>{Strings.signUp.about}</Text>
+            <Text style={GlobalStyles.p1} textBreakStrategy="simple">{Strings.signUp.about}</Text>
             <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
             <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
             <View style={styles.row}>
@@ -59,7 +59,7 @@ export default function SignUpScreen({navigation}) {
               <View style={styles.spacer} />
               <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad"></Input>
             </View>
-            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
+            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]} textBreakStrategy="simple">{Strings.signUp.required}</Text>
             <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title={Strings.formatString(Strings.signUp.agree, Strings.signUp.policy)} />
             <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>{Strings.signUp.submit}</Button>
             <PaginationDots currentPage={1} totalPages={3} />

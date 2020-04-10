@@ -37,9 +37,9 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
-        <Text style={GlobalStyles.h1}>{Strings.permissions.thingsToKnow}</Text>
+        <Text style={GlobalStyles.h1} textBreakStrategy="simple">{Strings.permissions.thingsToKnow}</Text>
         <View style={{flex: 1, alignSelf: 'stretch'}}>
-          <Text style={styles.subtitle}>{Strings.permissions.takeALookText}</Text>
+          <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.permissions.takeALookText}</Text>
             <InfoBox style={styles.infoBox}
                      icon="settings"
                      iconSize={64}

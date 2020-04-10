@@ -24,8 +24,8 @@ export default function PartnersScreen({navigation}) {
       <ScrollView>
         <View style={GlobalStyles.content}>
           <PageTitle title={Strings.common.programPartners} />
-          <Text style={[GlobalStyles.h2, styles.thanks]}>{Strings.partners.thanks}</Text>
-          <Text style={[GlobalStyles.p1, styles.text]}>{Strings.partners.text}</Text>
+          <Text style={[GlobalStyles.h2, styles.thanks]} textBreakStrategy="simple">{Strings.partners.thanks}</Text>
+          <Text style={[GlobalStyles.p1, styles.text]} textBreakStrategy="simple">{Strings.partners.text}</Text>
         </View>
         <View style={styles.row}>
           <Image style={[styles.logo, {width}]} source={require('../../assets/calfresh_logo.png')} />

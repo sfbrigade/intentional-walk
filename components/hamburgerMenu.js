@@ -14,7 +14,7 @@ function HamburgerMenuItem(props) {
         <Icon name={props.icon} size={32} color={color} />
       </View>
       <View style={styles.menuItemTextContainer}>
-        <Text style={[styles.menuItemText, {color}]}>{props.children}</Text>
+        <Text style={[styles.menuItemText, {color}]} textBreakStrategy="simple">{props.children}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -56,7 +56,7 @@ export default function HamburgerMenu(props) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image style={styles.headerLogo} source={require('../assets/logo_full.png')} />
-        <Text style={styles.headerEmail}>{email}</Text>
+        <Text style={styles.headerEmail} textBreakStrategy="simple">{email}</Text>
       </View>
       <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">{Strings.common.myRecordedWalks}</HamburgerMenuItem>
@@ -66,7 +66,7 @@ export default function HamburgerMenu(props) {
       <HamburgerMenuItem onPress={() => onPress('Privacy')} icon="description" route="Privacy">{Strings.common.privacyPolicy}</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => onPress('Partners')} icon="brightness-low" route="Partners">{Strings.common.programPartners}</HamburgerMenuItem>
       <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
-      <Text style={styles.aboutText}>{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
+      <Text style={styles.aboutText} textBreakStrategy="simple">{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
     </View>
   );
 }
