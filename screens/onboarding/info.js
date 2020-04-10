@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import {Button, InfoBox} from '../../components';
+import {Button, InfoBox, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
@@ -28,25 +28,29 @@ export default function InfoScreen({navigation}) {
           <View style={{flex: 1, alignSelf: 'stretch'}}>
             <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
             <InfoBox title={Strings.info.walk}
+                     style={styles.infoBox}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
               {Strings.info.walkText}
             </InfoBox>
             <InfoBox title={Strings.info.record}
-                     icon="play-circle-filled"
-                     iconSize={80}
-                     iconColor={Colors.primary.purple}>
+                     style={styles.infoBox}
+                     image={require('../../assets/record.png')}
+                     imageStyle={styles.recordButton}>
               {Strings.info.recordText}
             </InfoBox>
             <InfoBox title={Strings.info.win}
+                     style={styles.infoBox}
                      icon="star-border"
                      iconSize={80}
-                     iconColor={Colors.accent.orange}>
+                     iconColor={Colors.accent.orange}
+                     iconStyle={styles.starIcon}>
               {Strings.info.winText}
             </InfoBox>
           </View>
           <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
+          <PaginationDots currentPage={2} totalPages={3} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -60,11 +64,22 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     textAlign: 'center',
-    marginBottom: 48,
+    marginBottom: 70,
     fontSize: 17,
     color: Colors.primary.gray2,
+  },
+  infoBox: {
+    marginBottom: 30,
   },
   button: {
     width: 180,
   },
+  recordButton: {
+    marginTop: 20,
+    width: 54,
+    height: 54,
+  },
+  starIcon: {
+    marginTop: 20,
+  }
 });

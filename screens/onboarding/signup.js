@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Button, CheckBox, Input} from '../../components';
+import {Button, CheckBox, Input, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
 
@@ -47,9 +47,9 @@ export default function SignUpScreen({navigation}) {
         <KeyboardAwareScrollView style={GlobalStyles.container}>
           <View style={styles.content}>
             <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
-            <View style={styles.row}>
-              <Image source={require('../../assets/calfresh_logo.png')} style={styles.image} />
-              <Image source={require('../../assets/sfgiants_logo.png')} style={styles.image} />
+            <View style={[styles.row, styles.logos]}>
+              <Image source={require('../../assets/sfdph_logo.png')} style={[styles.logo, styles.sfdphLogo]} />
+              <Image source={require('../../assets/sfgiants_logo.png')} style={[styles.logo, styles.giantsLogo]} />
             </View>
             <Text style={GlobalStyles.p1}>{Strings.signUp.about}</Text>
             <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
@@ -62,6 +62,7 @@ export default function SignUpScreen({navigation}) {
             <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
             <CheckBox style={{alignSelf: 'flex-start'}} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} title={Strings.formatString(Strings.signUp.agree, Strings.signUp.policy)} />
             <Button isEnabled={isValid()} style={styles.button} onPress={pressHandler}>{Strings.signUp.submit}</Button>
+            <PaginationDots currentPage={1} totalPages={3} />
           </View>
         </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -79,15 +80,28 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
   },
-  image: {
-    resizeMode: 'contain',
-    height: 75,
-    width: 150,
-    margin: 10,
-  },
   row: {
     flex: 0,
     flexDirection: 'row',
+  },
+  logos: {
+    alignSelf: 'center',
+    marginBottom: 15,
+    width: 280
+  },
+  logo: {
+    resizeMode: 'contain',
+    height: 100,
+    width: '50%',
+  },
+  sfdphLogo: {
+    width: 100,
+    marginLeft: 10,
+    marginRight: 20,
+  },
+  giantsLogo: {
+    height: 80,
+    alignSelf: 'center',
   },
   spacer: {
     width: 16,

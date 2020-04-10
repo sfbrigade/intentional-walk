@@ -15,7 +15,6 @@
 		45AD8B3C23E23B6B00F432F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */; };
 		8A93F8680B98EC5C611970C2 /* libPods-IntentionalWalkAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */; };
 		A49EA2BBC81DB16956D27E47 /* libPods-IntentionalWalkApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */; };
-		015FC2AAEA254FC6B03C743E /* ConcertOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF876CDBDE9346728DA77B3C /* ConcertOne-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		E384276A9F7D77B0250F501F /* libPods-IntentionalWalkApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		FF876CDBDE9346728DA77B3C /* ConcertOne-Regular.ttf */ = {isa = PBXFileReference; name = "ConcertOne-Regular.ttf"; path = "../android/app/src/main/assets/fonts/ConcertOne-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,13 +172,11 @@
 			sourceTree = "<group>";
 		};
 		ED1A1A3044FC4F5C8C295C38 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
-				FF876CDBDE9346728DA77B3C /* ConcertOne-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -284,7 +280,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				015FC2AAEA254FC6B03C743E /* ConcertOne-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

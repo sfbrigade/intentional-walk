@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Linking, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Image, Linking, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -55,6 +55,7 @@ export default function HamburgerMenu(props) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <Image style={styles.headerLogo} source={require('../assets/logo_full.png')} />
         <Text style={styles.headerEmail}>{email}</Text>
       </View>
       <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
@@ -78,6 +79,14 @@ const styles = StyleSheet.create({
     height: 170,
     backgroundColor: Colors.primary.purple,
     justifyContent: 'flex-end',
+  },
+  headerLogo: {
+    alignSelf: 'flex-end',
+    resizeMode: 'contain',
+    width: 125,
+    height: 75,
+    opacity: 0.8,
+    marginRight: 20
   },
   headerEmail: {
     ...GlobalStyles.content,

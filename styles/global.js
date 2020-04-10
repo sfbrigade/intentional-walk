@@ -18,10 +18,6 @@ export default StyleSheet.create({
   content: {
     padding: 16,
   },
-  logoFont: {
-    fontFamily: 'ConcertOne-Regular',
-    fontWeight: 'normal',
-  },
   boxShadow: {
     shadowColor: 'black',
     shadowOffset: { width: 4, height: 4 },
