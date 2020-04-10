@@ -1,0 +1,25 @@
+Al usuario de la aplicación de Paseo Intencional,
+
+Al unirse al Departamento de Salud Pública de San Francisco (SFDPH), al Departamento de Salud Pública de California (CDPH), al Programa de Paseo Intencional (Programa) y al usar la Aplicación (Aplicación) de Paseo Intencional, permitirá que SFDPH / CDPH acceda a los siguientes datos: pasos totales y distancia caminada durante el Programa, nombre y apellido del usuario, dirección de correo electrónico, edad y código postal de residencia. Una vez que la aplicación se desinstala y / o el programa concluye, ya no se recopilarán datos adicionales. SFDPH / CDPH se adhiere a lo siguiente con respecto a la información personal.
+
+1. La información de identificación personal sólo puede obtenerse a través de medios legales.
+
+2. SFDPH / CDPH y Code for San Francisco no ponen a disposición, venden, ni utilizan datos personales para ningún fin o motivo que no sean los especificados, incluidos terceros, excepto con el consentimiento del usuario o según lo exijan las leyes o reglamentos .
+
+3. La información personal recopilada electrónicamente no puede solicitarse en virtud de la Ley de Registros Públicos.
+
+4. Todos los datos personales recopilados serán relevantes al propósito para el cual es necesario o destinado.
+
+5. La información personal sólo es accesible por un número limitado de personas que tienen derechos especiales de acceso a dichos sistemas y están obligados a mantener la información confidencial. Además, para mantener la seguridad de su información personal, SFDPH / CDPH mantiene una variedad de medidas de seguridad cuando un usuario ingresa, envía o accede a la información. SFDPH / CDPH sigue reglas que protegen el uso de información personal según lo establecido por las pautas federales. SFDPH / CDPH sigue estrictamente estas pautas.
+
+6. La aplicación recopila información personal, incluido el nombre y apellido del usuario, edad, código postal, dirección de correo electrónico y contraseña, si es necesario, para establecer una cuenta en el sistema para conectar el acceso móvil al registro de usuario correcto. SFDPH / CDPH utiliza los datos recopilados en la aplicación para la mejora y evaluación del programa, que también pueden incluir el tipo de dispositivo móvil, la versión del sistema operativo, el operador o la red que utiliza el dispositivo y las páginas de la aplicación que se visitan.
+
+7. La aplicación permanecerá en el dispositivo del usuario hasta que se elimine. La aplicación se puede eliminar desinstalando la aplicación móvil.
+
+8. El usuario de la aplicación tiene derecho a que SFDPH / CDPH elimine cualquier información personal recopilada electrónicamente sin reutilizarla ni distribuirla. Los usuarios de la aplicación pueden solicitar que se elimine su información personal recopilada electrónicamente contactando a SFDPH via: intentionalwalk@sfdph.org.
+
+9. SFDPH / CDPH solo recopilará datos relacionados con pasos y caminatas que el usuario haya permitido que la aplicación acceda al rastreador de salud del dispositivo móvil (Apple Health para usuarios de iOS y Google Fit para usuarios de Android) que coincida con el dispositivo móvil personal de los usuarios .
+
+10. Otras partes no recopilarán información personal sobre las actividades en línea del usuario de la Aplicación y en diferentes sitios web mientras usan la Aplicación.
+
+11. Si tiene alguna pregunta o comentario sobre esta información, el Programa de Paseo Intencional o la Aplicación, comuníquese con SFDPH via: intentionalwalk@sfdph.org o en la Oficina de privacidad de CDPH via: privacy@cdph.ca.gov.
