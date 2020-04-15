@@ -1,0 +1,10 @@
+[#73] Resume button added to Stop/Finish state of Recording
+[#79] Sign up form validation alerts, including Age Restriction popup
+[#78] Privacy Policy popup from Sign up screen
+[#74] Updated app icon and launcher title
+[#67] Update translated text in localized strings file
+[#58] Attempt to address string cut-off issue on Oppo OnePlus Android phones
+[#70] User can navigate to Privacy Policy
+[#72] Updated logos and branding in app
+[#69] Program Partners screen
+[#68] Fix top header navigation
