@@ -33,7 +33,9 @@ export default function SignUpScreen({navigation}) {
   const [age, setAge] = useState('');
   const [termsAgreed, setTermsAgreed] = useState(false);
 
-  const [showAgeAlert, setShowAgeAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertTitle, setAlertTitle] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   const screenDims = Dimensions.get('screen');
@@ -43,8 +45,8 @@ export default function SignUpScreen({navigation}) {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        if (showAgeAlert) {
-          setShowAgeAlert(false);
+        if (showAlert) {
+          setShowAlert(false);
           return true;
         } else if (showPrivacyPolicy) {
           setShowPrivacyPolicy(false);
@@ -59,9 +61,30 @@ export default function SignUpScreen({navigation}) {
   );
 
   const onSubmit = () => {
-    // TODO: validate form fields
+    /// validate email
+    if (!email.trim().match(/^[^@ ]+@[^\. ]+(?:\.[^\. ]+)+$/)) {
+      setAlertTitle(Strings.signUp.emailAlertTitle);
+      setAlertMessage(Strings.signUp.emailAlertMessage);
+      setShowAlert(true);
+      return;
+    }
+    /// validate zip
+    if (!zip.trim().match(/^\d{5}$/)) {
+      setAlertTitle(Strings.signUp.zipAlertTitle);
+      setAlertMessage(Strings.signUp.zipAlertMessage);
+      setShowAlert(true);
+      return;
+    }
+    /// validate age
+    const parsedAge = parseInt(age, 10);
+    if (isNaN(parsedAge) || parsedAge < 18) {
+      setAlertTitle(Strings.signUp.ageAlertTitle);
+      setAlertMessage(Strings.signUp.ageAlertMessage);
+      setShowAlert(true);
+      return;
+    }
     // TODO: contact server
-    Realm.createUser(name, email, zip, age).then(user => {
+    Realm.createUser(name.trim(), email.trim(), zip.trim(), parsedAge).then(user => {
       navigation.navigate('Info');
     }).catch(error => {
       console.log(e);
@@ -113,6 +136,13 @@ export default function SignUpScreen({navigation}) {
               <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
               <Autolink text={privacyText} style={styles.privacyText} />
             </ScrollText>
+          </View>
+        </Popup>
+        <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={GlobalStyles.h1}>{alertTitle}</Text>
+            <Text style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>{alertMessage}</Text>
+            <Button style={styles.button} onPress={() => setShowAlert(false)}>{Strings.common.okay}</Button>
           </View>
         </Popup>
     </SafeAreaView>

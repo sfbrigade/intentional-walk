@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {
+  Image,
+  Linking,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
-  Platform,
+  View,
 } from 'react-native';
 import {Button, InfoBox, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
@@ -59,7 +60,7 @@ export default function InfoScreen({navigation}) {
                        icon="account-circle"
                        iconSize={64}
                        iconColor={Colors.primary.darkGreen}>
-                {Strings.permissions.googleText}
+                <Text onPress={() => Linking.openURL(`https://support.google.com/accounts/answer/27441?hl=${Strings.getLanguage()}`)}>{Strings.formatString(Strings.permissions.googleText, <Text style={styles.linkText}>{Strings.permissions.getOneHere}</Text>)}</Text>
               </InfoBox>
             ) : null }
           </View>
@@ -90,15 +91,10 @@ const styles = StyleSheet.create({
   infoBoxLast: {
     marginBottom: 30,
   },
-  whiteText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  box: {
-    ...GlobalStyles.rounded,
-    height: 140,
-    padding: 16,
-    marginBottom: 16,
+  linkText: {
+    textDecorationLine: 'underline',
+    color: Colors.primary.purple,
+    fontWeight: 'bold',
   },
   button: {
     width: 180,
