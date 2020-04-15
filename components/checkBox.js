@@ -1,33 +1,35 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 import {CheckBox} from 'react-native-elements';
 
 export default function CustomCheckBox(props) {
   return (
-    <CheckBox checked={props.checked}
-              iconType="material"
-              uncheckedIcon="check-box-outline-blank"
-              checkedIcon="check-box"
-              uncheckedColor={Colors.primary.purple}
-              checkedColor={Colors.primary.purple}
-              containerStyle={[styles.container, props.style]}
-              textStyle={styles.text}
-              onPress={() => props.onPress()}
-              title={props.title}
-              />
+    <View style={[styles.row, props.style]}>
+      <CheckBox checked={props.checked}
+                iconType="material"
+                uncheckedIcon="check-box-outline-blank"
+                checkedIcon="check-box"
+                size={32}
+                uncheckedColor={Colors.primary.purple}
+                checkedColor={Colors.primary.purple}
+                containerStyle={styles.container}
+                onPress={() => props.onPress()} />
+      {props.children}
+    </View>
   );
 }
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 16,
+  },
   container: {
     backgroundColor: 'transparent',
     borderWidth: 0,
     padding: 0,
-    marginBottom: 16,
-  },
-  text: {
-    fontSize: 12,
-    fontWeight: 'normal',
-    color: Colors.primary.gray2
+    margin: 0,
   }
 });

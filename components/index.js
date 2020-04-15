@@ -9,6 +9,8 @@ export LinkButton from './linkButton';
 export Logo from './logo';
 export PageTitle from './pageTitle';
 export PaginationDots from './paginationDots';
+export Popup from './popup';
 export RecordedWalk from './recordedWalk';
 export Recorder from './recorder';
+export ScrollText from './scrollText';
 export StatBox from './statBox';

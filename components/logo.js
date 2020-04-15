@@ -4,7 +4,7 @@ import {Colors, GlobalStyles} from '../styles';
 
 export default function Logo(props) {
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, props.style]}>
       <Image style={styles.logo} source={require('../assets/logo.png')} />
     </View>
   );
