@@ -16,11 +16,10 @@ export default function Recorder(props) {
   const [pause, setPause] = useState(null);
   const isPausedRef = useRef(false);
   const [end, setEnd] = useState(null);
-  const isEndedRef = useRef(false);
 
   useEffect(() => {
     Pedometer.startUpdates(data => {
-      if (!isEndedRef.current && !isPausedRef.current) {
+      if (!isPausedRef.current) {
         setData(data);
         Realm.updateCurrentWalk(data);
       }
@@ -44,18 +43,21 @@ export default function Recorder(props) {
         activeWalk.pause = (activeWalk.pause || 0) + moment(now).diff(pause, 'seconds');
         isPausedRef.current = false;
         setPause(null);
+        setEnd(null);
       });
     });
   }
 
   const onStop = () => {
-    let end = new Date();
+    let end;
     if (pause) {
       end = pause;
+    } else {
+      end = new Date();
+      setPause(end);
+      isPausedRef.current = true;
     }
     setEnd(end);
-    isEndedRef.current = true;
-    Pedometer.stopUpdates();
     //// get one final update
     Pedometer.getPedometerData(end).then(data => {
       setData(data)
@@ -65,6 +67,7 @@ export default function Recorder(props) {
 
   const onFinish = () => {
     if (end) {
+      Pedometer.stopUpdates();
       Realm.stopWalk(end, data);
     }
   }
@@ -88,12 +91,12 @@ export default function Recorder(props) {
 
   let headerColor = Colors.primary.lightGreen;
   let headerText = Strings.recorder.recording;
-  if (pause) {
-    headerColor = Colors.accent.yellow;
-    headerText = Strings.recorder.paused;
-  } else if (end) {
+  if (end) {
     headerColor = Colors.secondary.red;
     headerText = Strings.formatString(Strings.recorder.save, activeWalk.timeOfWalk);
+  } else if (pause) {
+    headerColor = Colors.accent.yellow;
+    headerText = Strings.recorder.paused;
   }
   return (
     <View pointerEvents="box-none" style={[styles.container, props.style]}>
@@ -113,7 +116,8 @@ export default function Recorder(props) {
           <Text style={styles.count} textBreakStrategy="simple">{activeWalk.steps ? (activeWalk.steps || 0) : 0}</Text>
           <Text style={styles.label} textBreakStrategy="simple">{Strings.common.steps}</Text>
         </View>
-        <View style={{opacity: end ? 1 : 0}}>
+        <View style={[styles.stopButtonRow, {opacity: end ? 1 : 0}]}>
+          <Button onPress={onResume} style={styles.resumeButton} textStyle={{color: Colors.primary.purple}}>{Strings.recorder.resume}</Button>
           <Button onPress={onFinish} style={styles.finishButton}>{Strings.recorder.finish}</Button>
         </View>
       </View>
@@ -200,8 +204,23 @@ const styles = StyleSheet.create({
     color: Colors.primary.purple,
     marginBottom: 20
   },
+  stopButtonRow: {
+    position: 'absolute',
+    bottom: 4,
+    flexDirection: 'row',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  resumeButton: {
+    flex: 1,
+    marginRight: 4,
+    backgroundColor: 'white',
+    borderColor: Colors.primary.purple,
+    borderWidth: 2,
+  },
   finishButton: {
-    width: 180
+    flex: 1,
+    marginLeft: 4,
   },
   buttonsContainer: {
     position: 'absolute',
