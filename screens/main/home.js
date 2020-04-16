@@ -134,7 +134,7 @@ export default function HomeScreen({navigation}) {
             <View style={styles.row}>
               <StatBox
                 mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
-                subText={Strings.home.stepsToday}
+                subText={isToday ? Strings.home.stepsToday : Strings.common.steps}
                 icon="directions-walk"
                 iconSize={140}
                 iconStyle={{top: -15}}
@@ -143,7 +143,7 @@ export default function HomeScreen({navigation}) {
               />
               <StatBox
                 mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
-                subText={Strings.home.milesToday}
+                subText={isToday ? Strings.home.milesToday : Strings.common.miles}
                 icon="swap-calls"
                 iconSize={200}
                 iconStyle={{top: -45, left: -15, width: '200%'}}
