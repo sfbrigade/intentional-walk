@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   recordText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
     color: Colors.primary.purple,
     marginTop: 8,
