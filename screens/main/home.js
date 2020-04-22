@@ -124,6 +124,9 @@ export default function HomeScreen({navigation}) {
   const isToday = date.isSame(today);
   const dateString = isToday ? Strings.common.today : date.format('MMMM D');
 
+  const START_DATE = '2020-06-01';
+  const isBeforeStartDate = moment(today).isBefore(START_DATE);
+
   return (
     <View style={GlobalStyles.container}>
       { !activeWalk &&
@@ -131,6 +134,10 @@ export default function HomeScreen({navigation}) {
         <ScrollView>
           <View style={[GlobalStyles.content, {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54}]}>
             <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
+            { isBeforeStartDate && <View style={{marginBottom: 16}}>
+              <Text style={styles.alertText}>{Strings.home.getReadyAlert1}</Text>
+              <Text style={styles.alertText}>{Strings.home.getReadyAlert2}</Text>
+            </View> }
             <View style={styles.row}>
               <StatBox
                 mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
@@ -292,10 +299,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   recordText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
     color: Colors.primary.purple,
     marginTop: 8,
     marginBottom: 10
+  },
+  alertText: {
+    color: Colors.secondary.red,
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingHorizontal: 20,
+    textAlign: 'center'
   }
 });

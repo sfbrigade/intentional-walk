@@ -21,7 +21,7 @@ export default function WhereToWalkScreen({navigation}) {
     { title: Strings.whereToWalk.parksAndRecCenters, url: "https://sfrecpark.org/facilities" },
     { title: Strings.whereToWalk.hikingTrailsInSF, url: "https://sfrecpark.org/448/Trails-Hikes" },
     { title: Strings.whereToWalk.guidedWalks, url: "https://sfrecpark.org/1244/Healthy-Parks-Healthy-People" },
-    { title: Strings.whereToWalk.exerciseAndFitnessActivities, url: "https://apm.activecommunities.com/sfrecpark/Activity_Search?detailskeyword=&IsAdvanced=True&ddlSortBy=Activity+name&ActivityCategoryID=29&DaysOfWeek=0000000&SearchFor=2&SearchLevelID=2&maxAge=100&NumberOfItemsPerPage=20&IsSearch=true" }
+    { title: Strings.whereToWalk.exerciseAndFitnessActivities, url: "https://apm.activecommunities.com/sfrecpark/Activity_Search" }
   ]
   const linkBoxes = links.map( (link, index) => <LinkButton key={index} style={styles.button} title={link.title} url={link.url} /> );
   const screenDims = Dimensions.get('screen');
