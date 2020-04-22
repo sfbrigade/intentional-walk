@@ -19,21 +19,24 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={GlobalStyles.content}>
-          <PageTitle title={Strings.common.about} />
+          <PageTitle style={styles.title} title={Strings.common.about} />
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <InfoBox title={Strings.about.what}
+            <InfoBox style={styles.infoBox}
+                     title={Strings.about.what}
                      icon="directions-walk"
                      iconSize={80}
                      iconColor={Colors.accent.teal}>
               {Strings.about.whatText}
             </InfoBox>
-            <InfoBox title={Strings.about.dates}
+            <InfoBox style={styles.infoBox}
+                     title={Strings.about.dates}
                      icon="date-range"
                      iconSize={80}
                      iconColor={Colors.primary.lightGreen}>
               {Strings.about.datesText}
             </InfoBox>
-            <InfoBox title={Strings.about.prize}
+            <InfoBox style={styles.infoBox}
+                     title={Strings.about.prize}
                      icon="star-border"
                      iconSize={80}
                      iconColor={Colors.accent.orange}>
@@ -45,3 +48,12 @@ export default function InfoScreen({navigation}) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    marginBottom: 48,
+  },
+  infoBox: {
+    marginBottom: 30,
+  }
+});
