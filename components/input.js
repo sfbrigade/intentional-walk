@@ -27,7 +27,7 @@ export default function Input(props) {
                onChangeText={(newValue) => onChangeText(newValue)}
                onSubmitEditing={(nativeEvent) => props.onSubmitEditing ? props.onSubmitEditing(nativeEvent) : null}
                placeholder={props.placeholder}
-               placeholderColor={Colors.primary.gray2}
+               placeholderTextColor={Colors.primary.gray2}
                autoCapitalize={props.autoCapitalize || 'none'}
                autoCompleteType={props.autoCompleteType || 'off'}
                keyboardType={props.keyboardType || 'default'}
