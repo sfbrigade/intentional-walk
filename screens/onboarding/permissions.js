@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     maxWidth: 250,
-    marginBottom: 70,
+    marginBottom: 30,
     fontSize: 17,
     color: Colors.primary.gray2,
   },
   infoBox: {
-    marginBottom: 60,
+    marginBottom: 30,
   },
   infoBoxLast: {
     marginBottom: 30,
