@@ -134,7 +134,7 @@ export default function HomeScreen({navigation}) {
         <ScrollView>
           <View style={[GlobalStyles.content, {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54}]}>
             <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-            { isBeforeStartDate && <View style={{marginBottom: 20}}>
+            { isBeforeStartDate && <View style={{marginBottom: 16}}>
               <Text style={styles.alertText}>{Strings.home.getReadyAlert1}</Text>
               <Text style={styles.alertText}>{Strings.home.getReadyAlert2}</Text>
             </View> }
