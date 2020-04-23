@@ -17,33 +17,77 @@ export default function HomeScreen({navigation}) {
   const safeAreaInsets = useSafeArea();
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
+  const [steps, setSteps] = useState(null);
+  const [distances, setDistances] = useState(null);
+
   const [dailySteps, setDailySteps] = useState(null);
   const [dailyDistance, setDailyDistance] = useState(null);
   const [totalSteps, setTotalSteps] = useState(null);
+
   const [recordedWalks, setRecordedWalks] = useState(null);
   const [activeWalk, setActiveWalk] = useState(false);
 
-  const getDailySteps = (queryDate) => {
+  const getDailySteps = (queryDate, steps) => {
     setDailySteps(null);
-    Fitness.getDailySteps(queryDate).then(steps => {
-      if (dateRef.current.isSame(queryDate)) {
-        setDailySteps(steps);
+    if (steps == null) {
+      setSteps(true);
+      setTotalSteps(null);
+      Fitness.getSteps(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
+        .then(steps => {
+          if (moment(dateRef.current).startOf('month').isSame(moment(queryDate).startOf('month'))) {
+            setSteps(steps);
+            getDailySteps(dateRef.current, steps);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+    } else if (Array.isArray(steps)) {
+      let quantity = 0;
+      let total = 0;
+      const from = moment(queryDate)
+      const to = moment(from).add(1, 'days')
+      for (let step of steps) {
+        if (moment(step.startDate).isSameOrAfter(from) && moment(step.endDate).isSameOrBefore(to)) {
+          quantity = step.quantity;
+          if (totalSteps != null) {
+            break;
+          }
+        }
+        total += step.quantity;
       }
-    }).catch(error => {
-      console.log(error);
-    });
+      setDailySteps({quantity});
+      if (totalSteps == null) {
+        setTotalSteps({quantity: total});
+      }
+    }
   };
 
-  const getDailyDistance = (queryDate) => {
+  const getDailyDistance = (queryDate, distances) => {
     setDailyDistance(null);
-    Fitness.getDailyDistance(queryDate).then(distance => {
-      if (dateRef.current.isSame(queryDate)) {
-        setDailyDistance(distance);
+    if (distances == null) {
+      setDistances(true);
+      Fitness.getDistance(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
+        .then(distances => {
+          if (moment(dateRef.current).startOf('month').isSame(moment(queryDate).startOf('month'))) {
+            setDistances(distances);
+            getDailyDistance(dateRef.current, distances);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+    } else if (Array.isArray(distances)) {
+      let quantity = 0;
+      const from = moment(queryDate)
+      const to = moment(from).add(1, 'days')
+      for (let distance of distances) {
+        if (moment(distance.startDate).isSameOrAfter(from) && moment(distance.endDate).isSameOrBefore(to)) {
+          quantity = distance.quantity;
+          break;
+        }
       }
-    }).catch(error => {
-      console.log(error);
-    });
-  }
+      setDailyDistance({quantity});
+    }
+  };
 
   const getRecordedWalks = (queryDate) => {
     Realm.open().then(realm => {
@@ -54,35 +98,29 @@ export default function HomeScreen({navigation}) {
         setRecordedWalks(recordedWalks);
       }
     });
-  }
+  };
 
   const setDateAndGetDailySteps = (newDate) => {
     const oldDate = dateRef.current;
     dateRef.current = newDate;
     setDate(newDate);
-    getDailySteps(newDate);
-    getDailyDistance(newDate);
+
+    let newSteps = steps;
+    let newDistances = distances;
     if (!oldDate.startOf('month').isSame(moment(newDate).startOf('month'))) {
-      getTotalSteps();
+      newSteps = null;
+      newDistances = null;
     }
+    getDailySteps(newDate, newSteps);
+    getDailyDistance(newDate, newDistances);
     getRecordedWalks(newDate);
   };
-
-  const getTotalSteps = () => {
-    setTotalSteps(null);
-    Fitness.getTotalSteps(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month')).then(steps => {
-      setTotalSteps(steps);
-    }).catch(error => {
-      console.log(error);
-    });
-  }
 
   const refresh = () => {
     dateRef.current = moment(date.toDate());
     setDate(dateRef.current);
-    getDailySteps(dateRef.current);
-    getDailyDistance(dateRef.current);
-    getTotalSteps();
+    getDailySteps(dateRef.current, null);
+    getDailyDistance(dateRef.current, null);
     getRecordedWalks(dateRef.current);
   };
 
