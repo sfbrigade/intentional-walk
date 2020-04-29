@@ -15,6 +15,7 @@
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "@t2tx/react-native-universal-pedometer": "^2.0.3",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "react": "16.9.0",
