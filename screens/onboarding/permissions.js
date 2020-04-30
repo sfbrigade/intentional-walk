@@ -23,10 +23,10 @@ export default function InfoScreen({navigation}) {
       if (permitted) {
         if (Platform.OS === 'android') {
           Fitness.subscribeToActivity().then(function(subscribed) {
-            console.log('subscribeToActivity', subscribed);
+            /// TODO handle errors
           });
           Fitness.subscribeToSteps().then(function(subscribed) {
-            console.log('subscribeToSteps', subscribed);
+            /// TODO handle errors
           });
         }
         navigation.navigate('MainStack');

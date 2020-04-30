@@ -22,7 +22,7 @@ export default function RecordedWalk(props) {
       date = start.format('MMMM D');
     }
     steps = numeral(walk.steps).format('0,0');
-    miles = numeral(walk.distance).format('0,0.0');
+    miles = numeral(walk.distance * 0.000621371).format('0,0.0');
     minutes = Math.round(walk.elapsedTime / 60.0);
   }
   return (

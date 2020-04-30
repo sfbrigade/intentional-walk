@@ -6,7 +6,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen'
-import {Fitness, Realm, Strings} from '../../lib';
+import {Api, Fitness, Realm, Strings} from '../../lib';
 import {DateNavigator, Recorder} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {StatBox, RecordedWalk} from '../../components';
@@ -17,77 +17,135 @@ export default function HomeScreen({navigation}) {
   const safeAreaInsets = useSafeArea();
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
-  const [steps, setSteps] = useState(null);
-  const [distances, setDistances] = useState(null);
-
-  const [dailySteps, setDailySteps] = useState(null);
-  const [dailyDistance, setDailyDistance] = useState(null);
+  const [dailyWalks, setDailyWalks] = useState(null);
+  const [todaysWalk, setTodaysWalk] = useState(null);
   const [totalSteps, setTotalSteps] = useState(null);
+
+  const [contest, setContest] = useState(null);
 
   const [recordedWalks, setRecordedWalks] = useState(null);
   const [activeWalk, setActiveWalk] = useState(false);
 
-  const getDailySteps = (queryDate, steps) => {
-    setDailySteps(null);
-    if (steps == null) {
-      setSteps(true);
-      setTotalSteps(null);
-      Fitness.getSteps(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
-        .then(steps => {
-          if (moment(dateRef.current).startOf('month').isSame(moment(queryDate).startOf('month'))) {
-            setSteps(steps);
-            getDailySteps(dateRef.current, steps);
-          }
-        }).catch(error => {
-          console.log(error);
-        });
-    } else if (Array.isArray(steps)) {
-      let quantity = 0;
-      let total = 0;
-      const from = moment(queryDate)
-      const to = moment(from).add(1, 'days')
-      for (let step of steps) {
-        if (moment(step.startDate).isSameOrAfter(from) && moment(step.endDate).isSameOrBefore(to)) {
-          quantity = step.quantity;
-          if (totalSteps != null) {
-            break;
+  const saveStepsAndDistances = () => {
+    Realm.getContest().then(contest => {
+        const today = moment().startOf('day');
+        let from = null, to = null;
+        if (contest) {
+          /// check if we're in/after the contest period
+          if (!contest.isBeforeStartDate) {
+            from = moment(contest.start);
+            /// check if we're in the contest period
+            if (contest.isAfterEndDate) {
+              to = moment(contest.end);
+            } else {
+              to = today;
+            }
           }
         }
-        total += step.quantity;
-      }
-      setDailySteps({quantity});
-      if (totalSteps == null) {
-        setTotalSteps({quantity: total});
-      }
-    }
+        /// only save when within contest period
+        if (from && to) {
+          Fitness.getStepsAndDistances(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
+            .then(dailyWalks => {
+              if (dailyWalks && dailyWalks.length > 0) {
+                /// get user account, then save to server...!
+                Realm.getUser()
+                  .then(user => {
+                    if (user) {
+                      return Api.dailyWalk.create(dailyWalks, user.id);
+                    }
+                  })
+                  .then(response => {
+                    /// silent for now
+                  })
+                  .catch(error => {
+                    /// silent for now- send to remote logger (Firebase?)
+                  });
+              }
+            });
+        }
+      });
   };
 
-  const getDailyDistance = (queryDate, distances) => {
-    setDailyDistance(null);
-    if (distances == null) {
-      setDistances(true);
-      Fitness.getDistance(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
-        .then(distances => {
+  const getStepsAndDistances = (queryDate, dailyWalks) => {
+    setTodaysWalk(null);
+    if (dailyWalks == null) {
+      setDailyWalks(true);
+      Fitness.getStepsAndDistances(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
+        .then(dailyWalks => {
           if (moment(dateRef.current).startOf('month').isSame(moment(queryDate).startOf('month'))) {
-            setDistances(distances);
-            getDailyDistance(dateRef.current, distances);
+            setDailyWalks(dailyWalks);
+            getStepsAndDistances(dateRef.current, dailyWalks);
           }
-        }).catch(error => {
+        })
+        .catch(error => {
           console.log(error);
         });
-    } else if (Array.isArray(distances)) {
-      let quantity = 0;
-      const from = moment(queryDate)
-      const to = moment(from).add(1, 'days')
-      for (let distance of distances) {
-        if (moment(distance.startDate).isSameOrAfter(from) && moment(distance.endDate).isSameOrBefore(to)) {
-          quantity = distance.quantity;
+    } else if (Array.isArray(dailyWalks)) {
+      let todaysWalk = {
+        steps: 0,
+        distance: 0,
+      };
+      let from = moment(queryDate).startOf('day');
+      let to = moment(from).endOf('day');
+      for (let dailyWalk of dailyWalks) {
+        if (from.isSameOrBefore(dailyWalk.date) && to.isSameOrAfter(dailyWalk.date)) {
+          todaysWalk = dailyWalk;
           break;
         }
       }
-      setDailyDistance({quantity});
+      setTodaysWalk(todaysWalk);
     }
-  };
+  }
+
+  const getTotalSteps = () => {
+    setTotalSteps(null);
+    /// get current contest
+    Realm.getContest().then(contest => {
+        const now = moment();
+        let from = null, to = null;
+        if (contest) {
+          /// check if we're in/after the contest period
+          if (!contest.isBeforeStartDate) {
+            from = moment(contest.start);
+            /// check if we're in the contest period
+            if (contest.isAfterEndDate) {
+              to = moment(contest.end);
+            } else {
+              to = now;
+            }
+          }
+        }
+        /// if no contest (should never happen), or we're before the contest...
+        if (!from || !to) {
+          /// total up from when user created to now, or beginning of promo, whichever later
+          return Realm.getUser().then(user => {
+            if (contest && user) {
+              let from = moment(user.createdAt);
+              if (moment(contest.startPromo).isBefore(now) && from.isBefore(moment(contest.startPromo))) {
+                from = moment(contest.startPromo);
+              }
+              return [from, now];
+            }
+            /// no contest, no user, so don't return a range
+            return [null, null];
+          });
+        }
+        return [from, to];
+      })
+      .then(([from, to]) => {
+        if (from && to) {
+          let totalSteps = 0;
+          Fitness.getSteps(from, to).then(steps => {
+            for (let step of steps) {
+              totalSteps += step.quantity;
+            }
+          }).finally(() => setTotalSteps(totalSteps));
+        } else {
+          /// no range, just show 0
+          setTotalSteps(0);
+        }
+      });
+  }
 
   const getRecordedWalks = (queryDate) => {
     Realm.open().then(realm => {
@@ -105,51 +163,57 @@ export default function HomeScreen({navigation}) {
     dateRef.current = newDate;
     setDate(newDate);
 
-    let newSteps = steps;
-    let newDistances = distances;
+    let newDailyWalks = dailyWalks;
     if (!oldDate.startOf('month').isSame(moment(newDate).startOf('month'))) {
-      newSteps = null;
-      newDistances = null;
+      newDailyWalks = null;
     }
-    getDailySteps(newDate, newSteps);
-    getDailyDistance(newDate, newDistances);
+    getStepsAndDistances(newDate, newDailyWalks);
     getRecordedWalks(newDate);
   };
 
   const refresh = () => {
     dateRef.current = moment(date.toDate());
     setDate(dateRef.current);
-    getDailySteps(dateRef.current, null);
-    getDailyDistance(dateRef.current, null);
+    getStepsAndDistances(dateRef.current, null);
+    getTotalSteps();
     getRecordedWalks(dateRef.current);
+    saveStepsAndDistances();
   };
 
+  /// one time setup for some data store listeners
   useEffect(() => {
-    const listener = (results, changes) => setActiveWalk(results.length > 0 ? results[0] : null);
-    let results = null;
-    Realm.open().then(realm => {
-      results = realm.objects('IntentionalWalk').filtered('end=null');
-      results.addListener(listener);
-    });
-    return () => results ? results.removeListener(listener) : null;
+    /// listen for an active walk
+    Realm.addCurrentWalkListener(walk => setActiveWalk(walk));
+    /// listen for updates to contest info
+    Realm.addContestListener(contest => contest ? setContest(contest.toObject()) : null);
+    /// on cleanup, remove listeners
+    return () => Realm.removeAllListeners();
   }, []);
 
+  /// perform a bunch of other one-time checks/setup on app launch
   useEffect(() => {
     SplashScreen.hide();
+    /// load settings
     Realm.getSettings().then(settings => {
       const lang = settings.lang;
       if (lang) {
+        /// set language preference, if any
         Strings.setLanguage(lang);
+        /// recreate the date in the current locale
         moment.locale(lang);
         dateRef.current = moment(date.toDate());
         setDate(dateRef.current);
       }
     });
+    /// get signed in user, if any
     Realm.getUser().then(user => {
+      /// if no user, go to onboarding flow
       if (!user) {
         navigation.navigate('OnboardingStack');
       }
     });
+    /// check for updated contest info
+    Realm.updateContest();
   }, []);
 
   useFocusEffect(
@@ -162,9 +226,6 @@ export default function HomeScreen({navigation}) {
   const isToday = date.isSame(today);
   const dateString = isToday ? Strings.common.today : date.format('MMMM D');
 
-  const START_DATE = '2020-06-01';
-  const isBeforeStartDate = moment(today).isBefore(START_DATE);
-
   return (
     <View style={GlobalStyles.container}>
       { !activeWalk &&
@@ -172,13 +233,13 @@ export default function HomeScreen({navigation}) {
         <ScrollView>
           <View style={[GlobalStyles.content, {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54}]}>
             <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-            { isBeforeStartDate && <View style={{marginBottom: 16}}>
+            { contest && contest.isBeforeStartDate && <View style={{marginBottom: 16}}>
               <Text style={styles.alertText}>{Strings.home.getReadyAlert1}</Text>
-              <Text style={styles.alertText}>{Strings.home.getReadyAlert2}</Text>
+              <Text style={styles.alertText}>{Strings.formatString(Strings.home.getReadyAlert2, moment(contest.start).format(Strings.common.date))}</Text>
             </View> }
             <View style={styles.row}>
               <StatBox
-                mainText={dailySteps ? numeral(dailySteps.quantity).format('0,0') : "*"}
+                mainText={todaysWalk ? numeral(todaysWalk.steps).format('0,0') : " "}
                 subText={isToday ? Strings.home.stepsToday : Strings.common.steps}
                 icon="directions-walk"
                 iconSize={140}
@@ -187,7 +248,7 @@ export default function HomeScreen({navigation}) {
                 boxColor={Colors.accent.teal}
               />
               <StatBox
-                mainText={dailyDistance ? numeral(dailyDistance.quantity / 1609.0).format('0,0.0') : "*"}
+                mainText={todaysWalk ? numeral(todaysWalk.distance * 0.000621371).format('0,0.0') : " "}
                 subText={isToday ? Strings.home.milesToday : Strings.common.miles}
                 icon="swap-calls"
                 iconSize={200}
@@ -198,7 +259,7 @@ export default function HomeScreen({navigation}) {
             </View>
             <View style={[styles.row, isToday ? null : styles.hidden]} pointerEvents={isToday? 'auto' : 'none'}>
               <StatBox
-                mainText={totalSteps ? numeral(totalSteps.quantity).format('0,0') : "*"}
+                mainText={totalSteps != null ? numeral(totalSteps).format('0,0') : " "}
                 subText={Strings.home.overallStepTotal}
                 icon="star-border"
                 iconSize={200}

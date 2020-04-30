@@ -12,15 +12,15 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PageTitle, RecordedWalk} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {Realm} from '../../lib';
+import {Api, Realm} from '../../lib';
 
 export default function RecordedWalksScreen({navigation}) {
   const [recordedWalks, setRecordedWalks] = useState(null);
 
   useEffect(() => {
-    Realm.open().then(realm => {
-      setRecordedWalks(realm.objects('IntentionalWalk').sorted([['end', true]]));
-    });
+    Realm.getWalks().then(walks => setRecordedWalks(walks));
+    /// also synchronize with server
+    Realm.syncWalks();
   }, []);
 
   return (

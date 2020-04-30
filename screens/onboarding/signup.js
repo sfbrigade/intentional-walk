@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {
+  ActivityIndicator,
   BackHandler,
   Dimensions,
   Image,
@@ -17,14 +18,16 @@ import Autolink from 'react-native-autolink';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import loadLocalResource from 'react-native-local-resource'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import moment from 'moment';
 
 import {Button, CheckBox, Input, Logo, PaginationDots, Popup, ScrollText} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import {Realm, Strings} from '../../lib';
+import {Api, Realm, Strings} from '../../lib';
 
 import Privacy from '../../assets/privacy';
 
-export default function SignUpScreen({navigation}) {
+export default function SignUpScreen({navigation, route}) {
+  const {contest} = route.params;
   const [focus, setFocus] = useState('');
 
   const [name, setName] = useState('');
@@ -32,6 +35,8 @@ export default function SignUpScreen({navigation}) {
   const [zip, setZip] = useState('');
   const [age, setAge] = useState('');
   const [termsAgreed, setTermsAgreed] = useState(false);
+
+  const [isLoading, setLoading] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
@@ -83,13 +88,23 @@ export default function SignUpScreen({navigation}) {
       setShowAlert(true);
       return;
     }
-    // TODO: contact server
-    Realm.createUser(name.trim(), email.trim(), zip.trim(), parsedAge).then(user => {
-      navigation.navigate('Info');
-    }).catch(error => {
-      console.log(e);
-      // TODO: display error message
-    });
+    setLoading(true);
+    Realm.getSettings().then(settings => {
+        return Api.appUser.create(name.trim(), email.trim(), zip.trim(), parsedAge, settings.accountId);
+      })
+      .then(response => {
+        return Realm.createUser(response.data.payload.account_id, name.trim(), email.trim(), zip.trim(), parsedAge);
+      })
+      .then(user => {
+        setLoading(false);
+        navigation.navigate('Info');
+      })
+      .catch(error => {
+        setLoading(false);
+        setAlertTitle(Strings.common.serverErrorTitle);
+        setAlertMessage(Strings.common.serverErrorMessage);
+        setShowAlert(true);
+      });
   };
 
   const onPolicyPress = () => {
@@ -97,10 +112,10 @@ export default function SignUpScreen({navigation}) {
   }
 
   const isValid = () => {
-    return name != '' &&
-           email != '' &&
-           zip != '' &&
-           age != '' &&
+    return name.trim() != '' &&
+           email.trim() != '' &&
+           zip.trim() != '' &&
+           age.trim() != '' &&
            termsAgreed;
   }
 
@@ -113,19 +128,25 @@ export default function SignUpScreen({navigation}) {
               <Image source={require('../../assets/sfdph_logo.png')} style={[styles.logo, styles.sfdphLogo]} />
               <Image source={require('../../assets/sfgiants_logo.png')} style={[styles.logo, styles.giantsLogo]} />
             </View>
-            <Text style={GlobalStyles.p1} textBreakStrategy="simple">{Strings.signUp.about}</Text>
-            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next"></Input>
-            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next"></Input>
+            <Text style={GlobalStyles.p1} textBreakStrategy="simple">{Strings.formatString(Strings.signUp.about, Strings.formatString(Strings.common.range, moment(contest.start).format(Strings.common.rangeFrom), moment(contest.end).format(Strings.common.rangeTo)))}</Text>
+            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next" editable={!isLoading}></Input>
+            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next" editable={!isLoading}></Input>
             <View style={styles.row}>
-              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder={Strings.signUp.zipCode} keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})}></Input>
+              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder={Strings.signUp.zipCode} keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})} editable={!isLoading}></Input>
               <View style={styles.spacer} />
-              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad"></Input>
+              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad" editable={!isLoading}></Input>
             </View>
             <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]} textBreakStrategy="simple">{Strings.signUp.required}</Text>
-            <CheckBox style={styles.agreeCheckBox} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)}>
+            <CheckBox style={styles.agreeCheckBox} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} editable={!isLoading}>
               <Text style={[GlobalStyles.p1, styles.agreeText]} onPress={() => setTermsAgreed(!termsAgreed)}>{Strings.formatString(Strings.signUp.agree, <Text style={styles.linkText} onPress={onPolicyPress}>{Strings.signUp.policy}</Text>)}</Text>
             </CheckBox>
-            <Button isEnabled={isValid()} style={styles.button} onPress={onSubmit}>{Strings.signUp.submit}</Button>
+            { isLoading &&
+              <View style={styles.loader}>
+                <ActivityIndicator size="small" color={Colors.primary.purple} />
+                <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
+              </View>}
+            { !isLoading &&
+              <Button isEnabled={isValid()} style={styles.button} onPress={onSubmit}>{Strings.signUp.submit}</Button>}
             <PaginationDots currentPage={1} totalPages={3} />
           </View>
         </KeyboardAwareScrollView>
@@ -202,4 +223,16 @@ const styles = StyleSheet.create({
   privacyText: {
     color: Colors.primary.gray2
   },
+  loader: {
+    flexDirection: 'row',
+    height: 48,
+    marginBottom: 16,
+    alignItems: 'center',
+  },
+  loaderText: {
+    color: Colors.primary.purple,
+    fontSize: 24,
+    fontWeight: '500',
+    marginLeft: 10,
+  }
 });
