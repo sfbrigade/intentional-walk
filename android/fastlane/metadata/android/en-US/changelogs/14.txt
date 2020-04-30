@@ -1,0 +1,6 @@
+[#77] Client/Server API integration, new Contest model for dynamic contest dates
+[#98] Spanish translation of Zip Code Required alert
+[#99] Spanish translation of email required alert
+[#102] Capitalize month and day of week in date navigator
+[#103] Fix capitalization typo in Spanish strings
+[#55] Query steps/distance by month, not day
