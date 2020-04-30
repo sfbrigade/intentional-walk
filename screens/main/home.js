@@ -15,8 +15,10 @@ import numeral from 'numeral';
 
 export default function HomeScreen({navigation}) {
   const safeAreaInsets = useSafeArea();
+
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
+
   const [dailyWalks, setDailyWalks] = useState(null);
   const [todaysWalk, setTodaysWalk] = useState(null);
   const [totalSteps, setTotalSteps] = useState(null);
@@ -172,7 +174,11 @@ export default function HomeScreen({navigation}) {
   };
 
   const refresh = () => {
-    dateRef.current = moment(date.toDate());
+    const today = moment().startOf('day');
+    dateRef.current = moment(dateRef.current);
+    if (dateRef.current.isAfter(today)) {
+      dateRef.current = today;
+    }
     setDate(dateRef.current);
     getStepsAndDistances(dateRef.current, null);
     getTotalSteps();
@@ -201,7 +207,7 @@ export default function HomeScreen({navigation}) {
         Strings.setLanguage(lang);
         /// recreate the date in the current locale
         moment.locale(lang);
-        dateRef.current = moment(date.toDate());
+        dateRef.current = moment(dateRef.current);
         setDate(dateRef.current);
       }
     });
