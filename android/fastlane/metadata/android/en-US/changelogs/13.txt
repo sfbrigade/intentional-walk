@@ -1,0 +1,12 @@
+[#80] Make side menu scrollable
+[#97] Updated Partners text
+[#96] Zip Code Required alert Chinese translation
+[#95] Email Required alert Chinese translation
+[#94] Change Chinese translation for Stop
+[#91] Space things out on iWalk Information
+[#90] Change Chinese translation for Where to Walk
+[#88] Reduce spacing of You're Signed Up screen
+[#84] Fix input placeholder text color
+[#85 #86 #89 #92] Various issue fixes
+[#83] Change steps/miles subtitle on previous days
+[#82] Updated logo asset

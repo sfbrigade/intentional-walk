@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
 import {Strings} from '../lib';
+import _ from 'lodash';
 
 export default function DateNavigator(props) {
   const today = moment().startOf('day');
@@ -19,7 +20,7 @@ export default function DateNavigator(props) {
     next = today;
     prev = moment().startOf('day').subtract(2, 'days');
   } else {
-    title = <Text style={styles.title} textBreakStrategy="simple">{props.date.format('dddd')}</Text>;
+    title = <Text style={styles.title} textBreakStrategy="simple">{_.capitalize(props.date.format('dddd'))}</Text>;
     next = moment(props.date).add(1, 'day');
     prev = moment(props.date).subtract(1, 'day');
   }
@@ -30,7 +31,7 @@ export default function DateNavigator(props) {
       </TouchableOpacity>
       <View>
         {title}
-        <Text style={styles.subtitle} textBreakStrategy="simple">{props.date.format('MMMM D')}</Text>
+        <Text style={styles.subtitle} textBreakStrategy="simple">{_.capitalize(props.date.format('MMMM D'))}</Text>
       </View>
       <View style={styles.headerButton}>
         {next == null ? null : (

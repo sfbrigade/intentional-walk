@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {BackHandler} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {Button} from '../../components';
+import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Button, Popup} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
 import moment from 'moment';
@@ -21,6 +21,8 @@ export default function WelcomeScreen({navigation}) {
   );
 
   const [language, setLanguage] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const selectLanguage = lang => {
     setLanguage(lang);
@@ -30,7 +32,16 @@ export default function WelcomeScreen({navigation}) {
   };
 
   const continuePressed = () => {
-    navigation.navigate('SignUp');
+    setLoading(true);
+    Realm.updateContest()
+      .then(contest => {
+        setLoading(false);
+        navigation.navigate('SignUp', {contest: contest.toObject()});
+      })
+      .catch(error => {
+        setLoading(false);
+        setShowAlert(true);
+      });
   };
 
   return (
@@ -41,12 +52,23 @@ export default function WelcomeScreen({navigation}) {
           <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.welcome.select}</Text>
           <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
           <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
-          <Button style={styles.button} isToggle={true} isSelected={language === 'zh-cn'} onPress={() => selectLanguage('zh-cn')}>中文</Button>
-          {!language ? null : (
-            <Button style={[styles.button, {marginTop: 32}]} onPress={continuePressed}>{Strings.welcome.start}</Button>
-          )}
+          <Button style={[styles.button, {marginBottom: 32}]} isToggle={true} isSelected={language === 'zh-cn'} onPress={() => selectLanguage('zh-cn')}>中文</Button>
+          {language && isLoading &&
+            <View style={styles.loader}>
+              <ActivityIndicator size="small" color={Colors.primary.purple} />
+              <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
+            </View>}
+          {language && !isLoading &&
+            <Button style={styles.button} onPress={continuePressed}>{Strings.welcome.start}</Button>}
         </View>
       </ScrollView>
+      <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
+        <View style={{alignItems: 'center'}}>
+          <Text style={GlobalStyles.h1}>{Strings.common.serverErrorTitle}</Text>
+          <Text style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>{Strings.common.serverErrorMessage}</Text>
+          <Button style={styles.button} onPress={() => setShowAlert(false)}>{Strings.common.okay}</Button>
+        </View>
+      </Popup>
     </SafeAreaView>
   );
 }
@@ -101,5 +123,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
     fontFamily: 'Arial',
+  },
+  loader: {
+    flexDirection: 'row',
+    height: 50,
+    alignItems: 'center',
+  },
+  loaderText: {
+    color: Colors.primary.purple,
+    fontSize: 24,
+    fontWeight: '500',
+    marginLeft: 10,
   },
 });

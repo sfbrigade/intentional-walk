@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from './button';
 import {Colors, GlobalStyles} from '../styles';
-import {Fitness, Pedometer, Realm, Strings} from '../lib';
+import {Api, Fitness, Pedometer, Realm, Strings} from '../lib';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -109,11 +109,11 @@ export default function Recorder(props) {
           <Text style={styles.label} textBreakStrategy="simple">{Strings.common.mins}</Text>
         </View>
         <View>
-          <Text style={styles.count} textBreakStrategy="simple">{activeWalk.distance ? numeral(activeWalk.distance).format('0.0') : '0.0'}</Text>
+          <Text style={styles.count} textBreakStrategy="simple">{numeral(activeWalk.distance * 0.000621371).format('0.0')}</Text>
           <Text style={styles.label} textBreakStrategy="simple">{Strings.common.miles}</Text>
         </View>
         <View>
-          <Text style={styles.count} textBreakStrategy="simple">{activeWalk.steps ? (activeWalk.steps || 0) : 0}</Text>
+          <Text style={styles.count} textBreakStrategy="simple">{activeWalk.steps}</Text>
           <Text style={styles.label} textBreakStrategy="simple">{Strings.common.steps}</Text>
         </View>
         <View style={[styles.stopButtonRow, {opacity: end ? 1 : 0}]}>

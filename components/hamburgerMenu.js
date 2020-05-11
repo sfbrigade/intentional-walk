@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Linking, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Image, Linking, SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -53,21 +53,24 @@ export default function HamburgerMenu(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image style={styles.headerLogo} source={require('../assets/logo_full.png')} />
-        <Text style={styles.headerEmail} textBreakStrategy="simple">{email}</Text>
-      </View>
-      <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">{Strings.common.myRecordedWalks}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => Linking.openURL('mailto:intentionalwalk@sfdph.org')} icon="email">{Strings.common.emailUs}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('Privacy')} icon="description" route="Privacy">{Strings.common.privacyPolicy}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => onPress('Partners')} icon="brightness-low" route="Partners">{Strings.common.programPartners}</HamburgerMenuItem>
-      <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
-      <Text style={styles.aboutText} textBreakStrategy="simple">{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Image style={styles.headerLogo} source={require('../assets/logo_full.png')} />
+          <Text style={styles.headerEmail} textBreakStrategy="simple">{email}</Text>
+        </View>
+        <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">{Strings.common.myRecordedWalks}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => Linking.openURL('mailto:intentionalwalk@sfdph.org')} icon="email">{Strings.common.emailUs}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('Privacy')} icon="description" route="Privacy">{Strings.common.privacyPolicy}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('Partners')} icon="brightness-low" route="Partners">{Strings.common.programPartners}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
+        <View style={{height:60}}></View>
+        <Text style={styles.aboutText} textBreakStrategy="simple">{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

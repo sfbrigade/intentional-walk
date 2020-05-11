@@ -23,10 +23,10 @@ export default function InfoScreen({navigation}) {
       if (permitted) {
         if (Platform.OS === 'android') {
           Fitness.subscribeToActivity().then(function(subscribed) {
-            console.log('subscribeToActivity', subscribed);
+            /// TODO handle errors
           });
           Fitness.subscribeToSteps().then(function(subscribed) {
-            console.log('subscribeToSteps', subscribed);
+            /// TODO handle errors
           });
         }
         navigation.navigate('MainStack');
@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     maxWidth: 250,
-    marginBottom: 70,
+    marginBottom: 30,
     fontSize: 17,
     color: Colors.primary.gray2,
   },
   infoBox: {
-    marginBottom: 60,
+    marginBottom: 30,
   },
   infoBoxLast: {
     marginBottom: 30,
