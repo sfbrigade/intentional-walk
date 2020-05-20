@@ -24,9 +24,9 @@ export default function InfoScreen({navigation}) {
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1} textBreakStrategy="simple">{Strings.info.youreSignedUp}</Text>
+          <Text style={GlobalStyles.h1}>{Strings.info.youreSignedUp}</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
-            <Text style={styles.subtitle} textBreakStrategy="simple">{Strings.info.fromHereText}</Text>
+            <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
             <InfoBox title={Strings.info.walk}
                      style={styles.infoBox}
                      icon="directions-walk"

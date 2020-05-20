@@ -101,20 +101,20 @@ export default function Recorder(props) {
   return (
     <View pointerEvents="box-none" style={[styles.container, props.style]}>
       <View style={[styles.header, {backgroundColor: headerColor}]}>
-        <Text style={[GlobalStyles.h2, styles.headerText]} textBreakStrategy="simple">{headerText}</Text>
+        <Text style={[GlobalStyles.h2, styles.headerText]}>{headerText}</Text>
       </View>
       <View style={styles.body}>
         <View>
-          <Text style={styles.count} textBreakStrategy="simple">{elapsedTime}</Text>
-          <Text style={styles.label} textBreakStrategy="simple">{Strings.common.mins}</Text>
+          <Text style={styles.count}>{elapsedTime}</Text>
+          <Text style={styles.label}>{Strings.common.mins}</Text>
         </View>
         <View>
-          <Text style={styles.count} textBreakStrategy="simple">{numeral(activeWalk.distance * 0.000621371).format('0.0')}</Text>
-          <Text style={styles.label} textBreakStrategy="simple">{Strings.common.miles}</Text>
+          <Text style={styles.count}>{numeral(activeWalk.distance * 0.000621371).format('0.0')}</Text>
+          <Text style={styles.label}>{Strings.common.miles}</Text>
         </View>
         <View>
-          <Text style={styles.count} textBreakStrategy="simple">{activeWalk.steps}</Text>
-          <Text style={styles.label} textBreakStrategy="simple">{Strings.common.steps}</Text>
+          <Text style={styles.count}>{activeWalk.steps}</Text>
+          <Text style={styles.label}>{Strings.common.steps}</Text>
         </View>
         <View style={[styles.stopButtonRow, {opacity: end ? 1 : 0}]}>
           <Button onPress={onResume} style={styles.resumeButton} textStyle={{color: Colors.primary.purple}}>{Strings.recorder.resume}</Button>
@@ -130,7 +130,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onResume}>
                 <Image style={styles.primaryButton} source={require('../assets/record.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.resumeText]} textBreakStrategy="simple">{Strings.recorder.resume}</Text>
+              <Text style={[styles.buttonText, styles.resumeText]}>{Strings.recorder.resume}</Text>
             </View>
           }
           { !pause &&
@@ -138,7 +138,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop}>
                 <Image style={styles.primaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]} textBreakStrategy="simple">{Strings.recorder.stopAndSave}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stopAndSave}</Text>
             </View>
           }
           { pause &&
@@ -146,7 +146,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onStop} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/stop.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]} textBreakStrategy="simple">{Strings.recorder.stop}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stop}</Text>
             </View>
           }
           { !pause &&
@@ -154,7 +154,7 @@ export default function Recorder(props) {
               <TouchableOpacity onPress={onPause} style={styles.primaryButton}>
                 <Image style={styles.secondaryButton} source={require('../assets/pause.png')} />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.pauseText]} textBreakStrategy="simple">{Strings.recorder.pause}</Text>
+              <Text style={[styles.buttonText, styles.pauseText]}>{Strings.recorder.pause}</Text>
             </View>
           }
         </View>

@@ -9,7 +9,7 @@ export default function Button(props) {
       disabled={props.isEnabled === false}
       onPress={() => props.onPress()}>
       {React.Children.map(props.children, c => typeof c === 'string' ? (
-        <Text style={[styles.text, props.textStyle, props.isToggle && !props.isSelected ? styles.textToggle: {}]} textBreakStrategy="simple">{c}</Text>
+        <Text style={[styles.text, props.textStyle, props.isToggle && !props.isSelected ? styles.textToggle: {}]}>{c}</Text>
       ) : c)}
     </TouchableOpacity>
   );

@@ -123,12 +123,12 @@ export default function SignUpScreen({navigation, route}) {
     <SafeAreaView style={GlobalStyles.container}>
         <KeyboardAwareScrollView style={GlobalStyles.container}>
           <View style={styles.content}>
-            <Text style={GlobalStyles.h1} textBreakStrategy="simple">{Strings.common.welcome}</Text>
+            <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
             <View style={[styles.row, styles.logos]}>
               <Image source={require('../../assets/sfdph_logo.png')} style={[styles.logo, styles.sfdphLogo]} />
               <Image source={require('../../assets/sfgiants_logo.png')} style={[styles.logo, styles.giantsLogo]} />
             </View>
-            <Text style={GlobalStyles.p1} textBreakStrategy="simple">{Strings.formatString(Strings.signUp.about, Strings.formatString(Strings.common.range, moment(contest.start).format(Strings.common.rangeFrom), moment(contest.end).format(Strings.common.rangeTo)))}</Text>
+            <Text style={GlobalStyles.p1}>{Strings.formatString(Strings.signUp.about, Strings.formatString(Strings.common.range, moment(contest.start).format(Strings.common.rangeFrom), moment(contest.end).format(Strings.common.rangeTo)))}</Text>
             <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next" editable={!isLoading}></Input>
             <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next" editable={!isLoading}></Input>
             <View style={styles.row}>
@@ -136,7 +136,7 @@ export default function SignUpScreen({navigation, route}) {
               <View style={styles.spacer} />
               <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad" editable={!isLoading}></Input>
             </View>
-            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]} textBreakStrategy="simple">{Strings.signUp.required}</Text>
+            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
             <CheckBox style={styles.agreeCheckBox} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} editable={!isLoading}>
               <Text style={[GlobalStyles.p1, styles.agreeText]} onPress={() => setTermsAgreed(!termsAgreed)}>{Strings.formatString(Strings.signUp.agree, <Text style={styles.linkText} onPress={onPolicyPress}>{Strings.signUp.policy}</Text>)}</Text>
             </CheckBox>

@@ -12,15 +12,15 @@ export default function DateNavigator(props) {
   const yesterday = moment().startOf('day').subtract(1, 'days');
   let title, prev, next;
   if (props.date.isSame(today)) {
-    title = <Text style={styles.title} textBreakStrategy="simple">{Strings.common.today}</Text>;
+    title = <Text style={styles.title}>{Strings.common.today}</Text>;
     next = null;
     prev = yesterday;
   } else if (props.date.isSame(yesterday)) {
-    title = <Text style={styles.title} textBreakStrategy="simple">{Strings.common.yesterday}</Text>;
+    title = <Text style={styles.title}>{Strings.common.yesterday}</Text>;
     next = today;
     prev = moment().startOf('day').subtract(2, 'days');
   } else {
-    title = <Text style={styles.title} textBreakStrategy="simple">{_.capitalize(props.date.format('dddd'))}</Text>;
+    title = <Text style={styles.title}>{_.capitalize(props.date.format('dddd'))}</Text>;
     next = moment(props.date).add(1, 'day');
     prev = moment(props.date).subtract(1, 'day');
   }
@@ -31,7 +31,7 @@ export default function DateNavigator(props) {
       </TouchableOpacity>
       <View>
         {title}
-        <Text style={styles.subtitle} textBreakStrategy="simple">{_.capitalize(props.date.format('MMMM D'))}</Text>
+        <Text style={styles.subtitle}>{_.capitalize(props.date.format('MMMM D'))}</Text>
       </View>
       <View style={styles.headerButton}>
         {next == null ? null : (
