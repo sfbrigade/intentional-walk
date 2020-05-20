@@ -9,7 +9,9 @@ export default function StatBox(props) {
       <View style={[styles.box, {width: '100%', overflow: 'hidden'}]}>
         { props.mainText == ' ' &&
           <ActivityIndicator style={styles.spinner} size="small" color="white" /> }
-        <Text style={styles.mainText} textBreakStrategy="simple">{props.mainText}</Text>
+        <Text style={styles.mainText} textBreakStrategy="simple">{props.mainText}{
+          props.mainTextSuffix != '' ? <Text style={styles.subText}>{props.mainTextSuffix}</Text> : ''
+        }</Text>
         <Text style={styles.subText} textBreakStrategy="simple">{props.subText}</Text>
         <Icon
           style={[styles.icon, props.iconStyle]}

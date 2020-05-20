@@ -255,6 +255,7 @@ export default function HomeScreen({navigation}) {
               />
               <StatBox
                 mainText={todaysWalk ? numeral(todaysWalk.distance * 0.000621371).format('0,0.0') : " "}
+                mainTextSuffix={Strings.home.milesSuffix}
                 subText={isToday ? Strings.home.milesToday : Strings.common.miles}
                 icon="swap-calls"
                 iconSize={200}
