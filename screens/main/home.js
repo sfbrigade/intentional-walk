@@ -267,7 +267,7 @@ export default function HomeScreen({navigation}) {
             <View style={[styles.row, isToday ? null : styles.hidden]} pointerEvents={isToday? 'auto' : 'none'}>
               <StatBox
                 mainText={totalSteps != null ? numeral(totalSteps).format('0,0') : " "}
-                subText={Strings.home.overallStepTotal}
+                subText={contest.isDuringContest ? Strings.home.overallStepTotal : Strings.home.stepsThisMonth}
                 icon="star-border"
                 iconSize={200}
                 style={[styles.overallBox, styles.box]}
