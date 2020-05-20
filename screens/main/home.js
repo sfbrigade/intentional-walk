@@ -232,9 +232,6 @@ export default function HomeScreen({navigation}) {
   const isToday = date.isSame(today);
   const dateString = isToday ? Strings.common.today : date.format('MMMM D');
 
-  const START_DATE = '2020-06-01';
-  const isBeforeStartDate = moment(today).isBefore(START_DATE);
-
   return (
     <View style={GlobalStyles.container}>
       { !activeWalk &&
