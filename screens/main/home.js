@@ -105,32 +105,15 @@ export default function HomeScreen({navigation}) {
     Realm.getContest().then(contest => {
         const now = moment();
         let from = null, to = null;
-        if (contest) {
-          /// check if we're in/after the contest period
-          if (!contest.isBeforeStartDate) {
-            from = moment(contest.start);
-            /// check if we're in the contest period
-            if (contest.isAfterEndDate) {
-              to = moment(contest.end);
-            } else {
-              to = now;
-            }
-          }
-        }
-        /// if no contest (should never happen), or we're before the contest...
-        if (!from || !to) {
-          /// total up from when user created to now, or beginning of promo, whichever later
-          return Realm.getUser().then(user => {
-            if (contest && user) {
-              let from = moment(user.createdAt);
-              if (moment(contest.startPromo).isBefore(now) && from.isBefore(moment(contest.startPromo))) {
-                from = moment(contest.startPromo);
-              }
-              return [from, now];
-            }
-            /// no contest, no user, so don't return a range
-            return [null, null];
-          });
+        /// check if we're in/outside the contest period
+        if (contest && contest.isDuringContest) {
+          /// get total from start of contest until now
+          from = moment(contest.start);
+          to = now;
+        } else {
+          /// get total from start of month
+          from = moment().startOf('month');
+          to = now;
         }
         return [from, to];
       })
