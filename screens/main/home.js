@@ -26,7 +26,7 @@ export default function HomeScreen({navigation}) {
   const [contest, setContest] = useState(null);
 
   const [recordedWalks, setRecordedWalks] = useState(null);
-  const [activeWalk, setActiveWalk] = useState(false);
+  const [activeWalk, setActiveWalk] = useState(null);
 
   const saveStepsAndDistances = () => {
     Realm.getContest().then(contest => {
@@ -172,7 +172,15 @@ export default function HomeScreen({navigation}) {
   /// one time setup for some data store listeners
   useEffect(() => {
     /// listen for an active walk
-    Realm.addCurrentWalkListener(walk => setActiveWalk(walk));
+    let isFirstLoad = true;
+    Realm.addCurrentWalkListener(walk => {
+      setActiveWalk(walk);
+      if (!isFirstLoad && walk == null) {
+        /// if we've just finished a walk, then refresh to update step counts
+        refresh();
+      }
+      isFirstLoad = false;
+    });
     /// listen for updates to contest info
     Realm.addContestListener(contest => contest ? setContest(contest.toObject()) : null);
     /// on cleanup, remove listeners
