@@ -2,6 +2,7 @@ package org.codeforsanfrancisco.intentionalwalk;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -9,6 +10,10 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.security.ProviderInstaller;
+import com.google.android.gms.security.ProviderInstaller.ProviderInstallListener;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -44,6 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+    upgradeSecurityProvider();
   }
 
   /**
@@ -70,5 +76,23 @@ public class MainApplication extends Application implements ReactApplication {
         e.printStackTrace();
       }
     }
+  }
+
+  /**
+   * Upgrade device Security Provider as needed for latest SSL compatibility.
+   * https://gist.github.com/patrickhammond/0b13ec35160af758d98c
+   * https://developer.android.com/training/articles/security-gms-provider
+   */
+  private void upgradeSecurityProvider() {
+    ProviderInstaller.installIfNeededAsync(this, new ProviderInstallListener() {
+      @Override
+      public void onProviderInstalled() {
+      }
+
+      @Override
+      public void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
+        GoogleApiAvailability.getInstance().showErrorNotification(MainApplication.this, errorCode);
+      }
+    });
   }
 }
