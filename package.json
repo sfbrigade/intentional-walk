@@ -12,6 +12,7 @@
   "dependencies": {
     "@ovalmoney/react-native-fitness": "^0.2.4",
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-community/push-notification-ios": "^1.2.2",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "@t2tx/react-native-universal-pedometer": "^2.0.3",
@@ -32,6 +33,7 @@
     "react-native-local-resource": "^0.1.6",
     "react-native-localization": "^2.1.6",
     "react-native-progress": "^4.0.3",
+    "react-native-push-notification": "^3.5.2",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.6.4",
     "react-native-screens": "^2.0.0-alpha.32",

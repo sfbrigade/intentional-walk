@@ -237,6 +237,8 @@ PODS:
     - React
   - RNCMaskedView (0.1.6):
     - React
+  - RNCPushNotificationIOS (1.2.2):
+    - React
   - RNDeviceInfo (5.5.4):
     - React
   - RNGestureHandler (1.5.3):
@@ -285,6 +287,7 @@ DEPENDENCIES:
   - ReactNativeLocalization (from `../node_modules/react-native-localization`)
   - RealmJS (from `../node_modules/realm`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -362,6 +365,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/realm"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
@@ -410,6 +415,7 @@ SPEC CHECKSUMS:
   ReactNativeLocalization: 9abfb1717d6c6f2e3a4e444c4402d52acbf784cc
   RealmJS: b103c28012b1abfe13396ac82e76b4f4d9d47c0d
   RNCMaskedView: e5b99bc191945f157adeede68da9d424462de177
+  RNCPushNotificationIOS: 375feee5b89ad4aeee8a971f63fe4848902380b7
   RNDeviceInfo: 82e0a23d22ec73b2f71bd686a95d3dd278f223d7
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
