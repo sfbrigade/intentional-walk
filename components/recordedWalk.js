@@ -80,13 +80,11 @@ const styles = StyleSheet.create({
   mainTitle: {
     color: Colors.primary.purple,
     fontSize: 16,
-    fontWeight: 'bold',
-    minWidth: 120
+    fontWeight: 'bold'
   },
   statsTitle: {
     color: Colors.primary.purple,
-    fontSize: 16,
-    alignContent: 'center'
+    fontSize: 16
   },
   subtitle: {
     color: Colors.primary.purple,
