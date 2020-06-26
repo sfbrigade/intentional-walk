@@ -81,10 +81,12 @@ const styles = StyleSheet.create({
     color: Colors.primary.purple,
     fontSize: 16,
     fontWeight: 'bold',
+    minWidth: 120
   },
   statsTitle: {
     color: Colors.primary.purple,
     fontSize: 16,
+    alignContent: 'center'
   },
   subtitle: {
     color: Colors.primary.purple,
@@ -101,6 +103,8 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingTop: 8,
     flex: 1,
+    justifyContent: 'space-between',
+    paddingRight: 100
   },
   row2: {
     flexDirection: 'row',
