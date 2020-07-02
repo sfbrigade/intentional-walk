@@ -19,7 +19,7 @@ export default function RecordedWalk(props) {
     } else if (start.isSameOrAfter(yesterday)) {
       date = Strings.common.yesterday;
     } else {
-      date = start.format('MMMM D');
+      date = start.format('MMM D');
     }
     steps = numeral(walk.steps).format('0,0');
     miles = numeral(walk.distance * 0.000621371).format('0,0.0');
@@ -32,7 +32,7 @@ export default function RecordedWalk(props) {
           <Text style={styles.mainTitle}>{title}</Text>
           {date &&
             <View style={styles.dateContainer}>
-              <Text style={styles.statsTitle}>{date}</Text>
+              <Text style={[styles.statsTitle, {textAlign: 'right'}]}>{date}</Text>
             </View>}
         </View>
         {steps === undefined ?
@@ -93,8 +93,10 @@ const styles = StyleSheet.create({
   dateContainer: {
     paddingLeft: 16,
     marginLeft: 16,
+    marginRight: 100,
     borderLeftColor: Colors.primary.purple,
     borderLeftWidth: 1,
+    minWidth: 90,
   },
   row1: {
     flexDirection: 'row',
@@ -102,7 +104,6 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     flex: 1,
     justifyContent: 'space-between',
-    paddingRight: 100
   },
   row2: {
     flexDirection: 'row',
