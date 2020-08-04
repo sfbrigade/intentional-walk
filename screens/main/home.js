@@ -234,6 +234,15 @@ export default function HomeScreen({navigation}) {
               <Text style={styles.alertText}>{Strings.home.getReadyAlert1}</Text>
               <Text style={styles.alertText}>{Strings.formatString(Strings.home.getReadyAlert2, moment(contest.start).format(Strings.common.date))}</Text>
             </View> }
+            { contest && contest.isDuringContest && <View style={{marginBottom: 16}}>
+              <Text style={styles.alertText}>{Strings.formatString(Strings.home.currentAlert, moment(contest.start).format(Strings.common.date), moment(contest.end).format(Strings.common.date))}</Text>
+            </View> }
+            { contest && contest.isWeekAfterEndDate && <View style={{marginBottom: 16}}>
+              <Text style={styles.alertText}>{Strings.formatString(Strings.home.congratsAlert)}</Text>
+            </View> }
+            { contest && contest.isAfterEndDate && !contest.isWeekAfterEndDate && <View style={{marginBottom: 16}}>
+              <Text style={styles.alertText}>{Strings.formatString(Strings.home.noContestAlert)}</Text>
+            </View> }
             <View style={styles.row}>
               <StatBox
                 mainText={todaysWalk ? numeral(todaysWalk.steps).format('0,0') : " "}
@@ -406,7 +415,6 @@ const styles = StyleSheet.create({
     color: Colors.secondary.red,
     fontSize: 12,
     fontWeight: 'bold',
-    paddingHorizontal: 20,
     textAlign: 'center'
   }
 });
