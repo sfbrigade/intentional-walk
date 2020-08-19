@@ -64,6 +64,7 @@ export default function HamburgerMenu(props) {
         <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
         <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
         <HamburgerMenuItem onPress={() => Linking.openURL('mailto:intentionalwalk@sfdph.org')} icon="email">{Strings.common.emailUs}</HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => onPress('ContestRules')} icon="description" route="ContestRules">{Strings.common.contestRules}</HamburgerMenuItem>
         <HamburgerMenuItem onPress={() => onPress('Privacy')} icon="description" route="Privacy">{Strings.common.privacyPolicy}</HamburgerMenuItem>
         <HamburgerMenuItem onPress={() => onPress('Partners')} icon="brightness-low" route="Partners">{Strings.common.programPartners}</HamburgerMenuItem>
         <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>

@@ -16,14 +16,14 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import Autolink from 'react-native-autolink';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import loadLocalResource from 'react-native-local-resource'
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import loadLocalResource from 'react-native-local-resource';
 import moment from 'moment';
 
 import {Button, CheckBox, Input, Logo, PaginationDots, Popup, ScrollText} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
 
+import ContestRules from '../../assets/contestRules';
 import Privacy from '../../assets/privacy';
 
 export default function SignUpScreen({navigation, route}) {
@@ -42,10 +42,13 @@ export default function SignUpScreen({navigation, route}) {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showContestRules, setShowContestRules] = useState(false);
 
   const screenDims = Dimensions.get('screen');
   const [privacyText, setPrivacyText] = useState();
   loadLocalResource(Privacy[Strings.getLanguage()]).then(text => setPrivacyText(text));
+  const [contestRulesText, setContestRulesText] = useState();
+  loadLocalResource(ContestRules[Strings.getLanguage()]).then(text => setContestRulesText(text));
 
   useFocusEffect(
     useCallback(() => {
@@ -111,6 +114,10 @@ export default function SignUpScreen({navigation, route}) {
     setShowPrivacyPolicy(true);
   }
 
+  const onContestRulesPress = () => {
+    setShowContestRules(true);
+  }
+
   const isValid = () => {
     return name.trim() != '' &&
            email.trim() != '' &&
@@ -138,7 +145,7 @@ export default function SignUpScreen({navigation, route}) {
             </View>
             <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
             <CheckBox style={styles.agreeCheckBox} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} editable={!isLoading}>
-              <Text style={[GlobalStyles.p1, styles.agreeText]} onPress={() => setTermsAgreed(!termsAgreed)}>{Strings.formatString(Strings.signUp.agree, <Text style={styles.linkText} onPress={onPolicyPress}>{Strings.signUp.policy}</Text>)}</Text>
+              <Text style={[GlobalStyles.p1, styles.agreeText]} onPress={() => setTermsAgreed(!termsAgreed)}>{Strings.formatString(Strings.signUp.agree, <Text style={styles.linkText} onPress={onPolicyPress}>{Strings.signUp.policy}</Text>, <Text style={styles.linkText} onPress={onContestRulesPress}>{Strings.signUp.contestRules}</Text>)}</Text>
             </CheckBox>
             { isLoading &&
               <View style={styles.loader}>
@@ -156,6 +163,15 @@ export default function SignUpScreen({navigation, route}) {
               <Logo style={styles.privacyLogo} />
               <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
               <Autolink text={privacyText} style={styles.privacyText} />
+            </ScrollText>
+          </View>
+        </Popup>
+        <Popup isVisible={showContestRules} onClose={() => setShowContestRules(false)}>
+          <View>
+            <ScrollText style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
+              <Logo style={styles.privacyLogo} />
+              <Text style={GlobalStyles.h1}>{Strings.common.contestRules}</Text>
+              <Autolink text={contestRulesText} style={styles.privacyText} />
             </ScrollText>
           </View>
         </Popup>
@@ -208,11 +224,12 @@ const styles = StyleSheet.create({
     width: 16,
   },
   agreeCheckBox: {
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    width: '80%'
   },
   agreeText: {
     marginBottom: 0,
-    lineHeight: 32,
+    lineHeight: 22
   },
   linkText: {
     textDecorationLine: 'underline'
