@@ -46,7 +46,7 @@ export default function HomeScreen({navigation}) {
         }
         /// only save when within contest period
         if (from && to) {
-          Fitness.getStepsAndDistances(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
+          Fitness.getStepsAndDistances(from, to)
             .then(dailyWalks => {
               if (dailyWalks && dailyWalks.length > 0) {
                 /// get user account, then save to server...!
