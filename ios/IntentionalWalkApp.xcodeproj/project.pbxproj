@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* IntentionalWalkAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IntentionalWalkAppTests.m */; };
+		0ADAED8B938865850C54F46A /* libPods-IntentionalWalkApp-IntentionalWalkAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C1CC2262F9DD43276BE6F98 /* libPods-IntentionalWalkApp-IntentionalWalkAppTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		45AD8B3C23E23B6B00F432F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */; };
-		8A93F8680B98EC5C611970C2 /* libPods-IntentionalWalkAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */; };
 		A49EA2BBC81DB16956D27E47 /* libPods-IntentionalWalkApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */; };
 /* End PBXBuildFile section */
 
@@ -43,14 +43,16 @@
 		2D06686ADFCA384033A3334D /* libPods-IntentionalWalkApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34208F5F70B0A6BEBBC2D0F9 /* Pods-IntentionalWalkAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkAppTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkAppTests/Pods-IntentionalWalkAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkAppTests.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkAppTests/Pods-IntentionalWalkAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E87B515ADB55F161CD36908 /* Pods-IntentionalWalkApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOSTests/Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		457AA6895435D7FA65BDFEAA /* Pods-IntentionalWalkApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOS/Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntentionalWalkApp.entitlements; path = IntentionalWalkApp/IntentionalWalkApp.entitlements; sourceTree = "<group>"; };
 		45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		5B75ED87C917500E1462F544 /* Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOSTests/Pods-IntentionalWalkApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		63E8FF0727D7D1AB59B28F27 /* Pods-IntentionalWalkApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOS/Pods-IntentionalWalkApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		6C1CC2262F9DD43276BE6F98 /* libPods-IntentionalWalkApp-IntentionalWalkAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkApp-IntentionalWalkAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7488885BA91A4E06C1890A28 /* Pods-IntentionalWalkApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp.release.xcconfig"; sourceTree = "<group>"; };
+		87CE7A3CC481DD2EC6B1688B /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		AFC54432BF7B413674EC27EA /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF22D1A34E44AE084C9BBB78 /* Pods-IntentionalWalkApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E384276A9F7D77B0250F501F /* libPods-IntentionalWalkApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntentionalWalkApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -62,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A93F8680B98EC5C611970C2 /* libPods-IntentionalWalkAppTests.a in Frameworks */,
+				0ADAED8B938865850C54F46A /* libPods-IntentionalWalkApp-IntentionalWalkAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +123,8 @@
 				3E87B515ADB55F161CD36908 /* Pods-IntentionalWalkApp-tvOSTests.release.xcconfig */,
 				35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */,
 				34208F5F70B0A6BEBBC2D0F9 /* Pods-IntentionalWalkAppTests.release.xcconfig */,
+				AFC54432BF7B413674EC27EA /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig */,
+				87CE7A3CC481DD2EC6B1688B /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -134,7 +138,7 @@
 				27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */,
 				E384276A9F7D77B0250F501F /* libPods-IntentionalWalkApp-tvOS.a */,
 				2D06686ADFCA384033A3334D /* libPods-IntentionalWalkApp-tvOSTests.a */,
-				3DC791F8EABD42735D903811 /* libPods-IntentionalWalkAppTests.a */,
+				6C1CC2262F9DD43276BE6F98 /* libPods-IntentionalWalkApp-IntentionalWalkAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -189,6 +193,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				633E540B3C1587C104BB5597 /* [CP] Embed Pods Frameworks */,
+				E16ACBC0F880CC697B7F2DCD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,6 +217,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				6EE660326FCE9C8C9F7BE301 /* [CP] Copy Pods Resources */,
+				9D28A3A08B1E33AD4F5141A4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -315,11 +322,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IntentionalWalkAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-IntentionalWalkApp-IntentionalWalkAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		633E540B3C1587C104BB5597 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6EE660326FCE9C8C9F7BE301 /* [CP] Copy Pods Resources */ = {
@@ -345,6 +370,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -364,10 +390,29 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D28A3A08B1E33AD4F5141A4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp/Pods-IntentionalWalkApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A3981FB0355C90F2FCC8FC20 /* [CP] Check Pods Manifest.lock */ = {
@@ -390,6 +435,56 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E16ACBC0F880CC697B7F2DCD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests-resources.sh",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntentionalWalkApp-IntentionalWalkAppTests/Pods-IntentionalWalkApp-IntentionalWalkAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -456,7 +551,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */;
+			baseConfigurationReference = AFC54432BF7B413674EC27EA /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 2XU846A9M4;
@@ -480,7 +575,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 34208F5F70B0A6BEBBC2D0F9 /* Pods-IntentionalWalkAppTests.release.xcconfig */;
+			baseConfigurationReference = 87CE7A3CC481DD2EC6B1688B /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -578,6 +673,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -630,6 +726,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
