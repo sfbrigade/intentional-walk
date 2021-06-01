@@ -13,6 +13,8 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		451BCC0E2666EA46002144A9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BCC0D2666EA46002144A9 /* File.swift */; };
+		451BCC4F2666EB38002144A9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451BCC0D2666EA46002144A9 /* File.swift */; };
 		45AD8B3C23E23B6B00F432F2 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */; };
 		A49EA2BBC81DB16956D27E47 /* libPods-IntentionalWalkApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDC2DA07755E41A0501393 /* libPods-IntentionalWalkApp.a */; };
 /* End PBXBuildFile section */
@@ -44,6 +46,8 @@
 		34208F5F70B0A6BEBBC2D0F9 /* Pods-IntentionalWalkAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkAppTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkAppTests/Pods-IntentionalWalkAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		35734DD154A4080591DAC733 /* Pods-IntentionalWalkAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkAppTests.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkAppTests/Pods-IntentionalWalkAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3E87B515ADB55F161CD36908 /* Pods-IntentionalWalkApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOSTests/Pods-IntentionalWalkApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		451BCC0C2666EA45002144A9 /* IntentionalWalkApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IntentionalWalkApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		451BCC0D2666EA46002144A9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		457AA6895435D7FA65BDFEAA /* Pods-IntentionalWalkApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-IntentionalWalkApp-tvOS/Pods-IntentionalWalkApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntentionalWalkApp.entitlements; path = IntentionalWalkApp/IntentionalWalkApp.entitlements; sourceTree = "<group>"; };
 		45AD8B3B23E23B6B00F432F2 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -100,13 +104,15 @@
 		13B07FAE1A68108700A75B9A /* IntentionalWalkApp */ = {
 			isa = PBXGroup;
 			children = (
-				45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				451BCC0D2666EA46002144A9 /* File.swift */,
+				45AD8B3A23E23B6B00F432F2 /* IntentionalWalkApp.entitlements */,
+				451BCC0C2666EA45002144A9 /* IntentionalWalkApp-Bridging-Header.h */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = IntentionalWalkApp;
@@ -244,6 +250,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 2XU846A9M4;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
@@ -514,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* IntentionalWalkAppTests.m in Sources */,
+				451BCC4F2666EB38002144A9 /* File.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				451BCC0E2666EA46002144A9 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +562,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AFC54432BF7B413674EC27EA /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 2XU846A9M4;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -577,6 +587,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87CE7A3CC481DD2EC6B1688B /* Pods-IntentionalWalkApp-IntentionalWalkAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 2XU846A9M4;
@@ -599,6 +610,7 @@
 			baseConfigurationReference = CF22D1A34E44AE084C9BBB78 /* Pods-IntentionalWalkApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IntentionalWalkApp/IntentionalWalkApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -615,6 +627,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.codeforsanfrancisco.intentionalwalk;
 				PRODUCT_NAME = IntentionalWalkApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "IntentionalWalkApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -624,6 +639,7 @@
 			baseConfigurationReference = 7488885BA91A4E06C1890A28 /* Pods-IntentionalWalkApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IntentionalWalkApp/IntentionalWalkApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -639,6 +655,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.codeforsanfrancisco.intentionalwalk;
 				PRODUCT_NAME = IntentionalWalkApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "IntentionalWalkApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -693,6 +711,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -738,6 +757,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
