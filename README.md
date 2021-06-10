@@ -56,7 +56,9 @@
 
       If you are installing the tools for the very first time, you may need to
       accept the SDK license agreements. Run: ```sdkmanager --licenses```
-      to do so.
+      to do so. If you get errors running sdkmanager, install Google Play Licensing Library
+      in Android Studio -> Preferences -> Appearance & Behavior -> System Settings -> Android SDK
+      -> SDK Tools.
 
 5. Start the React Native Metro Bundler and leave it running.
    ```
