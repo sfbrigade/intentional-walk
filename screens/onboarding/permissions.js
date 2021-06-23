@@ -20,14 +20,6 @@ export default function InfoScreen({navigation}) {
   const onNextPress = () => {
     Fitness.requestPermissions().then((permitted) => {
       if (permitted) {
-        if (Platform.OS === 'android') {
-          Fitness.subscribeToActivity().then(function(subscribed) {
-            /// TODO handle errors
-          });
-          Fitness.subscribeToSteps().then(function(subscribed) {
-            /// TODO handle errors
-          });
-        }
         navigation.navigate('MainStack');
       }
     });
