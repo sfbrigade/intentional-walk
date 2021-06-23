@@ -28,7 +28,7 @@
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.3.0",
-    "react-native-google-fit": "^0.16.0",
+    "react-native-google-fit": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-local-resource": "^0.1.6",
     "react-native-localization": "^2.1.6",
