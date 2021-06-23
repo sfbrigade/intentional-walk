@@ -13,8 +13,7 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import Fitness from '@ovalmoney/react-native-fitness';
-import {Strings} from '../../lib';
+import {Fitness, Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
 
