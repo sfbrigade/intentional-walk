@@ -13,22 +13,13 @@ import {
 } from 'react-native';
 import {Button, InfoBox, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
-import Fitness from '@ovalmoney/react-native-fitness';
-import {Strings} from '../../lib';
+import {Fitness, Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
 
   const onNextPress = () => {
     Fitness.requestPermissions().then((permitted) => {
       if (permitted) {
-        if (Platform.OS === 'android') {
-          Fitness.subscribeToActivity().then(function(subscribed) {
-            /// TODO handle errors
-          });
-          Fitness.subscribeToSteps().then(function(subscribed) {
-            /// TODO handle errors
-          });
-        }
         navigation.navigate('MainStack');
       }
     });
