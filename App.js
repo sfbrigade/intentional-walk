@@ -37,8 +37,8 @@ const App: () => React$Node = () => {
         ref={navigationRef}
         onStateChange={state => onStateChange(state)}>
         <RootStack.Navigator mode="modal">
-          <RootStack.Screen name="OnboardingStack" component={OnboardingStack} options={{ headerShown: false, gestureEnabled: false }} />
           <RootStack.Screen name="MainStack" component={MainStack} options={{ headerShown: false }} />
+          <RootStack.Screen name="OnboardingStack" component={OnboardingStack} options={{ headerShown: false, gestureEnabled: false }} />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
