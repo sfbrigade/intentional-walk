@@ -9,8 +9,8 @@
    * Seleccione un idioma. Escriba su nombre, correo electrónico, código postal y edad. Marque el cuadro. Haga clic en "SUBMIT" ("ENVIAR"). Lea y haga clic en "NEXT" ("SIGUIENTE"). Seleccione su cuenta. Haga clic en  "ALLOW" ("PERMITIR") en las siguientes 3 pantallas.
    * ¡Empiece a caminar!
    * Para obtener más información: c4sf.me/iwalk
-* Empieza: 09/01/2020
-* Termina: 09/30/2020 
+* Empieza: 08/01/2021
+* Termina: 08/31/2021 
 
 Los Premios
 
