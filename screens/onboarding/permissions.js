@@ -55,7 +55,13 @@ export default function InfoScreen({navigation}) {
               </InfoBox>
             ) : null }
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
+          { Platform.OS == 'android' ? 
+	  (
+            <Button style={styles.googleButton} onPress={onNextPress}><Image
+	    source={require('../../assets/btn_google_signin_dark_normal_web.png')}/></Button>
+	  ) : (
+            <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
+          ) }
           <PaginationDots currentPage={3} totalPages={3} />
         </View>
       </ScrollView>
@@ -86,6 +92,10 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: Colors.primary.purple,
     fontWeight: 'bold',
+  },
+  googleButton: {
+    backgroundColor: Colors.primary.lightGray,
+    width: 180,
   },
   button: {
     width: 180,
