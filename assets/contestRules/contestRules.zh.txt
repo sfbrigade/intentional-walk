@@ -9,10 +9,11 @@
    * 前往Apple或Google Play Store 搜尋「Intentional Walk」然後下載！
    * 選擇語言 輸入姓名、電郵、郵編和年齡。勾選方框。輕觸SUBMIT（提交) 閱讀然後輕觸NEXT（下一步) 選擇帳號。在隨後的3個畫面中，輕觸ALLOW（允許）。
    * 開始行走！
-   * 有關更多詳情: c4sf.me/iwalk
+   * 有關更多詳情: iwalk.c4sf.me/中文
 
-* 开始: 08/01/2021
-* 结束: 08/31/2021
+* 开始: {2}
+* 结束: {3}
+* 前十名步行者將在比賽結束後一周內收到電子郵件通知。
 
 獎品
 
@@ -21,5 +22,5 @@
 
 其他雜項
 
-* Intentional Walk是由舊金山公共衛生局負責. USDA SNAP資助的一项機會均等提供者和雇主的方案.  社區合作夥伴包括加州公共衛生局, Code of San Franciaco, 舊金山巨人隊和舊金山康樂與公園部.
+* Intentional Walk是由舊金山公共衛生局負責. USDA SNAP資助的一项機會均等提供者和雇主的方案.  社區合作夥伴包括加州公共衛生局, Code for San Francisco, 舊金山巨人隊和舊金山康樂與公園部.
 * iwalk應用程序使用Google Fit來跟蹤您的步數. 所有信息將保密, 僅用於"Intentional Walk"計劃。蘋果和谷歌不是本次比賽的讚助商，對參賽規則和結果不承擔任何責任。

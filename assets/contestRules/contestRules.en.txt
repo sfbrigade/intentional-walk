@@ -8,12 +8,12 @@ How to Enter
    * In your app store, search, “Intentional Walk.”
    * Register your information through the sign-up screens. Create a profile.
    * Start walking! The app will track your steps via your phone’s health application.
-   * For more information on how to use the app: c4sf.me/iwalk
+   * For more information on how to use the app: iwalk.c4sf.me
 
 * Date:
-   * Starts on August 1, 2021 at 12:00 AM PST.
-   * Ends at 11:59 p.m. PST on August 31, 2021.
-   * The top ten walkers will be notified the first week of September 2021 by email.
+   * Starts on {0} at 12:00 AM PST.
+   * Ends at 11:59 p.m. PST on {1}.
+   * The top ten walkers will be notified by email within one week after the contest ends.
 
 The Prize(s)
 
