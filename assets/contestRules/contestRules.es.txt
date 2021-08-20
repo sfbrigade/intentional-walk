@@ -8,13 +8,14 @@
    * Visite la tienda de aplicaciones de Apple o Google Play. Busque y descargue “Intentional Walk” 
    * Seleccione un idioma. Escriba su nombre, correo electrónico, código postal y edad. Marque el cuadro. Haga clic en "SUBMIT" ("ENVIAR"). Lea y haga clic en "NEXT" ("SIGUIENTE"). Seleccione su cuenta. Haga clic en  "ALLOW" ("PERMITIR") en las siguientes 3 pantallas.
    * ¡Empiece a caminar!
-   * Para obtener más información: c4sf.me/iwalk
-* Empieza: 08/01/2021
-* Termina: 08/31/2021 
+   * Para obtener más información: iwalk.c4sf.me/español
+* Empieza: {2}
+* Termina: {3}
+* Los diez mejores caminantes serán notificados por correo electrónico dentro de una semana después de que finalice el concurso.
 
 Los Premios
 
-* Al final del programa, los 10 mejores caminantes serán contactados por correo ectrónico para reclamar su premio.
+* Al final del programa, los 10 mejores caminantes serán contactados por correo electrónico para reclamar su premio.
 * Si no tenemos noticias suyas en tres (3) días, entregaremos el premio a otro participante.
 
 Misceláneo
