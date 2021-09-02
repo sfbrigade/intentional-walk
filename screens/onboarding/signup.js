@@ -85,7 +85,7 @@ export default function SignUpScreen({navigation, route}) {
       return;
     }
     //validate zip- sf resident
-    if(!zip.trim().includes(validZipCodes)){
+    else if(!validZipCodes.includes(zip.trim())){
       setAlertTitle(Strings.signUp.zipRestrictionAlertTitle);
       setAlertMessage(Strings.signUp.zipRestrictionAlertMessage);
       setShowAlert(true);
