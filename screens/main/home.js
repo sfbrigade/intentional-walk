@@ -30,7 +30,7 @@ export default function HomeScreen({navigation}) {
 
   const saveStepsAndDistances = () => {
     Realm.getContest().then(contest => {
-        const today = moment().startOf('day');
+        const today = moment().endOf('day');
         let from = null, to = null;
         if (contest) {
           /// check if we're in/after the contest period
