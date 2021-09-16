@@ -25,6 +25,7 @@ import {Api, Realm, Strings} from '../../lib';
 
 import ContestRules from '../../assets/contestRules';
 import Privacy from '../../assets/privacy';
+import validZipCodes from '../../lib/validZipCodes';
 
 export default function SignUpScreen({navigation, route}) {
   const {contest} = route.params;
@@ -76,10 +77,17 @@ export default function SignUpScreen({navigation, route}) {
       setShowAlert(true);
       return;
     }
-    /// validate zip
+    /// validate zip-5 digits
     if (!zip.trim().match(/^\d{5}$/)) {
       setAlertTitle(Strings.signUp.zipAlertTitle);
       setAlertMessage(Strings.signUp.zipAlertMessage);
+      setShowAlert(true);
+      return;
+    }
+    //validate zip- sf resident
+    else if(!validZipCodes.includes(zip.trim())){
+      setAlertTitle(Strings.signUp.zipRestrictionAlertTitle);
+      setAlertMessage(Strings.signUp.zipRestrictionAlertMessage);
       setShowAlert(true);
       return;
     }
