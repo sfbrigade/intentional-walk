@@ -37,22 +37,35 @@
 
    - For Android development, first install Android Studio: https://developer.android.com/studio
 
-      For Mac OS X, configure your shell environment to reference the newly installed
-      developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
-      your .bash_profile in your home directory and add the following (assuming
-      default installation locations):
+      - For Mac OS X, configure your shell environment to reference the newly installed
+         developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
+         your .bash_profile in your home directory and add the following (assuming
+         default installation locations):
 
-      ```
-      export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
-      export ANDROID_SDK_ROOT=~/Library/Android/sdk
-      export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
-      export PATH=$PATH:$ANDROID_SDK_ROOT/tools
-      export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
-      export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-      ```
+         ```
+         export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
+         export ANDROID_SDK_ROOT=~/Library/Android/sdk
+         export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+         export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+         export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+         export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+         ```
 
-      Close and re-open your Terminal, or run ```source ~/.bash_profile``` to
-      set the newly configured environment variables.
+         Close and re-open your Terminal, or run ```source ~/.bash_profile``` to
+         set the newly configured environment variables.
+
+      - For Windows, make sure you have [Java Development Kit](https://www.oracle.com/java/technologies/downloads/)
+         installed. 
+         
+         Once installed, add the following environment variables and adjust the value as needed:
+
+         ```
+         ANDROID_SDK_ROOT          C:\Users\*\AppData\Local\Android\SDK
+         JAVA_HOME                 C:\Program Files\Java\jdk-17
+         PATH               (new)  C:\Users\*\AppData\Local\Android\Sdk\platform-tools
+         ```
+
+         Close and re-open your Terminal for the following step.
 
       If you are installing the tools for the very first time, you may need to
       accept the SDK license agreements. Run: ```sdkmanager --licenses```
