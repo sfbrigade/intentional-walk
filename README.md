@@ -4,23 +4,14 @@
 
 1. Clone this repo to your computer.
 
-2. Make sure you have Node.js _10_ installed (newer versions are not compatible).
-
-   https://nodejs.org/
-
-   Note: Mac OS users can also install Node using Homebrew (https://brew.sh/):
-   ```
-   intentional-walk % brew install node@10
-   ```
-
-3. Install packages.
+2. Install packages.
    ```
    intentional-walk % npm install
    ```
 
-4. Set up your mobile operating system tools
+3. Set up your mobile operating system tools
 
-   - For iOS development (Mac OS only), make sure you have Xcode and CocoaPods installed.
+   - For **iOS** development (Mac OS only), make sure you have Xcode and CocoaPods installed.
 
       https://developer.apple.com/xcode/
 
@@ -35,9 +26,9 @@
       ios % pod install
       ```
 
-   - For Android development, first install Android Studio: https://developer.android.com/studio
+   - For **Android** development, first install Android Studio: https://developer.android.com/studio
 
-      - For Mac OS X, configure your shell environment to reference the newly installed
+      - For **Mac OS X**, configure your shell environment to reference the newly installed
          developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
          your .bash_profile in your home directory and add the following (assuming
          default installation locations):
@@ -54,31 +45,54 @@
          Close and re-open your Terminal, or run ```source ~/.bash_profile``` to
          set the newly configured environment variables.
 
-      - For Windows, make sure you have [Java Development Kit](https://www.oracle.com/java/technologies/downloads/)
-         installed. 
+         If you are installing the tools for the very first time, you may need to
+         accept the SDK license agreements. Run: ```sdkmanager --licenses```
+         to do so. If you get errors running sdkmanager, install Google Play Licensing Library
+         in Android Studio -> Preferences -> Appearance & Behavior -> System Settings -> Android SDK
+         -> SDK Tools.
+
+      - For **Windows**, have the latest Android Studio installed. Note that this does include a JDK in its 
+         installation, so there is no need to separately install a JDK.
          
-         Once installed, add the following environment variables and adjust the value as needed:
+         Within the SDK Manager (Android Studio -> Preferences -> Appearance & Behavior -> 
+         System Settings -> Android SDK -> SDK Tools), have the following tools installed: 
+         - `Android SDK Build Tools `
+         - `Android Emulator `
+         - `Android SDK Platform-Tools `
+         - `Google Play Licensing Library `
+
+            For **Intel** processors, having `Android Emulator` installed should be sufficient. 
+            
+            Although for **AMD** processors, `Android Emulator Hypervisor Driver for AMD Processors (installer)` also 
+            must be installed. If the installation fails, check the following two items:
+            1. Hyper-V must be disabled as a Windows feature.
+            2. CPU Virtualization must be enabled in the BIOS
+            
+            More details of this installation after a failure can be found [here](https://github.com/google/android-emulator-hypervisor-driver-for-amd-processors/issues/10).
+
+         Within the AVD Manager (Android Studio -> Tools -> AVD Manager), create a virtual device if none are created.
+         We suggest using a recent Pixel phone. Use the AVD Manager to launch the emulator.
+
+         Set the following in your environment variables:
 
          ```
-         ANDROID_SDK_ROOT          C:\Users\*\AppData\Local\Android\SDK
-         JAVA_HOME                 C:\Program Files\Java\jdk-17
-         PATH               (new)  C:\Users\*\AppData\Local\Android\Sdk\platform-tools
+         ANDROID_SDK_ROOT          C:\Users\<my username>\AppData\Local\Android\SDK
+         JAVA_HOME                 C:\Program Files\Android\Android Studio\jre
+
+         and within PATH    (new)  %ANDROID_SDK_ROOT%\platform-tools
+                            (new)  %JAVA_HOME%\bin
          ```
 
-         Close and re-open your Terminal for the following step.
+         In Powershell, navigate to the repository and run `npm install`. Once installed run `npm run android`.
+         This should build and be installed into the emulator. Notes can be found in the following 
+         [issue](https://github.com/sfbrigade/intentional-walk/issues/204).
 
-      If you are installing the tools for the very first time, you may need to
-      accept the SDK license agreements. Run: ```sdkmanager --licenses```
-      to do so. If you get errors running sdkmanager, install Google Play Licensing Library
-      in Android Studio -> Preferences -> Appearance & Behavior -> System Settings -> Android SDK
-      -> SDK Tools.
-
-5. Start the React Native Metro Bundler and leave it running.
+4. Start the React Native Metro Bundler and leave it running.
    ```
    intentional-walk % npm start
    ```
 
-6. In another shell, build and run the app for your target platform.
+5. In another shell, build and run the app for your target platform.
    ```
    intentional-walk % npm run ios
    intentional-walk % npm run android
