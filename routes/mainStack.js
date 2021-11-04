@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import SideMenu from 'react-native-side-menu-updated';
-import {TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {Colors, GlobalStyles} from '../styles';
+import {StyleSheet, View} from 'react-native';
+import {Colors} from '../styles';
 
 export default function PaginationDots(props) {
   const totalPages = props.totalPages || 1;
@@ -10,7 +10,7 @@ export default function PaginationDots(props) {
     dots.push(
       <View
         key={i}
-        style={[styles.dot, i + 1 == currentPage ? styles.currentDot : null]}
+        style={[styles.dot, i + 1 === currentPage ? styles.currentDot : null]}
       />,
     );
   }

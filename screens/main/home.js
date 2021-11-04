@@ -36,17 +36,17 @@ export default function HomeScreen({navigation}) {
   const [activeWalk, setActiveWalk] = useState(null);
 
   const saveStepsAndDistances = () => {
-    Realm.getContest().then(contest => {
+    Realm.getContest().then(newContest => {
       const today = moment().endOf('day');
       let from = null,
         to = null;
-      if (contest) {
+      if (newContest) {
         /// check if we're in/after the contest period
-        if (!contest.isBeforeStartDate) {
-          from = moment(contest.start);
+        if (!newContest.isBeforeStartDate) {
+          from = moment(newContest.start);
           /// check if we're in the contest period
-          if (contest.isAfterEndDate) {
-            to = moment(contest.end);
+          if (newContest.isAfterEndDate) {
+            to = moment(newContest.end);
           } else {
             to = today;
           }
@@ -54,13 +54,13 @@ export default function HomeScreen({navigation}) {
       }
       /// only save when within contest period
       if (from && to) {
-        Fitness.getStepsAndDistances(from, to).then(dailyWalks => {
-          if (dailyWalks && dailyWalks.length > 0) {
+        Fitness.getStepsAndDistances(from, to).then(newDailyWalks => {
+          if (newDailyWalks && newDailyWalks.length > 0) {
             /// get user account, then save to server...!
             Realm.getUser()
               .then(user => {
                 if (user) {
-                  return Api.dailyWalk.create(dailyWalks, user.id);
+                  return Api.dailyWalk.create(newDailyWalks, user.id);
                 }
               })
               .then(response => {
@@ -75,44 +75,44 @@ export default function HomeScreen({navigation}) {
     });
   };
 
-  const getStepsAndDistances = (queryDate, dailyWalks) => {
+  const getStepsAndDistances = (queryDate, currentDailyWalks) => {
     setTodaysWalk(null);
-    if (dailyWalks == null) {
+    if (currentDailyWalks == null) {
       setDailyWalks(true);
       Fitness.getStepsAndDistances(
         moment(dateRef.current).startOf('month'),
         moment(dateRef.current).endOf('month'),
       )
-        .then(dailyWalks => {
+        .then(newDailyWalks => {
           if (
             moment(dateRef.current)
               .startOf('month')
               .isSame(moment(queryDate).startOf('month'))
           ) {
-            setDailyWalks(dailyWalks);
-            getStepsAndDistances(dateRef.current, dailyWalks);
+            setDailyWalks(newDailyWalks);
+            getStepsAndDistances(dateRef.current, newDailyWalks);
           }
         })
         .catch(error => {
           console.log(error);
         });
-    } else if (Array.isArray(dailyWalks)) {
-      let todaysWalk = {
+    } else if (Array.isArray(currentDailyWalks)) {
+      let newTodaysWalk = {
         steps: 0,
         distance: 0,
       };
       let from = moment(queryDate).startOf('day');
       let to = moment(from).endOf('day');
-      for (let dailyWalk of dailyWalks) {
+      for (let dailyWalk of currentDailyWalks) {
         if (
           from.isSameOrBefore(dailyWalk.date) &&
           to.isSameOrAfter(dailyWalk.date)
         ) {
-          todaysWalk = dailyWalk;
+          newTodaysWalk = dailyWalk;
           break;
         }
       }
-      setTodaysWalk(todaysWalk);
+      setTodaysWalk(newTodaysWalk);
     }
   };
 
@@ -120,14 +120,14 @@ export default function HomeScreen({navigation}) {
     setTotalSteps(null);
     /// get current contest
     Realm.getContest()
-      .then(contest => {
+      .then(newContest => {
         const now = moment();
         let from = null,
           to = null;
         /// check if we're in/outside the contest period
-        if (contest && contest.isDuringContest) {
+        if (newContest && newContest.isDuringContest) {
           /// get total from start of contest until now
-          from = moment(contest.start);
+          from = moment(newContest.start);
           to = now;
         } else {
           /// get total from start of month
@@ -138,14 +138,14 @@ export default function HomeScreen({navigation}) {
       })
       .then(([from, to]) => {
         if (from && to) {
-          let totalSteps = 0;
+          let newTotalSteps = 0;
           Fitness.getSteps(from, to)
             .then(steps => {
               for (let step of steps) {
-                totalSteps += step.quantity;
+                newTotalSteps += step.quantity;
               }
             })
-            .finally(() => setTotalSteps(totalSteps));
+            .finally(() => setTotalSteps(newTotalSteps));
         } else {
           /// no range, just show 0
           setTotalSteps(0);
@@ -155,7 +155,7 @@ export default function HomeScreen({navigation}) {
 
   const getRecordedWalks = queryDate => {
     Realm.open().then(realm => {
-      const recordedWalks = realm
+      const newRecordedWalks = realm
         .objects('IntentionalWalk')
         .filtered(
           'start>=$0 AND end<$1',
@@ -164,7 +164,7 @@ export default function HomeScreen({navigation}) {
         )
         .sorted([['end', true]]);
       if (dateRef.current.isSame(queryDate)) {
-        setRecordedWalks(recordedWalks);
+        setRecordedWalks(newRecordedWalks);
       }
     });
   };
@@ -208,8 +208,8 @@ export default function HomeScreen({navigation}) {
       isFirstLoad = false;
     });
     /// listen for updates to contest info
-    Realm.addContestListener(contest =>
-      contest ? setContest(contest.toObject()) : null,
+    Realm.addContestListener(newContest =>
+      newContest ? setContest(newContest.toObject()) : null,
     );
     /// on cleanup, remove listeners
     return () => Realm.removeAllListeners();
@@ -244,12 +244,11 @@ export default function HomeScreen({navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       refresh();
-    }, []),
+    }),
   );
 
   const today = moment().startOf('day');
   const isToday = date.isSame(today);
-  const dateString = isToday ? Strings.common.today : date.format('MMMM D');
 
   return (
     <View style={GlobalStyles.container}>
@@ -393,7 +392,7 @@ export default function HomeScreen({navigation}) {
                   {Strings.home.allRecordedWalks}
                 </Text>
               </View>
-              {recordedWalks && recordedWalks.length == 0 && (
+              {recordedWalks && recordedWalks.length === 0 && (
                 <RecordedWalk
                   title={
                     isToday ? Strings.common.noWalksYet : Strings.common.noWalks

@@ -1,10 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from './button';
 import {Colors, GlobalStyles} from '../styles';
-import {Api, Fitness, Pedometer, Realm, Strings} from '../lib';
+import {Pedometer, Realm, Strings} from '../lib';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -18,10 +17,10 @@ export default function Recorder(props) {
   const [end, setEnd] = useState(null);
 
   useEffect(() => {
-    Pedometer.startUpdates(data => {
+    Pedometer.startUpdates(newData => {
       if (!isPausedRef.current) {
-        setData(data);
-        Realm.updateCurrentWalk(data);
+        setData(newData);
+        Realm.updateCurrentWalk(newData);
       }
     });
     return () => Pedometer.stopUpdates();
@@ -50,19 +49,19 @@ export default function Recorder(props) {
   };
 
   const onStop = () => {
-    let end;
+    let newEnd;
     if (pause) {
-      end = pause;
+      newEnd = pause;
     } else {
-      end = new Date();
-      setPause(end);
+      newEnd = new Date();
+      setPause(newEnd);
       isPausedRef.current = true;
     }
-    setEnd(end);
+    setEnd(newEnd);
     //// get one final update
-    Pedometer.getPedometerData(end).then(data => {
-      setData(data);
-      Realm.updateCurrentWalk(data);
+    Pedometer.getPedometerData(newEnd).then(newData => {
+      setData(newData);
+      Realm.updateCurrentWalk(newData);
     });
   };
 

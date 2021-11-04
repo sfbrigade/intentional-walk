@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Image,
   Linking,
@@ -7,8 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {Button, InfoBox, PaginationDots} from '../../components';
@@ -54,7 +52,7 @@ export default function InfoScreen({navigation}) {
               iconStyle={{marginTop: 20}}>
               {Strings.permissions.prizeText}
             </InfoBox>
-            {Platform.OS == 'android' ? (
+            {Platform.OS === 'android' ? (
               <InfoBox
                 style={[styles.infoBox, styles.infoBoxLast]}
                 icon="account-circle"
@@ -76,7 +74,7 @@ export default function InfoScreen({navigation}) {
               </InfoBox>
             ) : null}
           </View>
-          {Platform.OS == 'android' ? (
+          {Platform.OS === 'android' ? (
             <Button style={styles.googleButton} onPress={onNextPress}>
               <Image
                 style={styles.googleButton}

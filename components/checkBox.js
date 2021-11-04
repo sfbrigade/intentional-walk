@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Colors, GlobalStyles} from '../styles';
+import {Colors} from '../styles';
 import {CheckBox} from 'react-native-elements';
 
 export default function CustomCheckBox(props) {

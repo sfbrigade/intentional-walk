@@ -1,18 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {
-  VirtualizedList,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
-import {Button, InfoBox, PageTitle, RecordedWalk} from '../../components';
-import {Colors, GlobalStyles} from '../../styles';
-import {Api, Realm} from '../../lib';
+import {VirtualizedList, SafeAreaView, StyleSheet} from 'react-native';
+import {PageTitle, RecordedWalk} from '../../components';
+import {GlobalStyles} from '../../styles';
+import {Realm, Strings} from '../../lib';
 
 export default function RecordedWalksScreen({navigation}) {
   const [recordedWalks, setRecordedWalks] = useState(null);
@@ -30,9 +20,9 @@ export default function RecordedWalksScreen({navigation}) {
           style={styles.list}
           data={recordedWalks}
           getItemCount={data => data.length + 1}
-          getItem={(data, i) => (i == 0 ? {id: ''} : data[i - 1])}
+          getItem={(data, i) => (i === 0 ? {id: ''} : data[i - 1])}
           renderItem={({item}) => {
-            if (item.id != '') {
+            if (item.id !== '') {
               return (
                 <RecordedWalk style={styles.walk} key={item.id} walk={item} />
               );
@@ -43,7 +33,7 @@ export default function RecordedWalksScreen({navigation}) {
                     style={styles.pageTitle}
                     title={Strings.common.myRecordedWalks}
                   />
-                  {recordedWalks.length == 0 && (
+                  {recordedWalks.length === 0 && (
                     <RecordedWalk
                       style={styles.walk}
                       title={Strings.common.noWalksYet}

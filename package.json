@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "lint-watch": "esw -w ."
+    "lint-watch": "esw -w --fix ."
   },
   "dependencies": {
     "@ovalmoney/react-native-fitness": "^0.5.3",

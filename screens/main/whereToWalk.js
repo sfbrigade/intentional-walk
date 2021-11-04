@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -6,16 +6,13 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   Image,
-  Platform,
 } from 'react-native';
-import {Button, InfoBox, LinkButton, PageTitle} from '../../components';
-import {Colors, GlobalStyles} from '../../styles';
+import {LinkButton, PageTitle} from '../../components';
+import {GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
-export default function WhereToWalkScreen({navigation}) {
+export default function WhereToWalkScreen() {
   const links = [
     {
       title: Strings.whereToWalk.parksAndRecCenters,

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {Colors, GlobalStyles} from '../styles';
 
 export default function Logo(props) {
   return (

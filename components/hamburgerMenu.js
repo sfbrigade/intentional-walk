@@ -13,7 +13,7 @@ import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
 import {isActiveRoute, navigationRef} from '../screens/tracker';
-import {Realm} from '../lib';
+import {Realm, Strings} from '../lib';
 
 function HamburgerMenuItem(props) {
   const color = isActiveRoute(props.route)
@@ -44,7 +44,7 @@ export default function HamburgerMenu(props) {
 
   const onPress = route => {
     if (!isActiveRoute(route)) {
-      if (route == 'Home' || isActiveRoute('Home')) {
+      if (route === 'Home' || isActiveRoute('Home')) {
         navigationRef.current?.navigate(route);
       } else {
         navigationRef.current?.dispatch({

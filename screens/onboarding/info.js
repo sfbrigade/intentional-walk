@@ -1,15 +1,5 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
+import React from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text} from 'react-native';
 import {Button, InfoBox, PaginationDots} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';

@@ -10,6 +10,7 @@ import {
 } from '../screens/onboarding';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
+import {Strings} from '../lib';
 
 const Stack = createStackNavigator();
 

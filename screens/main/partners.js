@@ -1,17 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
-  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import {Button, InfoBox, PageTitle} from '../../components';
+import {PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 

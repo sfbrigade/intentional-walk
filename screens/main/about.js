@@ -1,16 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from 'react-native';
-import {Button, InfoBox, PageTitle} from '../../components';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
 import moment from 'moment';
@@ -19,8 +9,8 @@ export default function InfoScreen({navigation}) {
   const [contest, setContest] = useState(null);
 
   useEffect(() => {
-    Realm.getContest().then(contest =>
-      setContest(contest ? contest.toObject() : null),
+    Realm.getContest().then(newContest =>
+      setContest(newContest ? newContest.toObject() : null),
     );
   }, []);
 

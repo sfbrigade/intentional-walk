@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import moment from 'moment';
-import Moment from 'react-moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
 import {Strings} from '../lib';

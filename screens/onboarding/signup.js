@@ -6,11 +6,8 @@ import {
   Image,
   Platform,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
@@ -83,7 +80,7 @@ export default function SignUpScreen({navigation, route}) {
 
   const onSubmit = () => {
     /// validate email
-    if (!email.trim().match(/^[^@ ]+@[^\. ]+(?:\.[^\. ]+)+$/)) {
+    if (!email.trim().match(/^[^@ ]+@[^. ]+(?:\.[^. ]+)+$/)) {
       setAlertTitle(Strings.signUp.emailAlertTitle);
       setAlertMessage(Strings.signUp.emailAlertMessage);
       setShowAlert(true);
@@ -153,10 +150,10 @@ export default function SignUpScreen({navigation, route}) {
 
   const isValid = () => {
     return (
-      name.trim() != '' &&
-      email.trim() != '' &&
-      zip.trim() != '' &&
-      age.trim() != '' &&
+      name.trim() !== '' &&
+      email.trim() !== '' &&
+      zip.trim() !== '' &&
+      age.trim() !== '' &&
       termsAgreed
     );
   };
@@ -196,7 +193,7 @@ export default function SignUpScreen({navigation, route}) {
             editable={!isLoading}
           />
           <Input
-            focused={focus == 'email'}
+            focused={focus === 'email'}
             onSubmitEditing={() => setFocus('zip')}
             onChangeText={newValue => setEmail(newValue)}
             placeholder={Strings.signUp.email}
@@ -207,7 +204,7 @@ export default function SignUpScreen({navigation, route}) {
           />
           <View style={styles.row}>
             <Input
-              focused={focus == 'zip'}
+              focused={focus === 'zip'}
               onSubmitEditing={() => setFocus('age')}
               onChangeText={newValue => setZip(newValue)}
               style={styles.input}
@@ -218,7 +215,7 @@ export default function SignUpScreen({navigation, route}) {
             />
             <View style={styles.spacer} />
             <Input
-              focused={focus == 'age'}
+              focused={focus === 'age'}
               onSubmitEditing={() => setFocus('')}
               onChangeText={newValue => setAge(newValue)}
               style={styles.input}

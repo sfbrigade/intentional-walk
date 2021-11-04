@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import {GlobalStyles, Colors} from '../styles';
+import {Colors} from '../styles';
 
 export default function ScrollText(props) {
   const [showIndicator, setShowIndicator] = useState(true);
