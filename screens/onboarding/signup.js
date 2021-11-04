@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
@@ -108,7 +109,7 @@ export default function SignUpScreen({navigation, route}) {
       })
       .then(user => {
         setLoading(false);
-        navigation.navigate('Info');
+        navigation.navigate('LoHOrigin');
       })
       .catch(error => {
         setLoading(false);

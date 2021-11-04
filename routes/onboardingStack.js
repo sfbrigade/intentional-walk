@@ -2,7 +2,7 @@ import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {WelcomeScreen, SignUpScreen, InfoScreen, PermissionsScreen} from '../screens/onboarding';
+import {WelcomeScreen, SignUpScreen, InfoScreen, PermissionsScreen, LoHOriginScreen} from '../screens/onboarding';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
 
@@ -23,6 +23,8 @@ export default function OnboardingStack() {
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
       <Stack.Screen name="Permissions" component={PermissionsScreen} />
+
+      <Stack.Screen name="LoHOrigin" component={LoHOriginScreen} />
     </Stack.Navigator>
   );
 };
