@@ -9,7 +9,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import {Button, Popup} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
