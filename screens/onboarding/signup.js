@@ -224,7 +224,7 @@ export default function SignUpScreen({navigation, route}) {
               editable={!isLoading}
             />
           </View>
-          <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>
+          <Text style={[GlobalStyles.p1, styles.requiredText]}>
             {Strings.signUp.required}
           </Text>
           <CheckBox
@@ -288,10 +288,9 @@ export default function SignUpScreen({navigation, route}) {
         </View>
       </Popup>
       <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
-        <View style={{alignItems: 'center'}}>
+        <View style={GlobalStyles.centered}>
           <Text style={GlobalStyles.h1}>{alertTitle}</Text>
-          <Text
-            style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>
+          <Text style={[GlobalStyles.h2, styles.alertText]}>
             {alertMessage}
           </Text>
           <Button style={styles.button} onPress={() => setShowAlert(false)}>
@@ -357,6 +356,9 @@ const styles = StyleSheet.create({
   privacyText: {
     color: Colors.primary.gray2,
   },
+  requiredText: {
+    alignSelf: 'flex-start',
+  },
   loader: {
     flexDirection: 'row',
     height: 48,
@@ -368,5 +370,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     marginLeft: 10,
+  },
+  alertText: {
+    textAlign: 'center',
+    marginBottom: 48,
   },
 });

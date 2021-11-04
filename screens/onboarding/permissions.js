@@ -29,7 +29,7 @@ export default function InfoScreen({navigation}) {
           <Text style={GlobalStyles.h1}>
             {Strings.permissions.thingsToKnow}
           </Text>
-          <View style={{flex: 1, alignSelf: 'stretch'}}>
+          <View style={styles.permissions}>
             <Text style={styles.subtitle}>
               {Strings.permissions.takeALookText}
             </Text>
@@ -38,7 +38,7 @@ export default function InfoScreen({navigation}) {
               icon="settings"
               iconSize={64}
               iconColor={Colors.primary.lightGreen}
-              iconStyle={{marginTop: 10}}>
+              iconStyle={styles.settingsIcon}>
               {Strings.permissions.settingsText}
             </InfoBox>
             <InfoBox
@@ -49,7 +49,7 @@ export default function InfoScreen({navigation}) {
               icon="lock"
               iconSize={64}
               iconColor={Colors.secondary.blue}
-              iconStyle={{marginTop: 20}}>
+              iconStyle={styles.prizeIcon}>
               {Strings.permissions.prizeText}
             </InfoBox>
             {Platform.OS === 'android' ? (
@@ -105,6 +105,16 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 17,
     color: Colors.primary.gray2,
+  },
+  permissions: {
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+  settingsIcon: {
+    marginTop: 10,
+  },
+  prizeIcon: {
+    marginTop: 20,
   },
   infoBox: {
     marginBottom: 30,

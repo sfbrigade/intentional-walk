@@ -14,7 +14,7 @@ export default function InfoScreen({navigation}) {
       <ScrollView>
         <View style={styles.content}>
           <Text style={GlobalStyles.h1}>{Strings.info.youreSignedUp}</Text>
-          <View style={{flex: 1, alignSelf: 'stretch'}}>
+          <View style={styles.info}>
             <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
             <InfoBox
               title={Strings.info.walk}
@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontSize: 17,
     color: Colors.primary.gray2,
+  },
+  info: {
+    flex: 1,
+    alignSelf: 'stretch',
   },
   infoBox: {
     marginBottom: 30,

@@ -75,7 +75,7 @@ export default function WelcomeScreen({navigation}) {
             Español
           </Button>
           <Button
-            style={[styles.button, {marginBottom: 32}]}
+            style={[styles.button, styles.lastButton]}
             isToggle={true}
             isSelected={language === 'zh-cn'}
             onPress={() => selectLanguage('zh-cn')}>
@@ -95,10 +95,9 @@ export default function WelcomeScreen({navigation}) {
         </View>
       </ScrollView>
       <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
-        <View style={{alignItems: 'center'}}>
+        <View style={GlobalStyles.centered}>
           <Text style={GlobalStyles.h1}>{Strings.common.serverErrorTitle}</Text>
-          <Text
-            style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>
+          <Text style={[GlobalStyles.h2, GlobalStyles.alertText]}>
             {Strings.common.serverErrorMessage}
           </Text>
           <Button style={styles.button} onPress={() => setShowAlert(false)}>
@@ -122,8 +121,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 40,
   },
+  alertText: {
+    textAlign: 'center',
+    marginBottom: 48,
+  },
   button: {
     width: 180,
+  },
+  lastButton: {
+    marginBottom: 32,
   },
   toggleButton: {
     ...GlobalStyles.rounded,

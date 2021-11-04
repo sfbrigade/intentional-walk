@@ -18,6 +18,10 @@ export default StyleSheet.create({
   content: {
     padding: 16,
   },
+  centered: {
+    alignItems: 'center',
+  },
+
   boxShadow: {
     shadowColor: 'black',
     shadowOffset: {width: 4, height: 4},
