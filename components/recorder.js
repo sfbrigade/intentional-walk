@@ -40,13 +40,14 @@ export default function Recorder(props) {
   const onResume = () => {
     Realm.open().then(realm => {
       realm.write(() => {
-        activeWalk.pause = (activeWalk.pause || 0) + moment(now).diff(pause, 'seconds');
+        activeWalk.pause =
+          (activeWalk.pause || 0) + moment(now).diff(pause, 'seconds');
         isPausedRef.current = false;
         setPause(null);
         setEnd(null);
       });
     });
-  }
+  };
 
   const onStop = () => {
     let end;
@@ -60,7 +61,7 @@ export default function Recorder(props) {
     setEnd(end);
     //// get one final update
     Pedometer.getPedometerData(end).then(data => {
-      setData(data)
+      setData(data);
       Realm.updateCurrentWalk(data);
     });
   };
@@ -70,9 +71,10 @@ export default function Recorder(props) {
       Pedometer.stopUpdates();
       Realm.stopWalk(end, data);
     }
-  }
+  };
 
-  let dt = 0, elapsedTime;
+  let dt = 0,
+    elapsedTime;
   if (activeWalk) {
     let compare = now;
     if (end) {
@@ -87,13 +89,16 @@ export default function Recorder(props) {
   }
   const sec = dt % 60;
   const min = Math.floor(dt / 60);
-  elapsedTime = `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`
+  elapsedTime = `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
 
   let headerColor = Colors.primary.lightGreen;
   let headerText = Strings.recorder.recording;
   if (end) {
     headerColor = Colors.secondary.red;
-    headerText = Strings.formatString(Strings.recorder.save, activeWalk.timeOfWalk);
+    headerText = Strings.formatString(
+      Strings.recorder.save,
+      activeWalk.timeOfWalk,
+    );
   } else if (pause) {
     headerColor = Colors.accent.yellow;
     headerText = Strings.recorder.paused;
@@ -109,7 +114,9 @@ export default function Recorder(props) {
           <Text style={styles.label}>{Strings.common.mins}</Text>
         </View>
         <View>
-          <Text style={styles.count}>{numeral(activeWalk.distance * 0.000621371).format('0.0')}</Text>
+          <Text style={styles.count}>
+            {numeral(activeWalk.distance * 0.000621371).format('0.0')}
+          </Text>
           <Text style={styles.label}>{Strings.common.miles}</Text>
         </View>
         <View>
@@ -117,48 +124,78 @@ export default function Recorder(props) {
           <Text style={styles.label}>{Strings.common.steps}</Text>
         </View>
         <View style={[styles.stopButtonRow, {opacity: end ? 1 : 0}]}>
-          <Button onPress={onResume} style={styles.resumeButton} textStyle={{color: Colors.primary.purple}}>{Strings.recorder.resume}</Button>
-          <Button onPress={onFinish} style={styles.finishButton}>{Strings.recorder.finish}</Button>
+          <Button
+            onPress={onResume}
+            style={styles.resumeButton}
+            textStyle={{color: Colors.primary.purple}}>
+            {Strings.recorder.resume}
+          </Button>
+          <Button onPress={onFinish} style={styles.finishButton}>
+            {Strings.recorder.finish}
+          </Button>
         </View>
       </View>
-      { !end &&
-        <View style={[styles.buttonsContainer, {paddingBottom: safeAreaInsets.bottom}]}>
-          <View style={styles.secondaryButtonContainer}>
-          </View>
-          { pause &&
+      {!end && (
+        <View
+          style={[
+            styles.buttonsContainer,
+            {paddingBottom: safeAreaInsets.bottom},
+          ]}>
+          <View style={styles.secondaryButtonContainer} />
+          {pause && (
             <View style={styles.primaryButtonContainer}>
               <TouchableOpacity onPress={onResume}>
-                <Image style={styles.primaryButton} source={require('../assets/record.png')} />
+                <Image
+                  style={styles.primaryButton}
+                  source={require('../assets/record.png')}
+                />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.resumeText]}>{Strings.recorder.resume}</Text>
+              <Text style={[styles.buttonText, styles.resumeText]}>
+                {Strings.recorder.resume}
+              </Text>
             </View>
-          }
-          { !pause &&
+          )}
+          {!pause && (
             <View style={styles.primaryButtonContainer}>
               <TouchableOpacity onPress={onStop}>
-                <Image style={styles.primaryButton} source={require('../assets/stop.png')} />
+                <Image
+                  style={styles.primaryButton}
+                  source={require('../assets/stop.png')}
+                />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stopAndSave}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>
+                {Strings.recorder.stopAndSave}
+              </Text>
             </View>
-          }
-          { pause &&
+          )}
+          {pause && (
             <View style={styles.secondaryButtonContainer}>
               <TouchableOpacity onPress={onStop} style={styles.primaryButton}>
-                <Image style={styles.secondaryButton} source={require('../assets/stop.png')} />
+                <Image
+                  style={styles.secondaryButton}
+                  source={require('../assets/stop.png')}
+                />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.recordText]}>{Strings.recorder.stop}</Text>
+              <Text style={[styles.buttonText, styles.recordText]}>
+                {Strings.recorder.stop}
+              </Text>
             </View>
-          }
-          { !pause &&
+          )}
+          {!pause && (
             <View style={styles.secondaryButtonContainer}>
               <TouchableOpacity onPress={onPause} style={styles.primaryButton}>
-                <Image style={styles.secondaryButton} source={require('../assets/pause.png')} />
+                <Image
+                  style={styles.secondaryButton}
+                  source={require('../assets/pause.png')}
+                />
               </TouchableOpacity>
-              <Text style={[styles.buttonText, styles.pauseText]}>{Strings.recorder.pause}</Text>
+              <Text style={[styles.buttonText, styles.pauseText]}>
+                {Strings.recorder.pause}
+              </Text>
             </View>
-          }
+          )}
         </View>
-      }
+      )}
     </View>
   );
 }
@@ -166,7 +203,7 @@ export default function Recorder(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    padding: 16
+    padding: 16,
   },
   header: {
     ...GlobalStyles.boxShadow,
@@ -175,11 +212,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 45,
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10
+    borderTopRightRadius: 10,
   },
   headerText: {
     color: 'white',
-    marginBottom: 0
+    marginBottom: 0,
   },
   body: {
     ...GlobalStyles.boxShadow,
@@ -189,20 +226,20 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 20 + 17 + 8 + 27,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   count: {
     fontWeight: 'bold',
     fontSize: 72,
     lineHeight: 72,
     textAlign: 'center',
-    color: Colors.primary.purple
+    color: Colors.primary.purple,
   },
   label: {
     textAlign: 'center',
     fontSize: 18,
     color: Colors.primary.purple,
-    marginBottom: 20
+    marginBottom: 20,
   },
   stopButtonRow: {
     position: 'absolute',
@@ -229,40 +266,40 @@ const styles = StyleSheet.create({
     bottom: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    elevation: 11
+    elevation: 11,
   },
   primaryButtonContainer: {
     alignItems: 'center',
-    width: 120
+    width: 120,
   },
   primaryButton: {
     width: 54,
     height: 54,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonText: {
     fontSize: 17,
     lineHeight: 17,
     fontWeight: 'bold',
     marginTop: 8,
-    marginBottom: 20
+    marginBottom: 20,
   },
   secondaryButtonContainer: {
     alignItems: 'center',
-    width: 80
+    width: 80,
   },
   secondaryButton: {
     width: 40,
-    height: 40
+    height: 40,
   },
   pauseText: {
-    color: Colors.accent.yellow
+    color: Colors.accent.yellow,
   },
   recordText: {
     color: Colors.secondary.red,
   },
   resumeText: {
-    color: Colors.primary.purple
-  }
+    color: Colors.primary.purple,
+  },
 });

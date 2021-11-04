@@ -7,11 +7,21 @@ export default function StatBox(props) {
   return (
     <View style={[styles.box, props.style, {backgroundColor: props.boxColor}]}>
       <View style={[styles.box, {width: '100%', overflow: 'hidden'}]}>
-        { props.mainText == ' ' &&
-          <ActivityIndicator style={styles.spinner} size="small" color="white" /> }
-        <Text style={styles.mainText}>{props.mainText}{
-          props.mainTextSuffix != '' ? <Text style={styles.subText}>{props.mainTextSuffix}</Text> : ''
-        }</Text>
+        {props.mainText == ' ' && (
+          <ActivityIndicator
+            style={styles.spinner}
+            size="small"
+            color="white"
+          />
+        )}
+        <Text style={styles.mainText}>
+          {props.mainText}
+          {props.mainTextSuffix != '' ? (
+            <Text style={styles.subText}>{props.mainTextSuffix}</Text>
+          ) : (
+            ''
+          )}
+        </Text>
         <Text style={styles.subText}>{props.subText}</Text>
         <Icon
           style={[styles.icon, props.iconStyle]}

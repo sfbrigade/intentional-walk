@@ -20,22 +20,32 @@ export default function DateNavigator(props) {
     next = today;
     prev = moment().startOf('day').subtract(2, 'days');
   } else {
-    title = <Text style={styles.title}>{_.capitalize(props.date.format('dddd'))}</Text>;
+    title = (
+      <Text style={styles.title}>
+        {_.capitalize(props.date.format('dddd'))}
+      </Text>
+    );
     next = moment(props.date).add(1, 'day');
     prev = moment(props.date).subtract(1, 'day');
   }
   return (
     <View style={[styles.header, props.style]}>
-      <TouchableOpacity style={styles.headerButton} onPress={() => props.setDate(prev)}>
+      <TouchableOpacity
+        style={styles.headerButton}
+        onPress={() => props.setDate(prev)}>
         <Icon name="chevron-left" size={30} color="white" />
       </TouchableOpacity>
       <View>
         {title}
-        <Text style={styles.subtitle}>{_.capitalize(props.date.format('MMMM D'))}</Text>
+        <Text style={styles.subtitle}>
+          {_.capitalize(props.date.format('MMMM D'))}
+        </Text>
       </View>
       <View style={styles.headerButton}>
         {next == null ? null : (
-          <TouchableOpacity style={styles.headerButton} onPress={() => props.setDate(next)}>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => props.setDate(next)}>
             <Icon name="chevron-right" size={30} color="white" />
           </TouchableOpacity>
         )}

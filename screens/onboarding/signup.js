@@ -19,7 +19,15 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import loadLocalResource from 'react-native-local-resource';
 import moment from 'moment';
 
-import {Button, CheckBox, Input, Logo, PaginationDots, Popup, ScrollText} from '../../components';
+import {
+  Button,
+  CheckBox,
+  Input,
+  Logo,
+  PaginationDots,
+  Popup,
+  ScrollText,
+} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
 
@@ -47,9 +55,13 @@ export default function SignUpScreen({navigation, route}) {
 
   const screenDims = Dimensions.get('screen');
   const [privacyText, setPrivacyText] = useState();
-  loadLocalResource(Privacy[Strings.getLanguage()]).then(text => setPrivacyText(text));
+  loadLocalResource(Privacy[Strings.getLanguage()]).then(text =>
+    setPrivacyText(text),
+  );
   const [contestRulesText, setContestRulesText] = useState();
-  loadLocalResource(ContestRules[Strings.getLanguage()]).then(text => setContestRulesText(text));
+  loadLocalResource(ContestRules[Strings.getLanguage()]).then(text =>
+    setContestRulesText(text),
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -66,7 +78,7 @@ export default function SignUpScreen({navigation, route}) {
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    })
+    }),
   );
 
   const onSubmit = () => {
@@ -85,7 +97,7 @@ export default function SignUpScreen({navigation, route}) {
       return;
     }
     //validate zip- sf resident
-    else if(!validZipCodes.includes(zip.trim())){
+    else if (!validZipCodes.includes(zip.trim())) {
       setAlertTitle(Strings.signUp.zipRestrictionAlertTitle);
       setAlertMessage(Strings.signUp.zipRestrictionAlertMessage);
       setShowAlert(true);
@@ -100,11 +112,24 @@ export default function SignUpScreen({navigation, route}) {
       return;
     }
     setLoading(true);
-    Realm.getSettings().then(settings => {
-        return Api.appUser.create(name.trim(), email.trim(), zip.trim(), parsedAge, settings.accountId);
+    Realm.getSettings()
+      .then(settings => {
+        return Api.appUser.create(
+          name.trim(),
+          email.trim(),
+          zip.trim(),
+          parsedAge,
+          settings.accountId,
+        );
       })
       .then(response => {
-        return Realm.createUser(response.data.payload.account_id, name.trim(), email.trim(), zip.trim(), parsedAge);
+        return Realm.createUser(
+          response.data.payload.account_id,
+          name.trim(),
+          email.trim(),
+          zip.trim(),
+          parsedAge,
+        );
       })
       .then(user => {
         setLoading(false);
@@ -120,76 +145,163 @@ export default function SignUpScreen({navigation, route}) {
 
   const onPolicyPress = () => {
     setShowPrivacyPolicy(true);
-  }
+  };
 
   const onContestRulesPress = () => {
     setShowContestRules(true);
-  }
+  };
 
   const isValid = () => {
-    return name.trim() != '' &&
-           email.trim() != '' &&
-           zip.trim() != '' &&
-           age.trim() != '' &&
-           termsAgreed;
-  }
+    return (
+      name.trim() != '' &&
+      email.trim() != '' &&
+      zip.trim() != '' &&
+      age.trim() != '' &&
+      termsAgreed
+    );
+  };
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
-        <KeyboardAwareScrollView style={GlobalStyles.container}>
-          <View style={styles.content}>
-            <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
-            <View style={[styles.row, styles.logos]}>
-              <Image source={require('../../assets/sfdph_logo.png')} style={[styles.logo, styles.sfdphLogo]} />
-              <Image source={require('../../assets/sfgiants_logo.png')} style={[styles.logo, styles.giantsLogo]} />
+      <KeyboardAwareScrollView style={GlobalStyles.container}>
+        <View style={styles.content}>
+          <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
+          <View style={[styles.row, styles.logos]}>
+            <Image
+              source={require('../../assets/sfdph_logo.png')}
+              style={[styles.logo, styles.sfdphLogo]}
+            />
+            <Image
+              source={require('../../assets/sfgiants_logo.png')}
+              style={[styles.logo, styles.giantsLogo]}
+            />
+          </View>
+          <Text style={GlobalStyles.p1}>
+            {Strings.formatString(
+              Strings.signUp.about,
+              Strings.formatString(
+                Strings.common.range,
+                moment(contest.start).format(Strings.common.rangeFrom),
+                moment(contest.end).format(Strings.common.rangeTo),
+              ),
+            )}
+          </Text>
+          <Input
+            onSubmitEditing={() => setFocus('email')}
+            onChangeText={newValue => setName(newValue)}
+            placeholder={Strings.signUp.name}
+            autoCapitalize="words"
+            autoCompleteType="name"
+            returnKeyType="next"
+            editable={!isLoading}
+          />
+          <Input
+            focused={focus == 'email'}
+            onSubmitEditing={() => setFocus('zip')}
+            onChangeText={newValue => setEmail(newValue)}
+            placeholder={Strings.signUp.email}
+            autoCompleteType="email"
+            keyboardType="email-address"
+            returnKeyType="next"
+            editable={!isLoading}
+          />
+          <View style={styles.row}>
+            <Input
+              focused={focus == 'zip'}
+              onSubmitEditing={() => setFocus('age')}
+              onChangeText={newValue => setZip(newValue)}
+              style={styles.input}
+              placeholder={Strings.signUp.zipCode}
+              keyboardType="number-pad"
+              returnKeyType={Platform.select({ios: 'done', android: 'next'})}
+              editable={!isLoading}
+            />
+            <View style={styles.spacer} />
+            <Input
+              focused={focus == 'age'}
+              onSubmitEditing={() => setFocus('')}
+              onChangeText={newValue => setAge(newValue)}
+              style={styles.input}
+              placeholder={Strings.signUp.age}
+              keyboardType="number-pad"
+              editable={!isLoading}
+            />
+          </View>
+          <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>
+            {Strings.signUp.required}
+          </Text>
+          <CheckBox
+            style={styles.agreeCheckBox}
+            checked={termsAgreed}
+            onPress={() => setTermsAgreed(!termsAgreed)}
+            editable={!isLoading}>
+            <Text
+              style={[GlobalStyles.p1, styles.agreeText]}
+              onPress={() => setTermsAgreed(!termsAgreed)}>
+              {Strings.formatString(
+                Strings.signUp.agree,
+                <Text style={styles.linkText} onPress={onPolicyPress}>
+                  {Strings.signUp.policy}
+                </Text>,
+                <Text style={styles.linkText} onPress={onContestRulesPress}>
+                  {Strings.signUp.contestRules}
+                </Text>,
+              )}
+            </Text>
+          </CheckBox>
+          {isLoading && (
+            <View style={styles.loader}>
+              <ActivityIndicator size="small" color={Colors.primary.purple} />
+              <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
             </View>
-            <Text style={GlobalStyles.p1}>{Strings.formatString(Strings.signUp.about, Strings.formatString(Strings.common.range, moment(contest.start).format(Strings.common.rangeFrom), moment(contest.end).format(Strings.common.rangeTo)))}</Text>
-            <Input onSubmitEditing={() => setFocus('email')} onChangeText={(newValue) => setName(newValue)} placeholder={Strings.signUp.name} autoCapitalize="words" autoCompleteType="name" returnKeyType="next" editable={!isLoading}></Input>
-            <Input focused={focus == 'email'} onSubmitEditing={() => setFocus('zip')} onChangeText={(newValue) => setEmail(newValue)} placeholder={Strings.signUp.email} autoCompleteType="email" keyboardType="email-address" returnKeyType="next" editable={!isLoading}></Input>
-            <View style={styles.row}>
-              <Input focused={focus == 'zip'} onSubmitEditing={() => setFocus('age')} onChangeText={(newValue) => setZip(newValue)} style={styles.input} placeholder={Strings.signUp.zipCode} keyboardType="number-pad" returnKeyType={Platform.select({ios: "done", android: "next"})} editable={!isLoading}></Input>
-              <View style={styles.spacer} />
-              <Input focused={focus == 'age'} onSubmitEditing={() => setFocus('')} onChangeText={(newValue) => setAge(newValue)} style={styles.input} placeholder={Strings.signUp.age} keyboardType="number-pad" editable={!isLoading}></Input>
-            </View>
-            <Text style={[GlobalStyles.p1, {alignSelf: 'flex-start'}]}>{Strings.signUp.required}</Text>
-            <CheckBox style={styles.agreeCheckBox} checked={termsAgreed} onPress={() => setTermsAgreed(!termsAgreed)} editable={!isLoading}>
-              <Text style={[GlobalStyles.p1, styles.agreeText]} onPress={() => setTermsAgreed(!termsAgreed)}>{Strings.formatString(Strings.signUp.agree, <Text style={styles.linkText} onPress={onPolicyPress}>{Strings.signUp.policy}</Text>, <Text style={styles.linkText} onPress={onContestRulesPress}>{Strings.signUp.contestRules}</Text>)}</Text>
-            </CheckBox>
-            { isLoading &&
-              <View style={styles.loader}>
-                <ActivityIndicator size="small" color={Colors.primary.purple} />
-                <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
-              </View>}
-            { !isLoading &&
-              <Button isEnabled={isValid()} style={styles.button} onPress={onSubmit}>{Strings.signUp.submit}</Button>}
-            <PaginationDots currentPage={1} totalPages={3} />
-          </View>
-        </KeyboardAwareScrollView>
-        <Popup isVisible={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)}>
-          <View>
-            <ScrollText style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
-              <Logo style={styles.privacyLogo} />
-              <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
-              <Autolink text={privacyText} style={styles.privacyText} />
-            </ScrollText>
-          </View>
-        </Popup>
-        <Popup isVisible={showContestRules} onClose={() => setShowContestRules(false)}>
-          <View>
-            <ScrollText style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
-              <Logo style={styles.privacyLogo} />
-              <Text style={GlobalStyles.h1}>{Strings.common.contestRules}</Text>
-              <Autolink text={contestRulesText} style={styles.privacyText} />
-            </ScrollText>
-          </View>
-        </Popup>
-        <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={GlobalStyles.h1}>{alertTitle}</Text>
-            <Text style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>{alertMessage}</Text>
-            <Button style={styles.button} onPress={() => setShowAlert(false)}>{Strings.common.okay}</Button>
-          </View>
-        </Popup>
+          )}
+          {!isLoading && (
+            <Button
+              isEnabled={isValid()}
+              style={styles.button}
+              onPress={onSubmit}>
+              {Strings.signUp.submit}
+            </Button>
+          )}
+          <PaginationDots currentPage={1} totalPages={3} />
+        </View>
+      </KeyboardAwareScrollView>
+      <Popup
+        isVisible={showPrivacyPolicy}
+        onClose={() => setShowPrivacyPolicy(false)}>
+        <View>
+          <ScrollText
+            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
+            <Logo style={styles.privacyLogo} />
+            <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
+            <Autolink text={privacyText} style={styles.privacyText} />
+          </ScrollText>
+        </View>
+      </Popup>
+      <Popup
+        isVisible={showContestRules}
+        onClose={() => setShowContestRules(false)}>
+        <View>
+          <ScrollText
+            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
+            <Logo style={styles.privacyLogo} />
+            <Text style={GlobalStyles.h1}>{Strings.common.contestRules}</Text>
+            <Autolink text={contestRulesText} style={styles.privacyText} />
+          </ScrollText>
+        </View>
+      </Popup>
+      <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
+        <View style={{alignItems: 'center'}}>
+          <Text style={GlobalStyles.h1}>{alertTitle}</Text>
+          <Text
+            style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>
+            {alertMessage}
+          </Text>
+          <Button style={styles.button} onPress={() => setShowAlert(false)}>
+            {Strings.common.okay}
+          </Button>
+        </View>
+      </Popup>
     </SafeAreaView>
   );
 }
@@ -212,7 +324,7 @@ const styles = StyleSheet.create({
   logos: {
     alignSelf: 'center',
     marginBottom: 15,
-    width: 280
+    width: 280,
   },
   logo: {
     resizeMode: 'contain',
@@ -233,20 +345,20 @@ const styles = StyleSheet.create({
   },
   agreeCheckBox: {
     alignSelf: 'flex-start',
-    width: '80%'
+    width: '80%',
   },
   agreeText: {
     marginBottom: 0,
-    lineHeight: 22
+    lineHeight: 22,
   },
   linkText: {
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   privacyLogo: {
     marginBottom: 16,
   },
   privacyText: {
-    color: Colors.primary.gray2
+    color: Colors.primary.gray2,
   },
   loader: {
     flexDirection: 'row',
@@ -259,5 +371,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     marginLeft: 10,
-  }
+  },
 });

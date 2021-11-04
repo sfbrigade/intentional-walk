@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Linking, SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  Image,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -7,7 +16,9 @@ import {isActiveRoute, navigationRef} from '../screens/tracker';
 import {Realm} from '../lib';
 
 function HamburgerMenuItem(props) {
-  const color = isActiveRoute(props.route) ? Colors.primary.purple : Colors.primary.gray2
+  const color = isActiveRoute(props.route)
+    ? Colors.primary.purple
+    : Colors.primary.gray2;
   return (
     <TouchableOpacity onPress={() => props.onPress()} style={styles.menuItem}>
       <View style={styles.menuItemIcon}>
@@ -31,12 +42,15 @@ export default function HamburgerMenu(props) {
     });
   });
 
-  const onPress = (route) => {
+  const onPress = route => {
     if (!isActiveRoute(route)) {
       if (route == 'Home' || isActiveRoute('Home')) {
         navigationRef.current?.navigate(route);
       } else {
-        navigationRef.current?.dispatch({type: 'REPLACE', payload: {name: route}});
+        navigationRef.current?.dispatch({
+          type: 'REPLACE',
+          payload: {name: route},
+        });
       }
     }
     props.onDone();
@@ -49,27 +63,74 @@ export default function HamburgerMenu(props) {
       }
       props.onDone();
       navigationRef.current?.navigate('OnboardingStack');
-    })
+    });
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <View style={styles.header}>
-          <Image style={styles.headerLogo} source={require('../assets/logo_full.png')} />
+          <Image
+            style={styles.headerLogo}
+            source={require('../assets/logo_full.png')}
+          />
           <Text style={styles.headerEmail}>{email}</Text>
         </View>
-        <HamburgerMenuItem onPress={() => onPress('Home')} icon="home" route="Home">{Strings.common.home}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('RecordedWalks')} icon="play-arrow" route="RecordedWalks">{Strings.common.myRecordedWalks}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('About')} icon="info" route="About">{Strings.common.about}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('WhereToWalk')} icon="directions-walk" route="WhereToWalk">{Strings.common.whereToWalk}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => Linking.openURL('mailto:intentionalwalk@sfdph.org')} icon="email">{Strings.common.emailUs}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('ContestRules')} icon="description" route="ContestRules">{Strings.common.contestRules}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('Privacy')} icon="description" route="Privacy">{Strings.common.privacyPolicy}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => onPress('Partners')} icon="brightness-low" route="Partners">{Strings.common.programPartners}</HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">{Strings.common.signOut}</HamburgerMenuItem>
-        <View style={{height:60}}></View>
-        <Text style={styles.aboutText}>{DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build {DeviceInfo.getBuildNumber()}</Text>
+        <HamburgerMenuItem
+          onPress={() => onPress('Home')}
+          icon="home"
+          route="Home">
+          {Strings.common.home}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('RecordedWalks')}
+          icon="play-arrow"
+          route="RecordedWalks">
+          {Strings.common.myRecordedWalks}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('About')}
+          icon="info"
+          route="About">
+          {Strings.common.about}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('WhereToWalk')}
+          icon="directions-walk"
+          route="WhereToWalk">
+          {Strings.common.whereToWalk}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => Linking.openURL('mailto:intentionalwalk@sfdph.org')}
+          icon="email">
+          {Strings.common.emailUs}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('ContestRules')}
+          icon="description"
+          route="ContestRules">
+          {Strings.common.contestRules}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('Privacy')}
+          icon="description"
+          route="Privacy">
+          {Strings.common.privacyPolicy}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => onPress('Partners')}
+          icon="brightness-low"
+          route="Partners">
+          {Strings.common.programPartners}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">
+          {Strings.common.signOut}
+        </HamburgerMenuItem>
+        <View style={{height: 60}} />
+        <Text style={styles.aboutText}>
+          {DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build{' '}
+          {DeviceInfo.getBuildNumber()}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -91,7 +152,7 @@ const styles = StyleSheet.create({
     width: 125,
     height: 75,
     opacity: 0.8,
-    marginRight: 20
+    marginRight: 20,
   },
   headerEmail: {
     ...GlobalStyles.content,
@@ -122,6 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.primary.gray2,
     textAlign: 'right',
-    paddingRight: 24
-  }
+    paddingRight: 24,
+  },
 });

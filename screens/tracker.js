@@ -10,7 +10,7 @@ export function getActiveRouteName(state) {
     return getActiveRouteName(route.state);
   }
   return route.name;
-};
+}
 
 export function onStateChange(state) {
   const previousRouteName = routeNameRef.current;

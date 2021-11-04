@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   Linking,
@@ -11,14 +11,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Button, InfoBox, PaginationDots } from '../../components';
-import { Colors, GlobalStyles } from '../../styles';
-import { Fitness, Strings } from '../../lib';
+import {Button, InfoBox, PaginationDots} from '../../components';
+import {Colors, GlobalStyles} from '../../styles';
+import {Fitness, Strings} from '../../lib';
 
-export default function InfoScreen({ navigation }) {
-
+export default function InfoScreen({navigation}) {
   const onNextPress = () => {
-    Fitness.requestPermissions().then((permitted) => {
+    Fitness.requestPermissions().then(permitted => {
       if (permitted) {
         navigation.navigate('MainStack');
       }
@@ -29,40 +28,66 @@ export default function InfoScreen({ navigation }) {
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>
         <View style={styles.content}>
-          <Text style={GlobalStyles.h1}>{Strings.permissions.thingsToKnow}</Text>
-          <View style={{ flex: 1, alignSelf: 'stretch' }}>
-            <Text style={styles.subtitle}>{Strings.permissions.takeALookText}</Text>
-            <InfoBox style={styles.infoBox}
+          <Text style={GlobalStyles.h1}>
+            {Strings.permissions.thingsToKnow}
+          </Text>
+          <View style={{flex: 1, alignSelf: 'stretch'}}>
+            <Text style={styles.subtitle}>
+              {Strings.permissions.takeALookText}
+            </Text>
+            <InfoBox
+              style={styles.infoBox}
               icon="settings"
               iconSize={64}
               iconColor={Colors.primary.lightGreen}
-              iconStyle={{ marginTop: 10 }}>
+              iconStyle={{marginTop: 10}}>
               {Strings.permissions.settingsText}
             </InfoBox>
-            <InfoBox style={[styles.infoBox, Platform.select({ ios: styles.infoBoxLast })]}
+            <InfoBox
+              style={[
+                styles.infoBox,
+                Platform.select({ios: styles.infoBoxLast}),
+              ]}
               icon="lock"
               iconSize={64}
               iconColor={Colors.secondary.blue}
-              iconStyle={{ marginTop: 20 }}>
+              iconStyle={{marginTop: 20}}>
               {Strings.permissions.prizeText}
             </InfoBox>
             {Platform.OS == 'android' ? (
-              <InfoBox style={[styles.infoBox, styles.infoBoxLast]}
+              <InfoBox
+                style={[styles.infoBox, styles.infoBoxLast]}
                 icon="account-circle"
                 iconSize={64}
                 iconColor={Colors.primary.darkGreen}>
-                <Text onPress={() => Linking.openURL(`https://support.google.com/accounts/answer/27441?hl=${Strings.getLanguage()}`)}>{Strings.formatString(Strings.permissions.googleText, <Text style={styles.linkText}>{Strings.permissions.getOneHere}</Text>)}</Text>
+                <Text
+                  onPress={() =>
+                    Linking.openURL(
+                      `https://support.google.com/accounts/answer/27441?hl=${Strings.getLanguage()}`,
+                    )
+                  }>
+                  {Strings.formatString(
+                    Strings.permissions.googleText,
+                    <Text style={styles.linkText}>
+                      {Strings.permissions.getOneHere}
+                    </Text>,
+                  )}
+                </Text>
               </InfoBox>
             ) : null}
           </View>
-          {Platform.OS == 'android' ?
-            (
-              <Button style={styles.googleButton} onPress={onNextPress}>
-                <Image style={styles.googleButton} source={require('../../assets/btn_google_signin_dark_normal_web.png')} />
-              </Button>
-            ) : (
-              <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
-            )}
+          {Platform.OS == 'android' ? (
+            <Button style={styles.googleButton} onPress={onNextPress}>
+              <Image
+                style={styles.googleButton}
+                source={require('../../assets/btn_google_signin_dark_normal_web.png')}
+              />
+            </Button>
+          ) : (
+            <Button style={styles.button} onPress={onNextPress}>
+              {Strings.common.next}
+            </Button>
+          )}
           <PaginationDots currentPage={3} totalPages={3} />
         </View>
       </ScrollView>

@@ -19,5 +19,5 @@ const styles = StyleSheet.create({
     marginRight: 20,
     width: 66,
     height: 16,
-  }
+  },
 });

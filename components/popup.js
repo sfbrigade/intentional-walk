@@ -6,16 +6,21 @@ import {GlobalStyles, Colors} from '../styles';
 
 export default function Popup(props) {
   return (
-    <View style={[styles.container, props.style, {
-      display: props.isVisible ? 'flex' : 'none',
-      position: props.isVisible ? 'absolute' : 'relative'
-    }]}>
-      <TouchableOpacity onPress={props.onClose} style={styles.backdrop}></TouchableOpacity>
+    <View
+      style={[
+        styles.container,
+        props.style,
+        {
+          display: props.isVisible ? 'flex' : 'none',
+          position: props.isVisible ? 'absolute' : 'relative',
+        },
+      ]}>
+      <TouchableOpacity onPress={props.onClose} style={styles.backdrop} />
       <View style={styles.box}>
-        <TouchableOpacity onPress={props.onClose} style={styles.closeIcon}><Icon name="clear" size={24} color={Colors.primary.gray2} /></TouchableOpacity>
-        <View style={styles.content}>
-          {props.children}
-        </View>
+        <TouchableOpacity onPress={props.onClose} style={styles.closeIcon}>
+          <Icon name="clear" size={24} color={Colors.primary.gray2} />
+        </TouchableOpacity>
+        <View style={styles.content}>{props.children}</View>
       </View>
     </View>
   );
@@ -53,5 +58,5 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 8,
-  }
+  },
 });

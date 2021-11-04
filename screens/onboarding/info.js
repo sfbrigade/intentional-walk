@@ -15,7 +15,6 @@ import {Colors, GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
 export default function InfoScreen({navigation}) {
-
   const onNextPress = () => {
     navigation.navigate('Permissions');
   };
@@ -27,29 +26,34 @@ export default function InfoScreen({navigation}) {
           <Text style={GlobalStyles.h1}>{Strings.info.youreSignedUp}</Text>
           <View style={{flex: 1, alignSelf: 'stretch'}}>
             <Text style={styles.subtitle}>{Strings.info.fromHereText}</Text>
-            <InfoBox title={Strings.info.walk}
-                     style={styles.infoBox}
-                     icon="directions-walk"
-                     iconSize={80}
-                     iconColor={Colors.accent.teal}>
+            <InfoBox
+              title={Strings.info.walk}
+              style={styles.infoBox}
+              icon="directions-walk"
+              iconSize={80}
+              iconColor={Colors.accent.teal}>
               {Strings.info.walkText}
             </InfoBox>
-            <InfoBox title={Strings.info.record}
-                     style={styles.infoBox}
-                     image={require('../../assets/record.png')}
-                     imageStyle={styles.recordButton}>
+            <InfoBox
+              title={Strings.info.record}
+              style={styles.infoBox}
+              image={require('../../assets/record.png')}
+              imageStyle={styles.recordButton}>
               {Strings.info.recordText}
             </InfoBox>
-            <InfoBox title={Strings.info.win}
-                     style={styles.infoBox}
-                     icon="star-border"
-                     iconSize={80}
-                     iconColor={Colors.accent.orange}
-                     iconStyle={styles.starIcon}>
+            <InfoBox
+              title={Strings.info.win}
+              style={styles.infoBox}
+              icon="star-border"
+              iconSize={80}
+              iconColor={Colors.accent.orange}
+              iconStyle={styles.starIcon}>
               {Strings.info.winText}
             </InfoBox>
           </View>
-          <Button style={styles.button} onPress={onNextPress}>{Strings.common.next}</Button>
+          <Button style={styles.button} onPress={onNextPress}>
+            {Strings.common.next}
+          </Button>
           <PaginationDots currentPage={2} totalPages={3} />
         </View>
       </ScrollView>
@@ -81,5 +85,5 @@ const styles = StyleSheet.create({
   },
   starIcon: {
     marginTop: 20,
-  }
+  },
 });

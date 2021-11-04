@@ -1,10 +1,10 @@
 import React, {useRef} from 'react';
-import { Platform, Text } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { MainStack, OnboardingStack } from './routes';
-import { navigationRef, routeNameRef, onStateChange } from './screens/tracker';
+import {Platform, Text} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {MainStack, OnboardingStack} from './routes';
+import {navigationRef, routeNameRef, onStateChange} from './screens/tracker';
 
 /// load locales, set defaults
 import {Strings} from './lib';
@@ -20,7 +20,7 @@ if (Platform.OS === 'android') {
   Text.render = function (...args) {
     const origin = oldRender.call(this, ...args);
     return React.cloneElement(origin, {
-      style: [{fontFamily: 'Roboto'}, origin.props.style]
+      style: [{fontFamily: 'Roboto'}, origin.props.style],
     });
   };
 }
@@ -37,12 +37,20 @@ const App: () => React$Node = () => {
         ref={navigationRef}
         onStateChange={state => onStateChange(state)}>
         <RootStack.Navigator mode="modal">
-          <RootStack.Screen name="MainStack" component={MainStack} options={{ headerShown: false }} />
-          <RootStack.Screen name="OnboardingStack" component={OnboardingStack} options={{ headerShown: false, gestureEnabled: false }} />
+          <RootStack.Screen
+            name="MainStack"
+            component={MainStack}
+            options={{headerShown: false}}
+          />
+          <RootStack.Screen
+            name="OnboardingStack"
+            component={OnboardingStack}
+            options={{headerShown: false, gestureEnabled: false}}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
-  )
+  );
 };
 
 export default App;

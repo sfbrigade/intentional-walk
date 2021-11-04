@@ -9,16 +9,29 @@ export default function ScrollText(props) {
 
   const onScroll = ({nativeEvent}) => {
     const {contentOffset, contentSize, layoutMeasurement} = nativeEvent;
-    setShowIndicator(contentOffset.y < (contentSize.height - layoutMeasurement.height - 20));
+    setShowIndicator(
+      contentOffset.y < contentSize.height - layoutMeasurement.height - 20,
+    );
   };
 
   return (
     <View style={props.style}>
-      <ScrollView style={styles.scrollView} onScrollEndDrag={onScroll} onMomentumScrollEnd={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        onScrollEndDrag={onScroll}
+        onMomentumScrollEnd={onScroll}>
         {props.children}
       </ScrollView>
-      <View style={[styles.scrollIndicator, showIndicator ? null : styles.scrollIndicatorHidden]} pointerEvents="none">
-        <Image style={styles.scrollIndicatorBackground} source={require('../assets/gradient.png')} />
+      <View
+        style={[
+          styles.scrollIndicator,
+          showIndicator ? null : styles.scrollIndicatorHidden,
+        ]}
+        pointerEvents="none">
+        <Image
+          style={styles.scrollIndicatorBackground}
+          source={require('../assets/gradient.png')}
+        />
         <Icon size={32} name="expand-more" color={Colors.primary.gray2} />
       </View>
     </View>
@@ -44,5 +57,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-  }
+  },
 });

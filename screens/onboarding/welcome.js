@@ -2,7 +2,15 @@ import React, {useState} from 'react';
 import {BackHandler} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {Button, Popup} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
@@ -16,8 +24,9 @@ export default function WelcomeScreen({navigation}) {
         return true;
       };
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    })
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }),
   );
 
   const [language, setLanguage] = useState(null);
@@ -28,7 +37,9 @@ export default function WelcomeScreen({navigation}) {
     setLanguage(lang);
     moment.locale(lang);
     Strings.setLanguage(lang);
-    Realm.getSettings().then(settings => Realm.write(() => settings.lang = lang));
+    Realm.getSettings().then(settings =>
+      Realm.write(() => (settings.lang = lang)),
+    );
   };
 
   const continuePressed = () => {
@@ -50,23 +61,50 @@ export default function WelcomeScreen({navigation}) {
         <View style={styles.content}>
           <Text style={GlobalStyles.h1}>{Strings.common.welcome}</Text>
           <Text style={styles.subtitle}>{Strings.welcome.select}</Text>
-          <Button style={styles.button} isToggle={true} isSelected={language === 'en'} onPress={() => selectLanguage('en')}>English</Button>
-          <Button style={styles.button} isToggle={true} isSelected={language === 'es'} onPress={() => selectLanguage('es')}>Español</Button>
-          <Button style={[styles.button, {marginBottom: 32}]} isToggle={true} isSelected={language === 'zh-cn'} onPress={() => selectLanguage('zh-cn')}>中文</Button>
-          {language && isLoading &&
+          <Button
+            style={styles.button}
+            isToggle={true}
+            isSelected={language === 'en'}
+            onPress={() => selectLanguage('en')}>
+            English
+          </Button>
+          <Button
+            style={styles.button}
+            isToggle={true}
+            isSelected={language === 'es'}
+            onPress={() => selectLanguage('es')}>
+            Español
+          </Button>
+          <Button
+            style={[styles.button, {marginBottom: 32}]}
+            isToggle={true}
+            isSelected={language === 'zh-cn'}
+            onPress={() => selectLanguage('zh-cn')}>
+            中文
+          </Button>
+          {language && isLoading && (
             <View style={styles.loader}>
               <ActivityIndicator size="small" color={Colors.primary.purple} />
               <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
-            </View>}
-          {language && !isLoading &&
-            <Button style={styles.button} onPress={continuePressed}>{Strings.welcome.start}</Button>}
+            </View>
+          )}
+          {language && !isLoading && (
+            <Button style={styles.button} onPress={continuePressed}>
+              {Strings.welcome.start}
+            </Button>
+          )}
         </View>
       </ScrollView>
       <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
         <View style={{alignItems: 'center'}}>
           <Text style={GlobalStyles.h1}>{Strings.common.serverErrorTitle}</Text>
-          <Text style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>{Strings.common.serverErrorMessage}</Text>
-          <Button style={styles.button} onPress={() => setShowAlert(false)}>{Strings.common.okay}</Button>
+          <Text
+            style={[GlobalStyles.h2, {textAlign: 'center', marginBottom: 48}]}>
+            {Strings.common.serverErrorMessage}
+          </Text>
+          <Button style={styles.button} onPress={() => setShowAlert(false)}>
+            {Strings.common.okay}
+          </Button>
         </View>
       </Popup>
     </SafeAreaView>
@@ -92,7 +130,7 @@ const styles = StyleSheet.create({
     ...GlobalStyles.rounded,
     backgroundColor: 'white',
     borderColor: Colors.primary.purple,
-    borderWidth: .5,
+    borderWidth: 0.5,
     width: 180,
     alignItems: 'center',
     justifyContent: 'center',

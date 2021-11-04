@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import loadLocalResource from 'react-native-local-resource'
+import loadLocalResource from 'react-native-local-resource';
 import Autolink from 'react-native-autolink';
 import {Button, InfoBox, PageTitle} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
