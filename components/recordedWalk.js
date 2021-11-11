@@ -32,9 +32,7 @@ export default function RecordedWalk(props) {
           <Text style={styles.mainTitle}>{title}</Text>
           {date && (
             <View style={styles.dateContainer}>
-              <Text style={[styles.statsTitle, {textAlign: 'right'}]}>
-                {date}
-              </Text>
+              <Text style={[styles.statsTitle, styles.date]}>{date}</Text>
             </View>
           )}
         </View>
@@ -44,7 +42,7 @@ export default function RecordedWalk(props) {
           </View>
         ) : (
           <>
-            <View style={[styles.row2, {paddingRight: 100}]}>
+            <View style={[styles.row2, styles.row2Padded]}>
               <View style={styles.stats}>
                 <Text style={styles.statsTitle}>{steps}</Text>
                 <Text style={styles.subtitle}>{Strings.common.steps}</Text>
@@ -89,6 +87,9 @@ const styles = StyleSheet.create({
     color: Colors.primary.purple,
     fontSize: 16,
   },
+  date: {
+    textAlign: 'right',
+  },
   subtitle: {
     color: Colors.primary.purple,
     fontSize: 12.5,
@@ -114,6 +115,9 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     flex: 2,
     justifyContent: 'space-between',
+  },
+  row2Padded: {
+    paddingRight: 100,
   },
   stats: {
     justifyContent: 'center',

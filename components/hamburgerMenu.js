@@ -126,7 +126,7 @@ export default function HamburgerMenu(props) {
         <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">
           {Strings.common.signOut}
         </HamburgerMenuItem>
-        <View style={{height: 60}} />
+        <View style={styles.spacer} />
         <Text style={styles.aboutText}>
           {DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build{' '}
           {DeviceInfo.getBuildNumber()}
@@ -184,5 +184,8 @@ const styles = StyleSheet.create({
     color: Colors.primary.gray2,
     textAlign: 'right',
     paddingRight: 24,
+  },
+  spacer: {
+    height: 60,
   },
 });

@@ -122,7 +122,7 @@ export default function Recorder(props) {
           <Text style={styles.count}>{activeWalk.steps}</Text>
           <Text style={styles.label}>{Strings.common.steps}</Text>
         </View>
-        <View style={[styles.stopButtonRow, {opacity: end ? 1 : 0}]}>
+        <View style={[styles.stopButtonRow, end ? styles.show : styles.hide]}>
           <Button
             onPress={onResume}
             style={styles.resumeButton}
@@ -246,6 +246,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  show: {
+    opacity: 1,
+  },
+  hide: {
+    opacity: 0,
   },
   resumeButton: {
     flex: 1,

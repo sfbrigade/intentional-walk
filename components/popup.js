@@ -10,10 +10,7 @@ export default function Popup(props) {
       style={[
         styles.container,
         props.style,
-        {
-          display: props.isVisible ? 'flex' : 'none',
-          position: props.isVisible ? 'absolute' : 'relative',
-        },
+        props.isVisible ? styles.show : styles.hide,
       ]}>
       <TouchableOpacity onPress={props.onClose} style={styles.backdrop} />
       <View style={styles.box}>
@@ -52,6 +49,14 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     padding: 2,
+  },
+  show: {
+    display: 'flex',
+    position: 'absolute',
+  },
+  hide: {
+    display: 'none',
+    position: 'relative',
   },
   closeIcon: {
     alignSelf: 'flex-end',

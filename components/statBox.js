@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function StatBox(props) {
   return (
     <View style={[styles.box, props.style, {backgroundColor: props.boxColor}]}>
-      <View style={[styles.box, {width: '100%', overflow: 'hidden'}]}>
+      <View style={[styles.box, styles.innerBox]}>
         {props.mainText === ' ' && (
           <ActivityIndicator
             style={styles.spinner}
@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 112,
+  },
+  innerBox: {
+    width: '100%',
+    overflow: 'hidden',
   },
   spinner: {
     position: 'absolute',

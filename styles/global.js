@@ -21,7 +21,6 @@ export default StyleSheet.create({
   centered: {
     alignItems: 'center',
   },
-
   boxShadow: {
     shadowColor: 'black',
     shadowOffset: {width: 4, height: 4},

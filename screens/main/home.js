@@ -261,12 +261,12 @@ export default function HomeScreen({navigation}) {
                 {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54},
               ]}>
               <DateNavigator
-                style={{marginBottom: 16}}
+                style={styles.marginBottom}
                 date={date}
                 setDate={setDateAndGetDailySteps}
               />
               {contest && contest.isBeforeStartDate && (
-                <View style={{marginBottom: 16}}>
+                <View style={styles.marginBottom}>
                   <Text style={styles.alertText}>
                     {Strings.home.getReadyAlert1}
                   </Text>
@@ -279,7 +279,7 @@ export default function HomeScreen({navigation}) {
                 </View>
               )}
               {contest && contest.isDuringContest && (
-                <View style={{marginBottom: 16}}>
+                <View style={styles.marginBottom}>
                   <Text style={styles.alertText}>
                     {Strings.formatString(
                       Strings.home.currentAlert,
@@ -290,7 +290,7 @@ export default function HomeScreen({navigation}) {
                 </View>
               )}
               {contest && contest.isWeekAfterEndDate && (
-                <View style={{marginBottom: 16}}>
+                <View style={styles.marginBottom}>
                   <Text style={styles.alertText}>
                     {Strings.formatString(Strings.home.congratsAlert)}
                   </Text>
@@ -299,7 +299,7 @@ export default function HomeScreen({navigation}) {
               {contest &&
                 contest.isAfterEndDate &&
                 !contest.isWeekAfterEndDate && (
-                  <View style={{marginBottom: 16}}>
+                  <View style={styles.marginBottom}>
                     <Text style={styles.alertText}>
                       {Strings.formatString(Strings.home.noContestAlert)}
                     </Text>
@@ -315,7 +315,7 @@ export default function HomeScreen({navigation}) {
                   }
                   icon="directions-walk"
                   iconSize={140}
-                  iconStyle={{top: -15}}
+                  iconStyle={styles.walkIcon}
                   style={[
                     styles.stepsBox,
                     styles.box,
@@ -337,7 +337,7 @@ export default function HomeScreen({navigation}) {
                   }
                   icon="swap-calls"
                   iconSize={200}
-                  iconStyle={{top: -45, left: -15, width: '200%'}}
+                  iconStyle={styles.milesIcon}
                   style={[
                     styles.milesBox,
                     styles.box,
@@ -444,6 +444,9 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
   },
+  marginBottom: {
+    marginBottom: 16,
+  },
   stepsBox: {
     borderTopLeftRadius: 10,
   },
@@ -455,6 +458,11 @@ const styles = StyleSheet.create({
   },
   milesBoxRounded: {
     borderBottomRightRadius: 10,
+  },
+  milesIcon: {
+    top: -45,
+    left: -15,
+    width: '200%',
   },
   overallBox: {
     borderBottomLeftRadius: 10,
@@ -470,6 +478,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  walkIcon: {
+    top: -15,
   },
   walkText: {
     ...GlobalStyles.h2,

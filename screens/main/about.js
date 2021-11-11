@@ -20,7 +20,7 @@ export default function InfoScreen({navigation}) {
         <View style={GlobalStyles.content}>
           <PageTitle style={styles.title} title={Strings.common.about} />
           {contest && (
-            <View style={{flex: 1, alignSelf: 'stretch'}}>
+            <View style={styles.contest}>
               <InfoBox
                 style={styles.infoBox}
                 title={Strings.about.what}
@@ -74,5 +74,9 @@ const styles = StyleSheet.create({
   },
   infoBox: {
     marginBottom: 30,
+  },
+  contest: {
+    flex: 1,
+    alignSelf: 'stretch',
   },
 });
