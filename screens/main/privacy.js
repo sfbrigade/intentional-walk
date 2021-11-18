@@ -1,27 +1,18 @@
 import React, {useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import loadLocalResource from 'react-native-local-resource'
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import loadLocalResource from 'react-native-local-resource';
 import Autolink from 'react-native-autolink';
-import {Button, InfoBox, PageTitle} from '../../components';
-import {Colors, GlobalStyles} from '../../styles';
+import {PageTitle} from '../../components';
+import {GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
 import Privacy from '../../assets/privacy';
 
 export default function PrivacyScreen({navigation}) {
   const [text, setText] = useState();
-  loadLocalResource(Privacy[Strings.getLanguage()]).then(text => setText(text));
+  loadLocalResource(Privacy[Strings.getLanguage()]).then(newText =>
+    setText(newText),
+  );
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView>

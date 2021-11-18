@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import {createRef} from 'react';
 
 export const routeNameRef = createRef();
 export const navigationRef = createRef();
@@ -10,7 +10,7 @@ export function getActiveRouteName(state) {
     return getActiveRouteName(route.state);
   }
   return route.name;
-};
+}
 
 export function onStateChange(state) {
   const previousRouteName = routeNameRef.current;
@@ -24,5 +24,5 @@ export function onStateChange(state) {
 }
 
 export function isActiveRoute(routeName) {
-  return routeNameRef.current == routeName;
+  return routeNameRef.current === routeName;
 }

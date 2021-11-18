@@ -1,11 +1,18 @@
-'use strict'
+'use strict';
 
 import React, {useEffect, useRef, useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
-import {ScrollView, StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 import {Api, Fitness, Realm, Strings} from '../../lib';
 import {DateNavigator, Recorder} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
@@ -29,86 +36,98 @@ export default function HomeScreen({navigation}) {
   const [activeWalk, setActiveWalk] = useState(null);
 
   const saveStepsAndDistances = () => {
-    Realm.getContest().then(contest => {
-        const today = moment().endOf('day');
-        let from = null, to = null;
-        if (contest) {
-          /// check if we're in/after the contest period
-          if (!contest.isBeforeStartDate) {
-            from = moment(contest.start);
-            /// check if we're in the contest period
-            if (contest.isAfterEndDate) {
-              to = moment(contest.end);
-            } else {
-              to = today;
-            }
+    Realm.getContest().then(newContest => {
+      const today = moment().endOf('day');
+      let from = null,
+        to = null;
+      if (newContest) {
+        /// check if we're in/after the contest period
+        if (!newContest.isBeforeStartDate) {
+          from = moment(newContest.start);
+          /// check if we're in the contest period
+          if (newContest.isAfterEndDate) {
+            to = moment(newContest.end);
+          } else {
+            to = today;
           }
         }
-        /// only save when within contest period
-        if (from && to) {
-          Fitness.getStepsAndDistances(from, to)
-            .then(dailyWalks => {
-              if (dailyWalks && dailyWalks.length > 0) {
-                /// get user account, then save to server...!
-                Realm.getUser()
-                  .then(user => {
-                    if (user) {
-                      return Api.dailyWalk.create(dailyWalks, user.id);
-                    }
-                  })
-                  .then(response => {
-                    /// silent for now
-                  })
-                  .catch(error => {
-                    /// silent for now- send to remote logger (Firebase?)
-                  });
-              }
-            });
-        }
-      });
+      }
+      /// only save when within contest period
+      if (from && to) {
+        Fitness.getStepsAndDistances(from, to).then(newDailyWalks => {
+          if (newDailyWalks && newDailyWalks.length > 0) {
+            /// get user account, then save to server...!
+            Realm.getUser()
+              .then(user => {
+                if (user) {
+                  return Api.dailyWalk.create(newDailyWalks, user.id);
+                }
+              })
+              .then(response => {
+                /// silent for now
+              })
+              .catch(error => {
+                /// silent for now- send to remote logger (Firebase?)
+              });
+          }
+        });
+      }
+    });
   };
 
-  const getStepsAndDistances = (queryDate, dailyWalks) => {
+  const getStepsAndDistances = (queryDate, currentDailyWalks) => {
     setTodaysWalk(null);
-    if (dailyWalks == null) {
+    if (currentDailyWalks == null) {
       setDailyWalks(true);
-      Fitness.getStepsAndDistances(moment(dateRef.current).startOf('month'), moment(dateRef.current).endOf('month'))
-        .then(dailyWalks => {
-          if (moment(dateRef.current).startOf('month').isSame(moment(queryDate).startOf('month'))) {
-            setDailyWalks(dailyWalks);
-            getStepsAndDistances(dateRef.current, dailyWalks);
+      Fitness.getStepsAndDistances(
+        moment(dateRef.current).startOf('month'),
+        moment(dateRef.current).endOf('month'),
+      )
+        .then(newDailyWalks => {
+          if (
+            moment(dateRef.current)
+              .startOf('month')
+              .isSame(moment(queryDate).startOf('month'))
+          ) {
+            setDailyWalks(newDailyWalks);
+            getStepsAndDistances(dateRef.current, newDailyWalks);
           }
         })
         .catch(error => {
           console.log(error);
         });
-    } else if (Array.isArray(dailyWalks)) {
-      let todaysWalk = {
+    } else if (Array.isArray(currentDailyWalks)) {
+      let newTodaysWalk = {
         steps: 0,
         distance: 0,
       };
       let from = moment(queryDate).startOf('day');
       let to = moment(from).endOf('day');
-      for (let dailyWalk of dailyWalks) {
-        if (from.isSameOrBefore(dailyWalk.date) && to.isSameOrAfter(dailyWalk.date)) {
-          todaysWalk = dailyWalk;
+      for (let dailyWalk of currentDailyWalks) {
+        if (
+          from.isSameOrBefore(dailyWalk.date) &&
+          to.isSameOrAfter(dailyWalk.date)
+        ) {
+          newTodaysWalk = dailyWalk;
           break;
         }
       }
-      setTodaysWalk(todaysWalk);
+      setTodaysWalk(newTodaysWalk);
     }
-  }
+  };
 
   const getTotalSteps = () => {
     setTotalSteps(null);
     /// get current contest
-    Realm.getContest().then(contest => {
+    Realm.getContest()
+      .then(newContest => {
         const now = moment();
-        let from = null, to = null;
+        let from = null,
+          to = null;
         /// check if we're in/outside the contest period
-        if (contest && contest.isDuringContest) {
+        if (newContest && newContest.isDuringContest) {
           /// get total from start of contest until now
-          from = moment(contest.start);
+          from = moment(newContest.start);
           to = now;
         } else {
           /// get total from start of month
@@ -119,31 +138,38 @@ export default function HomeScreen({navigation}) {
       })
       .then(([from, to]) => {
         if (from && to) {
-          let totalSteps = 0;
-          Fitness.getSteps(from, to).then(steps => {
-            for (let step of steps) {
-              totalSteps += step.quantity;
-            }
-          }).finally(() => setTotalSteps(totalSteps));
+          let newTotalSteps = 0;
+          Fitness.getSteps(from, to)
+            .then(steps => {
+              for (let step of steps) {
+                newTotalSteps += step.quantity;
+              }
+            })
+            .finally(() => setTotalSteps(newTotalSteps));
         } else {
           /// no range, just show 0
           setTotalSteps(0);
         }
       });
-  }
+  };
 
-  const getRecordedWalks = (queryDate) => {
+  const getRecordedWalks = queryDate => {
     Realm.open().then(realm => {
-      const recordedWalks = realm.objects('IntentionalWalk')
-        .filtered('start>=$0 AND end<$1', queryDate.toDate(), moment(queryDate).add(1, 'd').toDate())
+      const newRecordedWalks = realm
+        .objects('IntentionalWalk')
+        .filtered(
+          'start>=$0 AND end<$1',
+          queryDate.toDate(),
+          moment(queryDate).add(1, 'd').toDate(),
+        )
         .sorted([['end', true]]);
       if (dateRef.current.isSame(queryDate)) {
-        setRecordedWalks(recordedWalks);
+        setRecordedWalks(newRecordedWalks);
       }
     });
   };
 
-  const setDateAndGetDailySteps = (newDate) => {
+  const setDateAndGetDailySteps = newDate => {
     const oldDate = dateRef.current;
     dateRef.current = newDate;
     setDate(newDate);
@@ -182,7 +208,9 @@ export default function HomeScreen({navigation}) {
       isFirstLoad = false;
     });
     /// listen for updates to contest info
-    Realm.addContestListener(contest => contest ? setContest(contest.toObject()) : null);
+    Realm.addContestListener(newContest =>
+      newContest ? setContest(newContest.toObject()) : null,
+    );
     /// on cleanup, remove listeners
     return () => Realm.removeAllListeners();
   }, []);
@@ -216,97 +244,192 @@ export default function HomeScreen({navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       refresh();
-    }, [])
+    }),
   );
 
   const today = moment().startOf('day');
   const isToday = date.isSame(today);
-  const dateString = isToday ? Strings.common.today : date.format('MMMM D');
 
   return (
     <View style={GlobalStyles.container}>
-      { !activeWalk &&
-      <>
-        <ScrollView>
-          <View style={[GlobalStyles.content, {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54}]}>
-            <DateNavigator style={{marginBottom: 16}} date={date} setDate={setDateAndGetDailySteps}/>
-            { contest && contest.isBeforeStartDate && <View style={{marginBottom: 16}}>
-              <Text style={styles.alertText}>{Strings.home.getReadyAlert1}</Text>
-              <Text style={styles.alertText}>{Strings.formatString(Strings.home.getReadyAlert2, moment(contest.start).format(Strings.common.date))}</Text>
-            </View> }
-            { contest && contest.isDuringContest && <View style={{marginBottom: 16}}>
-              <Text style={styles.alertText}>{Strings.formatString(Strings.home.currentAlert, moment(contest.start).format(Strings.common.date), moment(contest.end).format(Strings.common.date))}</Text>
-            </View> }
-            { contest && contest.isWeekAfterEndDate && <View style={{marginBottom: 16}}>
-              <Text style={styles.alertText}>{Strings.formatString(Strings.home.congratsAlert)}</Text>
-            </View> }
-            { contest && contest.isAfterEndDate && !contest.isWeekAfterEndDate && <View style={{marginBottom: 16}}>
-              <Text style={styles.alertText}>{Strings.formatString(Strings.home.noContestAlert)}</Text>
-            </View> }
-            <View style={styles.row}>
-              <StatBox
-                mainText={todaysWalk ? numeral(todaysWalk.steps).format('0,0') : " "}
-                subText={isToday ? Strings.home.stepsToday : Strings.common.steps}
-                icon="directions-walk"
-                iconSize={140}
-                iconStyle={{top: -15}}
-                style={[styles.stepsBox, styles.box, isToday ? null : styles.stepsBoxRounded]}
-                boxColor={Colors.accent.teal}
+      {!activeWalk && (
+        <>
+          <ScrollView>
+            <View
+              style={[
+                GlobalStyles.content,
+                {paddingBottom: safeAreaInsets.bottom + 20 + 17 + 10 + 54},
+              ]}>
+              <DateNavigator
+                style={styles.marginBottom}
+                date={date}
+                setDate={setDateAndGetDailySteps}
               />
-              <StatBox
-                mainText={todaysWalk ? numeral(todaysWalk.distance * 0.000621371).format('0,0.0') : " "}
-                mainTextSuffix={Strings.home.milesSuffix}
-                subText={isToday ? Strings.home.milesToday : Strings.common.miles}
-                icon="swap-calls"
-                iconSize={200}
-                iconStyle={{top: -45, left: -15, width: '200%'}}
-                style={[styles.milesBox, styles.box, isToday ? null : styles.milesBoxRounded]}
-                boxColor={Colors.primary.lightGreen}
-              />
-            </View>
-            <View style={[styles.row, isToday ? null : styles.hidden]} pointerEvents={isToday? 'auto' : 'none'}>
-              <StatBox
-                mainText={totalSteps != null ? numeral(totalSteps).format('0,0') : " "}
-                subText={contest && contest.isDuringContest ? Strings.home.overallStepTotal : Strings.home.stepsThisMonth}
-                icon="star-border"
-                iconSize={200}
-                style={[styles.overallBox, styles.box]}
-                boxColor={Colors.accent.orange}
-              />
-            </View>
-            <View style={[styles.row, isToday ? null : styles.hidden]} pointerEvents={isToday? 'auto' : 'none'}>
-              <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('WhereToWalk')}>
-                <View style={styles.walkBox}>
-                  <Text style={styles.walkText}>{Strings.home.whereToWalk}</Text>
-                  <Icon style={styles.walkChevron} name="chevron-right" size={30} />
+              {contest && contest.isBeforeStartDate && (
+                <View style={styles.marginBottom}>
+                  <Text style={styles.alertText}>
+                    {Strings.home.getReadyAlert1}
+                  </Text>
+                  <Text style={styles.alertText}>
+                    {Strings.formatString(
+                      Strings.home.getReadyAlert2,
+                      moment(contest.start).format(Strings.common.date),
+                    )}
+                  </Text>
                 </View>
-              </TouchableOpacity>
+              )}
+              {contest && contest.isDuringContest && (
+                <View style={styles.marginBottom}>
+                  <Text style={styles.alertText}>
+                    {Strings.formatString(
+                      Strings.home.currentAlert,
+                      moment(contest.start).format(Strings.common.date),
+                      moment(contest.end).format(Strings.common.date),
+                    )}
+                  </Text>
+                </View>
+              )}
+              {contest && contest.isWeekAfterEndDate && (
+                <View style={styles.marginBottom}>
+                  <Text style={styles.alertText}>
+                    {Strings.formatString(Strings.home.congratsAlert)}
+                  </Text>
+                </View>
+              )}
+              {contest &&
+                contest.isAfterEndDate &&
+                !contest.isWeekAfterEndDate && (
+                  <View style={styles.marginBottom}>
+                    <Text style={styles.alertText}>
+                      {Strings.formatString(Strings.home.noContestAlert)}
+                    </Text>
+                  </View>
+                )}
+              <View style={styles.row}>
+                <StatBox
+                  mainText={
+                    todaysWalk ? numeral(todaysWalk.steps).format('0,0') : ' '
+                  }
+                  subText={
+                    isToday ? Strings.home.stepsToday : Strings.common.steps
+                  }
+                  icon="directions-walk"
+                  iconSize={140}
+                  iconStyle={styles.walkIcon}
+                  style={[
+                    styles.stepsBox,
+                    styles.box,
+                    isToday ? null : styles.stepsBoxRounded,
+                  ]}
+                  boxColor={Colors.accent.teal}
+                />
+                <StatBox
+                  mainText={
+                    todaysWalk
+                      ? numeral(todaysWalk.distance * 0.000621371).format(
+                          '0,0.0',
+                        )
+                      : ' '
+                  }
+                  mainTextSuffix={Strings.home.milesSuffix}
+                  subText={
+                    isToday ? Strings.home.milesToday : Strings.common.miles
+                  }
+                  icon="swap-calls"
+                  iconSize={200}
+                  iconStyle={styles.milesIcon}
+                  style={[
+                    styles.milesBox,
+                    styles.box,
+                    isToday ? null : styles.milesBoxRounded,
+                  ]}
+                  boxColor={Colors.primary.lightGreen}
+                />
+              </View>
+              <View
+                style={[styles.row, isToday ? null : styles.hidden]}
+                pointerEvents={isToday ? 'auto' : 'none'}>
+                <StatBox
+                  mainText={
+                    totalSteps != null ? numeral(totalSteps).format('0,0') : ' '
+                  }
+                  subText={
+                    contest && contest.isDuringContest
+                      ? Strings.home.overallStepTotal
+                      : Strings.home.stepsThisMonth
+                  }
+                  icon="star-border"
+                  iconSize={200}
+                  style={[styles.overallBox, styles.box]}
+                  boxColor={Colors.accent.orange}
+                />
+              </View>
+              <View
+                style={[styles.row, isToday ? null : styles.hidden]}
+                pointerEvents={isToday ? 'auto' : 'none'}>
+                <TouchableOpacity
+                  style={styles.box}
+                  onPress={() => navigation.navigate('WhereToWalk')}>
+                  <View style={styles.walkBox}>
+                    <Text style={styles.walkText}>
+                      {Strings.home.whereToWalk}
+                    </Text>
+                    <Icon
+                      style={styles.walkChevron}
+                      name="chevron-right"
+                      size={30}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={[styles.subtitle]}>
+                <Text style={styles.subtitleHeader}>
+                  {Strings.home.myRecordedWalks}
+                </Text>
+                <Text
+                  style={styles.subtitleLink}
+                  onPress={() => navigation.navigate('RecordedWalks')}>
+                  {Strings.home.allRecordedWalks}
+                </Text>
+              </View>
+              {recordedWalks && recordedWalks.length === 0 && (
+                <RecordedWalk
+                  title={
+                    isToday ? Strings.common.noWalksYet : Strings.common.noWalks
+                  }
+                  subtitle={isToday ? Strings.home.noWalksYetText : null}
+                />
+              )}
+              {recordedWalks &&
+                recordedWalks.length > 0 &&
+                recordedWalks.map(walk => (
+                  <RecordedWalk key={walk.id} walk={walk} />
+                ))}
             </View>
-            <View style={[styles.subtitle]}>
-              <Text style={styles.subtitleHeader}>{Strings.home.myRecordedWalks}</Text>
-              <Text style={styles.subtitleLink} onPress={() => navigation.navigate('RecordedWalks')}>{Strings.home.allRecordedWalks}</Text>
-            </View>
-            { recordedWalks && recordedWalks.length == 0 &&
-              <RecordedWalk
-                title={isToday ? Strings.common.noWalksYet : Strings.common.noWalks}
-                subtitle={isToday ? Strings.home.noWalksYetText : null} />
-            }
-            { recordedWalks && recordedWalks.length > 0 &&
-                recordedWalks.map(walk => <RecordedWalk key={walk.id} walk={walk} />)
-            }
+          </ScrollView>
+          <View
+            pointerEvents={isToday ? 'box-none' : 'none'}
+            style={[
+              styles.recordContainer,
+              {paddingBottom: safeAreaInsets.bottom},
+              isToday ? null : styles.hidden,
+            ]}>
+            <TouchableOpacity onPress={() => Realm.startWalk()}>
+              <Image
+                style={styles.recordButton}
+                source={require('../../assets/record.png')}
+              />
+            </TouchableOpacity>
+            <Text style={styles.recordText}>{Strings.home.recordAWalk}</Text>
           </View>
-        </ScrollView>
-        <View pointerEvents={isToday ? 'box-none' : 'none'} style={[styles.recordContainer, {paddingBottom: safeAreaInsets.bottom}, isToday ? null : styles.hidden]}>
-          <TouchableOpacity onPress={() => Realm.startWalk()}>
-            <Image style={styles.recordButton} source={require('../../assets/record.png')} />
-          </TouchableOpacity>
-          <Text style={styles.recordText}>{Strings.home.recordAWalk}</Text>
-        </View>
-      </> }
-      { activeWalk &&
+        </>
+      )}
+      {activeWalk && (
         <Recorder
           style={[styles.recorder, {paddingBottom: safeAreaInsets.bottom}]}
-          activeWalk={activeWalk} /> }
+          activeWalk={activeWalk}
+        />
+      )}
     </View>
   );
 }
@@ -321,6 +444,9 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
   },
+  marginBottom: {
+    marginBottom: 16,
+  },
   stepsBox: {
     borderTopLeftRadius: 10,
   },
@@ -332,6 +458,11 @@ const styles = StyleSheet.create({
   },
   milesBoxRounded: {
     borderBottomRightRadius: 10,
+  },
+  milesIcon: {
+    top: -45,
+    left: -15,
+    width: '200%',
   },
   overallBox: {
     borderBottomLeftRadius: 10,
@@ -346,7 +477,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+  },
+  walkIcon: {
+    top: -15,
   },
   walkText: {
     ...GlobalStyles.h2,
@@ -354,7 +488,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
     paddingLeft: 20,
-    marginBottom: 0
+    marginBottom: 0,
   },
   walkChevron: {
     color: 'white',
@@ -365,25 +499,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 0,
     marginRight: 0,
-    marginBottom: 12
+    marginBottom: 12,
   },
   subtitleHeader: {
     fontWeight: 'bold',
     fontSize: 16,
     color: Colors.primary.gray2,
     alignSelf: 'flex-start',
-    marginBottom: 4
+    marginBottom: 4,
   },
   subtitleLink: {
     fontSize: 12,
     color: Colors.primary.gray2,
     textDecorationLine: 'underline',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   recorder: {
     position: 'absolute',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   recordContainer: {
     position: 'absolute',
@@ -394,7 +528,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 10,
@@ -409,12 +543,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.primary.purple,
     marginTop: 8,
-    marginBottom: 10
+    marginBottom: 10,
   },
   alertText: {
     color: Colors.secondary.red,
     fontSize: 12,
     fontWeight: 'bold',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Colors, GlobalStyles} from '../styles';
+import {Colors} from '../styles';
 
 export default function HamburgerButton(props) {
   return (

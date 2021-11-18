@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import {StyleSheet} from 'react-native';
 import Colors from './colors';
@@ -13,14 +13,17 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.primary.lightGray
+    backgroundColor: Colors.primary.lightGray,
   },
   content: {
     padding: 16,
   },
+  centered: {
+    alignItems: 'center',
+  },
   boxShadow: {
     shadowColor: 'black',
-    shadowOffset: { width: 4, height: 4 },
+    shadowOffset: {width: 4, height: 4},
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 10,

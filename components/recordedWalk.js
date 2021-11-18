@@ -30,18 +30,19 @@ export default function RecordedWalk(props) {
       <View style={styles.clipContainer}>
         <View style={styles.row1}>
           <Text style={styles.mainTitle}>{title}</Text>
-          {date &&
+          {date && (
             <View style={styles.dateContainer}>
-              <Text style={[styles.statsTitle, {textAlign: 'right'}]}>{date}</Text>
-            </View>}
+              <Text style={[styles.statsTitle, styles.date]}>{date}</Text>
+            </View>
+          )}
         </View>
-        {steps === undefined ?
+        {steps === undefined ? (
           <View style={styles.row2}>
             <Text style={styles.subtitle}>{subtitle}</Text>
           </View>
-          :
+        ) : (
           <>
-            <View style={[styles.row2, {paddingRight: 100}]}>
+            <View style={[styles.row2, styles.row2Padded]}>
               <View style={styles.stats}>
                 <Text style={styles.statsTitle}>{steps}</Text>
                 <Text style={styles.subtitle}>{Strings.common.steps}</Text>
@@ -59,7 +60,7 @@ export default function RecordedWalk(props) {
               <Icon style={styles.icon} name="timer" size={100} />
             </View>
           </>
-        }
+        )}
       </View>
     </View>
   );
@@ -75,16 +76,19 @@ const styles = StyleSheet.create({
   },
   clipContainer: {
     flex: 1,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   mainTitle: {
     color: Colors.primary.purple,
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   statsTitle: {
     color: Colors.primary.purple,
-    fontSize: 16
+    fontSize: 16,
+  },
+  date: {
+    textAlign: 'right',
   },
   subtitle: {
     color: Colors.primary.purple,
@@ -111,6 +115,9 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     flex: 2,
     justifyContent: 'space-between',
+  },
+  row2Padded: {
+    paddingRight: 100,
   },
   stats: {
     justifyContent: 'center',
