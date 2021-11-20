@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: 0.5,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });

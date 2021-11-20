@@ -4,10 +4,9 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
-  View
+  View,
 } from 'react-native';
-import { CheckBox, Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
+import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
 import { Colors, GlobalStyles } from '../../styles';
 import { Strings } from '../../lib';
 

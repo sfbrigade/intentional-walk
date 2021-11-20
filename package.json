@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-watch": "esw -w --fix ."
   },
   "dependencies": {
     "@ovalmoney/react-native-fitness": "^0.5.3",
@@ -49,6 +50,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
+    "eslint-watch": "^7.0.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-test-renderer": "17.0.1"

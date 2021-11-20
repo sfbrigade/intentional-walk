@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, TextInput, findNodeHandle} from 'react-native';
+import {StyleSheet, TextInput} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 
 export default function Input(props) {
@@ -15,25 +15,34 @@ export default function Input(props) {
   };
 
   useEffect(() => {
-    if (prevFocusRef.current != props.focused && props.focused) {
+    if (prevFocusRef.current !== props.focused && props.focused) {
       textInputRef.current.focus();
     }
     prevFocusRef.current = props.focused;
   });
 
   return (
-    <TextInput ref={textInputRef}
-               editable={props.editable}
-               style={[styles.input, props.style, value != '' ? styles.inputFocused : {}, props.editable ? {} : styles.inputDisabled]}
-               onChangeText={(newValue) => onChangeText(newValue)}
-               onSubmitEditing={(nativeEvent) => props.onSubmitEditing ? props.onSubmitEditing(nativeEvent) : null}
-               placeholder={props.placeholder}
-               placeholderTextColor={Colors.primary.gray2}
-               autoCapitalize={props.autoCapitalize || 'none'}
-               autoCompleteType={props.autoCompleteType || 'off'}
-               autoCorrect={props.autoCorrect || false}
-               keyboardType={props.keyboardType || 'default'}
-               returnKeyType={props.returnKeyType || 'done'} />
+    <TextInput
+      ref={textInputRef}
+      editable={props.editable}
+      style={[
+        styles.input,
+        props.style,
+        value !== '' ? styles.inputFocused : {},
+        props.editable ? {} : styles.inputDisabled,
+      ]}
+      onChangeText={newValue => onChangeText(newValue)}
+      onSubmitEditing={nativeEvent =>
+        props.onSubmitEditing ? props.onSubmitEditing(nativeEvent) : null
+      }
+      placeholder={props.placeholder}
+      placeholderTextColor={Colors.primary.gray2}
+      autoCapitalize={props.autoCapitalize || 'none'}
+      autoCompleteType={props.autoCompleteType || 'off'}
+      autoCorrect={props.autoCorrect || false}
+      keyboardType={props.keyboardType || 'default'}
+      returnKeyType={props.returnKeyType || 'done'}
+    />
   );
 }
 const styles = StyleSheet.create({
@@ -56,5 +65,5 @@ const styles = StyleSheet.create({
   inputDisabled: {
     color: Colors.primary.gray2,
     borderColor: Colors.primary.gray2,
-  }
+  },
 });
