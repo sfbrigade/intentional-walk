@@ -1,11 +1,15 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Colors, GlobalStyles} from '../styles';
+import { StyleSheet, Text, View } from 'react-native';
+import { Colors, GlobalStyles } from '../styles';
 
 export default function MultipleChoiceQuestion(props) {
   return (
-    <View style={styles.content}>
-      <Text style={styles.text}>{props.text}</Text>
+    <View style={{width: '100%'}}>
+      <View style={styles.content}>
+        <Text style={styles.text}>{props.text}</Text>
+      </View>
+      {props.children}
     </View>
   );
 }
