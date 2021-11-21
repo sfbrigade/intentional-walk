@@ -244,7 +244,7 @@ export default function HomeScreen({navigation}) {
   useFocusEffect(
     React.useCallback(() => {
       refresh();
-    }),
+    }, []),
   );
 
   const today = moment().startOf('day');
