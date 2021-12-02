@@ -5,9 +5,12 @@ import { Colors, GlobalStyles } from '../styles';
 
 export default function MultipleChoiceQuestion(props) {
   return (
-    <View style={{width: '100%'}}>
+    <View style={{ width: '100%' }}>
       <View style={styles.content}>
         <Text style={styles.text}>{props.text}</Text>
+        {props.subText ? 
+          <Text style={styles.subText}>{props.subText}</Text>
+        : <></>}
       </View>
       {props.children}
     </View>
@@ -16,12 +19,12 @@ export default function MultipleChoiceQuestion(props) {
 
 const styles = StyleSheet.create({
   content: {
-    height: 68,
+    minHeight: 68,
     width: '100%',
     paddingTop: 0,
     paddingBottom: 2,
-    paddingLeft: 32,
-    paddingRight: 32,
+    paddingLeft: 28,
+    paddingRight: 28,
     marginTop: 0,
     marginBottom: 2,
     borderRadius: GlobalStyles.rounded.borderRadius,
@@ -37,6 +40,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: '700',
     fontSize: 20,
+    color: Colors.primary.lightGray,
+  },
+  subText: {
+    fontFamily: 'Roboto',
+    fontWeight: '500',
+    fontSize: 17,
     color: Colors.primary.lightGray,
   },
 });

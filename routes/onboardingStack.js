@@ -7,6 +7,9 @@ import {
   SignUpScreen,
   InfoScreen,
   PermissionsScreen,
+  LoHOriginScreen,
+  WhatIsRaceScreen,
+  WhatIsGenderIdentityScreen
 } from '../screens/onboarding';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
@@ -36,6 +39,8 @@ export default function OnboardingStack() {
       <Stack.Screen name="Permissions" component={PermissionsScreen} />
 
       <Stack.Screen name="LoHOrigin" component={LoHOriginScreen} />
+      <Stack.Screen name="WhatIsRace" component={WhatIsRaceScreen} />
+      <Stack.Screen name="WhatIsGenderIdentity" component={WhatIsGenderIdentityScreen} />
     </Stack.Navigator>
   );
 }

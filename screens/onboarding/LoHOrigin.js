@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
-import { Colors, GlobalStyles } from '../../styles';
+import { GlobalStyles } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function LoHOriginScreen({ navigation }) {
@@ -15,7 +15,7 @@ export default function LoHOriginScreen({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   const onNextPress = () => {
-    navigation.navigate('Info');
+    navigation.navigate('WhatIsRace');
   };
 
   const isValid = () => {
@@ -35,6 +35,7 @@ export default function LoHOriginScreen({ navigation }) {
         <View style={styles.content}>
           <MultipleChoiceQuestion
             text={Strings.latinOrHispanicOrigin.question}
+            subText={Strings.latinOrHispanicOrigin.questionSub}
             style={styles.content}
           >
             {options.map(o =>
@@ -70,26 +71,5 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 180,
-  },
-  selectionCheckBox: {
-    height: 62,
-    width: '100%',
-    marginTop: 0,
-    marginBottom: 2,
-    paddingLeft: 16,
-    borderRadius: GlobalStyles.rounded.borderRadius,
-    backgroundColor: 'white',
-    shadowColor: GlobalStyles.boxShadow.shadowColor,
-    shadowOffset: GlobalStyles.boxShadow.shadowOffset,
-    shadowOpacity: GlobalStyles.boxShadow.shadowOpacity,
-    shadowRadius: GlobalStyles.boxShadow.shadowRadius,
-    elevation: GlobalStyles.boxShadow.elevation,
-  },
-  text: {
-    fontFamily: 'Roboto',
-    fontWeight: '700',
-    fontSize: 18,
-    color: Colors.primary.purple,
-    paddingLeft: 16,
   },
 });
