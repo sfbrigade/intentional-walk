@@ -26,7 +26,7 @@ export default function LoHOriginScreen({ navigation }) {
   const options = [
     { id: 1, label: Strings.latinOrHispanicOrigin.yes },
     { id: 2, label: Strings.latinOrHispanicOrigin.no },
-    { id: 3, label: Strings.latinOrHispanicOrigin.declineToAnswer }
+    { id: 3, label: Strings.latinOrHispanicOrigin.declineToAnswer },
   ];
 
   return (

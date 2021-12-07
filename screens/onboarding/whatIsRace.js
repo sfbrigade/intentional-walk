@@ -6,12 +6,12 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
-import { GlobalStyles } from '../../styles';
+import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
+import { GlobalStyles, Colors } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function WhatIsRaceScreen({ navigation }) {
-    const [getChecked, setChecked] = useState(0);
+    const [getChecked, setChecked] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
     const onNextPress = () => {
@@ -19,7 +19,7 @@ export default function WhatIsRaceScreen({ navigation }) {
     };
 
     const isValid = () => {
-        return !isLoading && getChecked > 0;
+        return !isLoading && getChecked.length > 0;
     };
 
     // Replace when model is updated
@@ -28,8 +28,26 @@ export default function WhatIsRaceScreen({ navigation }) {
         { id: 2, label: Strings.whatIsYourRace.asian },
         { id: 3, label: Strings.whatIsYourRace.black },
         { id: 4, label: Strings.whatIsYourRace.pacificIsl },
-        { id: 5, label: Strings.whatIsYourRace.white }
+        { id: 5, label: Strings.whatIsYourRace.white },
     ];
+
+    const pressCheck = (id) => {
+        let whatsChecked = getChecked;
+        const declinedID = 99;
+        if (id === declinedID) {
+            whatsChecked = [declinedID];
+        } else {
+            if (whatsChecked.indexOf(id) >= 0) {
+                whatsChecked.splice(whatsChecked.indexOf(id), 1);
+            } else if (whatsChecked.indexOf(id) === -1) {
+                whatsChecked.push(id);
+            }
+            if (whatsChecked.indexOf(declinedID) >= 0) {
+                whatsChecked.splice(whatsChecked.indexOf(declinedID), 1);
+            }
+        }
+        setChecked(whatsChecked);
+    };
 
     return (
         <SafeAreaView style={GlobalStyles.container}>
@@ -44,21 +62,33 @@ export default function WhatIsRaceScreen({ navigation }) {
                             <MultipleChoiceAnswer
                                 key={o.id}
                                 text={o.label}
-                                checked={getChecked === o.id}
-                                onPress={() => setChecked(o.id)}
+                                checked={getChecked.indexOf(o.id) >= 0}
+                                onPress={() => pressCheck(o.id)}
                                 editable={!isLoading}
                             />
                         )}
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.other}
-                            checked={getChecked === 98}
-                            onPress={() => setChecked(98)}
+                            subText={Strings.whatIsYourRace.otherSub}
+                            checked={getChecked.indexOf(98) >= 0}
+                            onPress={() => pressCheck(98)}
+                            editable={!isLoading}
+                        />
+                        <Input
+                            placeholder={Strings.whatIsYourRace.otherSub}
+                            // onChangeText={}
+                            returnKeyType="next"
+                            style={[
+                                (getChecked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
+                                styles.input,
+                            ]}
+                            placeholderTextColor={'#C3C3C3'}
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.declineToAnswer}
-                            checked={getChecked === 99}
-                            onPress={() => setChecked(99)}
+                            checked={getChecked.indexOf(99) >= 0}
+                            onPress={() => pressCheck(99)}
                             editable={!isLoading}
                         />
                     </MultipleChoiceQuestion>
@@ -85,5 +115,13 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 180,
+    },
+    input: {
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: Colors.primary.purple,
+        marginTop: 16,
+        marginBottom: 16,
+        paddingLeft: 16,
     },
 });

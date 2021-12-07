@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors, GlobalStyles } from '../styles';
 import { CheckBox } from 'react-native-elements';
 
@@ -22,9 +22,13 @@ export default function MultipleChoiceAnswer(props) {
                 containerStyle={styles.container}
                 onPress={() => props.onPress()}
             />
-            <Text
-                style={styles.text}
-            >{props.text}</Text>
+            <View>
+                <Text style={styles.text}>{props.text}</Text>
+                {props.subText ?
+                    <Text style={styles.subText}>{props.subText}</Text> :
+                    <></>
+                }
+            </View>
         </TouchableOpacity>
     );
 }
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        height: 62,
+        minHeight: 62,
         width: '100%',
         marginTop: 0,
         marginBottom: 2,
@@ -55,8 +59,15 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Roboto',
         fontWeight: '700',
-        fontSize: 18,
+        fontSize: 17,
         color: Colors.primary.purple,
-        paddingLeft: 16,
+        paddingLeft: 12,
+    },
+    subText: {
+        fontFamily: 'Roboto',
+        fontWeight: '500',
+        fontSize: 17,
+        color: Colors.primary.purple,
+        paddingLeft: 12,
     },
 });

@@ -5,12 +5,13 @@ import { Colors, GlobalStyles } from '../styles';
 
 export default function MultipleChoiceQuestion(props) {
   return (
-    <View style={{ width: '100%' }}>
+    <View style={[{ width: '100%' }, props.style]}>
       <View style={styles.content}>
         <Text style={styles.text}>{props.text}</Text>
-        {props.subText ? 
-          <Text style={styles.subText}>{props.subText}</Text>
-        : <></>}
+        {props.subText ?
+          <Text style={styles.subText}>{props.subText}</Text> :
+          <></>
+        }
       </View>
       {props.children}
     </View>

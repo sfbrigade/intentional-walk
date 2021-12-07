@@ -6,8 +6,8 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
-import { GlobalStyles } from '../../styles';
+import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
+import { GlobalStyles, Colors } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function WhatIsGenderIdentityScreen({ navigation }) {
@@ -28,7 +28,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
         { id: 2, label: Strings.whatIsYourGenderIdentity.male },
         { id: 3, label: Strings.whatIsYourGenderIdentity.transFemale },
         { id: 4, label: Strings.whatIsYourGenderIdentity.transMale },
-        { id: 5, label: Strings.whatIsYourGenderIdentity.nonBinary }
+        { id: 5, label: Strings.whatIsYourGenderIdentity.nonBinary },
     ];
 
     return (
@@ -51,8 +51,20 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                         )}
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.other}
+                            subText={Strings.whatIsYourGenderIdentity.otherSub}
                             checked={getChecked === 98}
                             onPress={() => setChecked(98)}
+                            editable={!isLoading}
+                        />
+                        <Input
+                            placeholder={Strings.whatIsYourGenderIdentity.otherSub}
+                            // onChangeText={}
+                            returnKeyType="next"
+                            style={[
+                                (getChecked === 98 ? { display: 'flex' } : { display: 'none' }),
+                                styles.input,
+                            ]}
+                            placeholderTextColor={'#C3C3C3'}
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
@@ -70,7 +82,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                         >
                             {Strings.common.next}
                         </Button>
-                        <PaginationDots currentPage={2} totalPages={3} />
+                        <PaginationDots currentPage={3} totalPages={3} />
                     </View>
                 </View>
             </ScrollView>
@@ -85,5 +97,13 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 180,
+    },
+    input: {
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: Colors.primary.purple,
+        marginTop: 16,
+        marginBottom: 16,
+        paddingLeft: 16,
     },
 });
