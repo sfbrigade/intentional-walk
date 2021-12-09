@@ -32,7 +32,7 @@ export default function WhatIsRaceScreen({ navigation }) {
     ];
 
     const pressCheck = (id) => {
-        let whatsChecked = getChecked;
+        let whatsChecked = [...getChecked];
         const declinedID = 99;
         if (id === declinedID) {
             whatsChecked = [declinedID];
