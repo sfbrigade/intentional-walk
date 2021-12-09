@@ -11,7 +11,7 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function WhatIsRaceScreen({ navigation }) {
-    const [getChecked, setChecked] = useState([]);
+    const [checked, setChecked] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
     const onNextPress = () => {
@@ -19,7 +19,7 @@ export default function WhatIsRaceScreen({ navigation }) {
     };
 
     const isValid = () => {
-        return !isLoading && getChecked.length > 0;
+        return !isLoading && checked.length > 0;
     };
 
     // Replace when model is updated
@@ -32,7 +32,7 @@ export default function WhatIsRaceScreen({ navigation }) {
     ];
 
     const pressCheck = (id) => {
-        let whatsChecked = [...getChecked];
+        let whatsChecked = [...checked];
         const declinedID = 99;
         if (id === declinedID) {
             whatsChecked = [declinedID];
@@ -62,7 +62,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                             <MultipleChoiceAnswer
                                 key={o.id}
                                 text={o.label}
-                                checked={getChecked.indexOf(o.id) >= 0}
+                                checked={checked.indexOf(o.id) >= 0}
                                 onPress={() => pressCheck(o.id)}
                                 editable={!isLoading}
                             />
@@ -70,7 +70,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.other}
                             subText={Strings.whatIsYourRace.otherSub}
-                            checked={getChecked.indexOf(98) >= 0}
+                            checked={checked.indexOf(98) >= 0}
                             onPress={() => pressCheck(98)}
                             editable={!isLoading}
                         />
@@ -79,7 +79,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                             // onChangeText={}
                             returnKeyType="next"
                             style={[
-                                (getChecked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
+                                (checked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
                                 styles.input,
                             ]}
                             placeholderTextColor={'#C3C3C3'}
@@ -87,7 +87,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.declineToAnswer}
-                            checked={getChecked.indexOf(99) >= 0}
+                            checked={checked.indexOf(99) >= 0}
                             onPress={() => pressCheck(99)}
                             editable={!isLoading}
                         />

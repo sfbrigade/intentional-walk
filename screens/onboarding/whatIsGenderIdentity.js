@@ -11,7 +11,7 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function WhatIsGenderIdentityScreen({ navigation }) {
-    const [getChecked, setChecked] = useState(0);
+    const [checked, setChecked] = useState(0);
     const [isLoading, setLoading] = useState(false);
 
     const onNextPress = () => {
@@ -19,7 +19,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
     };
 
     const isValid = () => {
-        return !isLoading && getChecked > 0;
+        return !isLoading && checked > 0;
     };
 
     // Replace when model is updated
@@ -44,7 +44,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                             <MultipleChoiceAnswer
                                 key={o.id}
                                 text={o.label}
-                                checked={getChecked === o.id}
+                                checked={checked === o.id}
                                 onPress={() => setChecked(o.id)}
                                 editable={!isLoading}
                             />
@@ -52,7 +52,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.other}
                             subText={Strings.whatIsYourGenderIdentity.otherSub}
-                            checked={getChecked === 98}
+                            checked={checked === 98}
                             onPress={() => setChecked(98)}
                             editable={!isLoading}
                         />
@@ -61,7 +61,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                             // onChangeText={}
                             returnKeyType="next"
                             style={[
-                                (getChecked === 98 ? { display: 'flex' } : { display: 'none' }),
+                                (checked === 98 ? { display: 'flex' } : { display: 'none' }),
                                 styles.input,
                             ]}
                             placeholderTextColor={'#C3C3C3'}
@@ -69,7 +69,7 @@ export default function WhatIsGenderIdentityScreen({ navigation }) {
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.declineToAnswer}
-                            checked={getChecked === 99}
+                            checked={checked === 99}
                             onPress={() => setChecked(99)}
                             editable={!isLoading}
                         />

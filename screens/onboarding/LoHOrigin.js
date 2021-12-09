@@ -11,7 +11,7 @@ import { GlobalStyles } from '../../styles';
 import { Strings } from '../../lib';
 
 export default function LoHOriginScreen({ navigation }) {
-  const [getChecked, setChecked] = useState(0);
+  const [checked, setChecked] = useState(0);
   const [isLoading, setLoading] = useState(false);
 
   const onNextPress = () => {
@@ -19,7 +19,7 @@ export default function LoHOriginScreen({ navigation }) {
   };
 
   const isValid = () => {
-    return !isLoading && getChecked > 0;
+    return !isLoading && checked > 0;
   };
 
   // Replace when model is updated
@@ -42,7 +42,7 @@ export default function LoHOriginScreen({ navigation }) {
               <MultipleChoiceAnswer
                 key={o.id}
                 text={o.label}
-                checked={getChecked === o.id}
+                checked={checked === o.id}
                 onPress={() => setChecked(o.id)}
                 editable={!isLoading}
               />
