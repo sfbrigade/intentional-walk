@@ -8,27 +8,47 @@ import {
 } from 'react-native';
 import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
 import { GlobalStyles, Colors } from '../../styles';
-import { Strings } from '../../lib';
+import { Api, Realm, Strings } from '../../lib';
 
-export default function WhatIsRaceScreen({ navigation }) {
+export default function WhatIsRaceScreen({ navigation, route }) {
+    const user = route.params.user;
     const [checked, setChecked] = useState([]);
+    const [raceOther, setRaceOther] = useState('');
     const [isLoading, setLoading] = useState(false);
 
     const onNextPress = () => {
-        navigation.navigate('WhatIsGenderIdentity');
+        // TODO: add validation for the "other" text input
+        const values = [];
+        options.map(o => {
+            if (checked.indexOf(o.id) >= 0) {
+                values.push(o.value);
+            }
+        });
+        if (checked.indexOf(98) >= 0) {
+            values.push('OT');
+            user.race_other = raceOther.trim();
+        } else {
+            user.race_other = null;
+        }
+        if (values.length > 0) {
+            user.race = values;
+        } else {
+            user.race = [];
+        }
+        navigation.navigate('WhatIsGenderIdentity', {user: user});
     };
 
     const isValid = () => {
         return !isLoading && checked.length > 0;
     };
 
-    // Replace when model is updated
+    // TODO: Replace when model is updated
     const options = [
-        { id: 1, label: Strings.whatIsYourRace.americanNative },
-        { id: 2, label: Strings.whatIsYourRace.asian },
-        { id: 3, label: Strings.whatIsYourRace.black },
-        { id: 4, label: Strings.whatIsYourRace.pacificIsl },
-        { id: 5, label: Strings.whatIsYourRace.white },
+        { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
+        { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
+        { id: 3, value: 'BL', text: Strings.whatIsYourRace.black },
+        { id: 4, value: 'PI', text: Strings.whatIsYourRace.pacificIsl },
+        { id: 5, value: 'WH', text: Strings.whatIsYourRace.white },
     ];
 
     const pressCheck = (id) => {
@@ -61,7 +81,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                         {options.map(o =>
                             <MultipleChoiceAnswer
                                 key={o.id}
-                                text={o.label}
+                                text={o.text}
                                 checked={checked.indexOf(o.id) >= 0}
                                 onPress={() => pressCheck(o.id)}
                                 editable={!isLoading}
@@ -76,7 +96,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                         />
                         <Input
                             placeholder={Strings.whatIsYourRace.otherSub}
-                            // onChangeText={}
+                            onChangeText={newValue => setRaceOther(newValue)}
                             returnKeyType="next"
                             style={[
                                 (checked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
@@ -100,7 +120,7 @@ export default function WhatIsRaceScreen({ navigation }) {
                         >
                             {Strings.common.next}
                         </Button>
-                        <PaginationDots currentPage={2} totalPages={3} />
+                        <PaginationDots currentPage={3} totalPages={6} />
                     </View>
                 </View>
             </ScrollView>

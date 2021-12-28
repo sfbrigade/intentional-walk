@@ -111,27 +111,42 @@ export default function SignUpScreen({navigation, route}) {
     }
     setLoading(true);
     Realm.getSettings()
+      // .then(settings => {
+      //   return Api.appUser.create(
+      //     name.trim(),
+      //     email.trim(),
+      //     zip.trim(),
+      //     parsedAge,
+      //     settings.accountId,
+      //   );
+      // })
       .then(settings => {
-        return Api.appUser.create(
-          name.trim(),
-          email.trim(),
-          zip.trim(),
-          parsedAge,
-          settings.accountId,
-        );
+        const userObject = {
+          name: name.trim(),
+          email: email.trim(),
+          zip: zip.trim(),
+          age: parsedAge,
+          accountId: settings.accountId,
+          gender: null,
+          gender_other: null,
+          race: null,
+          race_other: null,
+          is_latino: null,
+        };
+        return userObject;
       })
-      .then(response => {
-        return Realm.createUser(
-          response.data.payload.account_id,
-          name.trim(),
-          email.trim(),
-          zip.trim(),
-          parsedAge,
-        );
-      })
+      // .then(response => {
+      //   return Realm.createUser(
+      //     response.data.payload.account_id,
+      //     name.trim(),
+      //     email.trim(),
+      //     zip.trim(),
+      //     parsedAge,
+      //   );
+      // })
       .then(user => {
         setLoading(false);
-        navigation.navigate('LoHOrigin');
+        navigation.navigate('LoHOrigin', {user: user});
       })
       .catch(error => {
         setLoading(false);
@@ -261,7 +276,7 @@ export default function SignUpScreen({navigation, route}) {
               {Strings.signUp.submit}
             </Button>
           )}
-          <PaginationDots currentPage={1} totalPages={3} />
+          <PaginationDots currentPage={1} totalPages={6} />
         </View>
       </KeyboardAwareScrollView>
       <Popup

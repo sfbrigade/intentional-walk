@@ -8,25 +8,28 @@ import {
 } from 'react-native';
 import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
 import { GlobalStyles } from '../../styles';
-import { Strings } from '../../lib';
+import { Api, Realm, Strings } from '../../lib';
 
-export default function LoHOriginScreen({ navigation }) {
+export default function LoHOriginScreen({ navigation, route }) {
+  const user = route.params.user;
   const [checked, setChecked] = useState(0);
   const [isLoading, setLoading] = useState(false);
+  const [value, setValue] = useState(null);
 
   const onNextPress = () => {
-    navigation.navigate('WhatIsRace');
+    user.is_latino = value;
+    navigation.navigate('WhatIsRace', {user: user});
   };
 
   const isValid = () => {
     return !isLoading && checked > 0;
   };
 
-  // Replace when model is updated
+  // TODO: Replace when model is updated
   const options = [
-    { id: 1, label: Strings.latinOrHispanicOrigin.yes },
-    { id: 2, label: Strings.latinOrHispanicOrigin.no },
-    { id: 3, label: Strings.latinOrHispanicOrigin.declineToAnswer },
+    { id: 1, value: true, text: Strings.latinOrHispanicOrigin.yes },
+    { id: 2, value: false, text: Strings.latinOrHispanicOrigin.no },
+    { id: 3, value: null, text: Strings.latinOrHispanicOrigin.declineToAnswer },
   ];
 
   return (
@@ -41,9 +44,12 @@ export default function LoHOriginScreen({ navigation }) {
             {options.map(o =>
               <MultipleChoiceAnswer
                 key={o.id}
-                text={o.label}
+                text={o.text}
                 checked={checked === o.id}
-                onPress={() => setChecked(o.id)}
+                onPress={() => {
+                  setChecked(o.id);
+                  setValue(o.value);
+                }}
                 editable={!isLoading}
               />
             )}
@@ -56,7 +62,7 @@ export default function LoHOriginScreen({ navigation }) {
             >
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={1} totalPages={3} />
+            <PaginationDots currentPage={2} totalPages={6} />
           </View>
         </View>
       </ScrollView>
