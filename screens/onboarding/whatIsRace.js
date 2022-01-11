@@ -4,9 +4,10 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
+    Text,
     View,
 } from 'react-native';
-import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
+import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots, Popup } from '../../components';
 import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
@@ -16,14 +17,24 @@ export default function WhatIsRaceScreen({ navigation, route }) {
     const [raceOther, setRaceOther] = useState('');
     const [isLoading, setLoading] = useState(false);
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+
     const onNextPress = () => {
-        // TODO: add validation for the "other" text input
         const values = [];
         options.map(o => {
             if (checked.indexOf(o.id) >= 0) {
                 values.push(o.value);
             }
         });
+        if (raceOther.trim() === '' && checked.indexOf(98) >= 0){
+            // TODO: Update to use Strings && get translations
+            setAlertTitle('Please fill in');
+            setAlertMessage('Do not leave the field blank');
+            setShowAlert(true);
+            return;
+        }
         if (checked.indexOf(98) >= 0) {
             values.push('OT');
             user.race_other = raceOther.trim();
@@ -35,14 +46,13 @@ export default function WhatIsRaceScreen({ navigation, route }) {
         } else {
             user.race = [];
         }
-        navigation.navigate('WhatIsGenderIdentity', {user: user});
+        navigation.navigate('WhatIsGenderIdentity', { user: user });
     };
 
     const isValid = () => {
         return !isLoading && checked.length > 0;
     };
 
-    // TODO: Replace when model is updated
     const options = [
         { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
         { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
@@ -124,6 +134,17 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                     </View>
                 </View>
             </ScrollView>
+            <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
+                <View style={GlobalStyles.centered}>
+                    <Text style={GlobalStyles.h1}>{alertTitle}</Text>
+                    <Text style={[GlobalStyles.h2, styles.alertText]}>
+                        {alertMessage}
+                    </Text>
+                    <Button style={styles.button} onPress={() => setShowAlert(false)}>
+                        {Strings.common.okay}
+                    </Button>
+                </View>
+            </Popup>
         </SafeAreaView>
     );
 }
@@ -132,6 +153,10 @@ const styles = StyleSheet.create({
     content: {
         ...GlobalStyles.content,
         alignItems: 'center',
+    },
+    alertText: {
+        textAlign: 'center',
+        marginBottom: 48,
     },
     button: {
         width: 180,

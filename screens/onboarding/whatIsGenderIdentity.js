@@ -4,9 +4,10 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
+    Text,
     View,
 } from 'react-native';
-import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots } from '../../components';
+import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots, Popup } from '../../components';
 import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
@@ -17,13 +18,23 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
     const [genderOther, setGenderOther] = useState('');
     const [isLoading, setLoading] = useState(false);
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState('');
+    const [alertMessage, setAlertMessage] = useState('');
+
     const onNextPress = () => {
-        // TODO: add validation for the "other" text input
         user.gender = gender;
         if (genderOther.trim().length > 0 && gender === 'OT') {
             user.gender_other = genderOther.trim();
         } else {
             user.gender_other = null;
+        }
+        if (genderOther.trim() === '' && gender === 'OT') {
+            // TODO: Update to use Strings && get translations
+            setAlertTitle('Please fill in');
+            setAlertMessage('Do not leave the field blank');
+            setShowAlert(true);
+            return;
         }
 
         Realm.open()
@@ -57,15 +68,13 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
             })
             .then(res => {
                 setLoading(false);
-                // console.log(res);
                 navigation.navigate('Info');
             })
             .catch(error => {
-                // console.log(error);
                 setLoading(false);
-                // setAlertTitle(Strings.common.serverErrorTitle);
-                // setAlertMessage(Strings.common.serverErrorMessage);
-                // setShowAlert(true);
+                setAlertTitle(Strings.common.serverErrorTitle);
+                setAlertMessage(Strings.common.serverErrorMessage);
+                setShowAlert(true);
             });
     };
 
@@ -73,7 +82,6 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
         return !isLoading && checked > 0;
     };
 
-    // Replace when model is updated
     const options = [
         { id: 1, value: 'CF', text: Strings.whatIsYourGenderIdentity.female },
         { id: 2, value: 'CM', text: Strings.whatIsYourGenderIdentity.male },
@@ -146,6 +154,17 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                     </View>
                 </View>
             </ScrollView>
+            <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
+                <View style={GlobalStyles.centered}>
+                    <Text style={GlobalStyles.h1}>{alertTitle}</Text>
+                    <Text style={[GlobalStyles.h2, styles.alertText]}>
+                        {alertMessage}
+                    </Text>
+                    <Button style={styles.button} onPress={() => setShowAlert(false)}>
+                        {Strings.common.okay}
+                    </Button>
+                </View>
+            </Popup>
         </SafeAreaView>
     );
 }
@@ -154,6 +173,10 @@ const styles = StyleSheet.create({
     content: {
         ...GlobalStyles.content,
         alignItems: 'center',
+    },
+    alertText: {
+        textAlign: 'center',
+        marginBottom: 48,
     },
     button: {
         width: 180,

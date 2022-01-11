@@ -25,7 +25,6 @@ export default function LoHOriginScreen({ navigation, route }) {
     return !isLoading && checked > 0;
   };
 
-  // TODO: Replace when model is updated
   const options = [
     { id: 1, value: true, text: Strings.latinOrHispanicOrigin.yes },
     { id: 2, value: false, text: Strings.latinOrHispanicOrigin.no },
