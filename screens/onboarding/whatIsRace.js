@@ -12,9 +12,15 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function WhatIsRaceScreen({ navigation, route }) {
-    const user = route.params.user;
-    const [checked, setChecked] = useState([]);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [zip, setZip] = useState('');
+    const [age, setAge] = useState('');
+    const [lohOrigin, setLohOrigin] = useState(null);
+    const [race, setRace] = useState([]);
     const [raceOther, setRaceOther] = useState('');
+
+    const [checked, setChecked] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
@@ -22,35 +28,75 @@ export default function WhatIsRaceScreen({ navigation, route }) {
     const [alertMessage, setAlertMessage] = useState('');
 
     const onNextPress = () => {
-        const values = [];
-        options.map(o => {
-            if (checked.indexOf(o.id) >= 0) {
-                values.push(o.value);
-            }
-        });
-        if (raceOther.trim() === '' && checked.indexOf(98) >= 0){
-            // TODO: Update to use Strings && get translations
-            setAlertTitle('Please fill in');
-            setAlertMessage('Do not leave the field blank');
-            setShowAlert(true);
-            return;
-        }
-        if (checked.indexOf(98) >= 0) {
-            values.push('OT');
-            user.race_other = raceOther.trim();
-        } else {
-            user.race_other = null;
-        }
-        if (values.length > 0) {
-            user.race = values;
-        } else {
-            user.race = [];
-        }
-        navigation.navigate('WhatIsGenderIdentity', { user: user });
+        setLoading(true);
+
+        Realm.getUser()
+            .then(x => {
+                setName(x.name);
+                setEmail(x.email);
+                setZip(x.zip);
+                setAge(x.age);
+                setLohOrigin(x.is_latino);
+
+                const values = [];
+                let filledIn = '';
+                options.map(o => {
+                    if (checked.indexOf(o.id) >= 0) {
+                        values.push(o.value);
+                    }
+                });
+                if (checked.indexOf(98) >= 0) {
+                    values.push('OT');
+                    filledIn = raceOther.trim();
+                }
+                setRace(values);
+
+                return Api.appUser.create(
+                    x.name,
+                    x.email,
+                    x.zip,
+                    x.age,
+                    x.id,
+                    x.is_latino,
+                    values,
+                    filledIn,
+                );
+            })
+            .then(response => {
+                let filledIn = '';
+                if (checked.indexOf(98) >= 0) {
+                    filledIn = raceOther;
+                }
+
+                return Realm.createUser(
+                    response.data.payload.account_id,
+                    name,
+                    email,
+                    zip,
+                    age,
+                    lohOrigin,
+                    race,
+                    filledIn,
+                );
+            })
+            .then(user => {
+                setLoading(false);
+                navigation.navigate('WhatIsGenderIdentity');
+            })
+            .catch(error => {
+                setLoading(false);
+                setAlertTitle(Strings.common.serverErrorTitle);
+                setAlertMessage(Strings.common.serverErrorMessage);
+                setShowAlert(true);
+            });
     };
 
     const isValid = () => {
-        return !isLoading && checked.length > 0;
+        let filled = true;
+        if (raceOther.trim() === '' && checked.indexOf(98) >= 0) {
+            filled = false;
+        }
+        return !isLoading && checked.length > 0 && filled;
     };
 
     const options = [

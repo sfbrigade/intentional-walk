@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
@@ -11,9 +11,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import Autolink from 'react-native-autolink';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import loadLocalResource from 'react-native-local-resource';
 import moment from 'moment';
 
@@ -26,15 +26,15 @@ import {
   Popup,
   ScrollText,
 } from '../../components';
-import {Colors, GlobalStyles} from '../../styles';
-import {Api, Realm, Strings} from '../../lib';
+import { Colors, GlobalStyles } from '../../styles';
+import { Api, Realm, Strings } from '../../lib';
 
 import ContestRules from '../../assets/contestRules';
 import Privacy from '../../assets/privacy';
 import validZipCodes from '../../lib/validZipCodes';
 
-export default function SignUpScreen({navigation, route}) {
-  const {contest} = route.params;
+export default function SignUpScreen({ navigation, route }) {
+  const { contest } = route.params;
   const [focus, setFocus] = useState('');
 
   const [name, setName] = useState('');
@@ -111,42 +111,27 @@ export default function SignUpScreen({navigation, route}) {
     }
     setLoading(true);
     Realm.getSettings()
-      // .then(settings => {
-      //   return Api.appUser.create(
-      //     name.trim(),
-      //     email.trim(),
-      //     zip.trim(),
-      //     parsedAge,
-      //     settings.accountId,
-      //   );
-      // })
       .then(settings => {
-        const userObject = {
-          name: name.trim(),
-          email: email.trim(),
-          zip: zip.trim(),
-          age: parsedAge,
-          accountId: settings.accountId,
-          gender: null,
-          gender_other: null,
-          race: null,
-          race_other: null,
-          is_latino: null,
-        };
-        return userObject;
+        return Api.appUser.create(
+          name.trim(),
+          email.trim(),
+          zip.trim(),
+          parsedAge,
+          settings.accountId,
+        );
       })
-      // .then(response => {
-      //   return Realm.createUser(
-      //     response.data.payload.account_id,
-      //     name.trim(),
-      //     email.trim(),
-      //     zip.trim(),
-      //     parsedAge,
-      //   );
-      // })
+      .then(response => {
+        return Realm.createUser(
+          response.data.payload.account_id,
+          name.trim(),
+          email.trim(),
+          zip.trim(),
+          parsedAge,
+        );
+      })
       .then(user => {
         setLoading(false);
-        navigation.navigate('LoHOrigin', {user: user});
+        navigation.navigate('LoHOrigin');
       })
       .catch(error => {
         setLoading(false);
@@ -226,7 +211,7 @@ export default function SignUpScreen({navigation, route}) {
               style={styles.input}
               placeholder={Strings.signUp.zipCode}
               keyboardType="number-pad"
-              returnKeyType={Platform.select({ios: 'done', android: 'next'})}
+              returnKeyType={Platform.select({ ios: 'done', android: 'next' })}
               editable={!isLoading}
             />
             <View style={styles.spacer} />
@@ -284,7 +269,7 @@ export default function SignUpScreen({navigation, route}) {
         onClose={() => setShowPrivacyPolicy(false)}>
         <View>
           <ScrollText
-            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
+            style={{ height: Math.round((screenDims.height - 100) * 0.8) }}>
             <Logo style={styles.privacyLogo} />
             <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
             <Autolink text={privacyText} style={styles.privacyText} />
@@ -296,7 +281,7 @@ export default function SignUpScreen({navigation, route}) {
         onClose={() => setShowContestRules(false)}>
         <View>
           <ScrollText
-            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
+            style={{ height: Math.round((screenDims.height - 100) * 0.8) }}>
             <Logo style={styles.privacyLogo} />
             <Text style={GlobalStyles.h1}>{Strings.common.contestRules}</Text>
             <Autolink text={contestRulesText} style={styles.privacyText} />
