@@ -35,67 +35,60 @@ export default function HomeScreen({navigation}) {
   const [recordedWalks, setRecordedWalks] = useState(null);
   const [activeWalk, setActiveWalk] = useState(null);
 
-  const saveStepsAndDistances = () => {
-    Realm.getContest().then(newContest => {
-      const today = moment().endOf('day');
-      let from = null,
-        to = null;
-      if (newContest) {
-        /// check if we're in/after the contest period
-        if (!newContest.isBeforeStartDate) {
-          from = moment(newContest.start);
-          /// check if we're in the contest period
-          if (newContest.isAfterEndDate) {
-            to = moment(newContest.end);
-          } else {
-            to = today;
-          }
+  async function saveStepsAndDistances() {
+    const newContest = await Realm.getContest();
+    const today = moment().endOf('day');
+    if (newContest) {
+      let from = null;
+      let to = null;
+      /// check if we're in/after the contest period
+      if (!newContest.isBeforeStartDate) {
+        from = moment(newContest.start);
+        /// check if we're in the contest period
+        if (newContest.isAfterEndDate) {
+          to = moment(newContest.end);
+        } else {
+          to = today;
         }
       }
       /// only save when within contest period
       if (from && to) {
-        Fitness.getStepsAndDistances(from, to).then(newDailyWalks => {
-          if (newDailyWalks && newDailyWalks.length > 0) {
-            /// get user account, then save to server...!
-            Realm.getUser()
-              .then(user => {
-                if (user) {
-                  return Api.dailyWalk.create(newDailyWalks, user.id);
-                }
-              })
-              .then(response => {
-                /// silent for now
-              })
-              .catch(error => {
-                /// silent for now- send to remote logger (Firebase?)
-              });
+        const newDailyWalks = await Fitness.getStepsAndDistances(from, to);
+        if (newDailyWalks && newDailyWalks.length > 0) {
+          /// get user account, then save to server...!
+          const user = await Realm.getUser();
+          if (user) {
+            try {
+              await Api.dailyWalk.create(newDailyWalks, user.id);
+            } catch (error) {
+              console.log(error);
+            }
           }
-        });
+        }
       }
-    });
-  };
+    }
+  }
 
-  const getStepsAndDistances = (queryDate, currentDailyWalks) => {
+  async function getStepsAndDistances(queryDate, currentDailyWalks) {
     setTodaysWalk(null);
     if (currentDailyWalks == null) {
       setDailyWalks(true);
-      Fitness.getStepsAndDistances(
-        moment(dateRef.current).startOf('month'),
-        moment(dateRef.current).endOf('month'),
-      )
-        .then(newDailyWalks => {
-          if (
-            moment(dateRef.current)
-              .startOf('month')
-              .isSame(moment(queryDate).startOf('month'))
-          ) {
-            setDailyWalks(newDailyWalks);
-            getStepsAndDistances(dateRef.current, newDailyWalks);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      try {
+        const newDailyWalks = await Fitness.getStepsAndDistances(
+          moment(dateRef.current).startOf('month'),
+          moment(dateRef.current).endOf('month'),
+        );
+        if (
+          moment(dateRef.current)
+            .startOf('month')
+            .isSame(moment(queryDate).startOf('month'))
+        ) {
+          setDailyWalks(newDailyWalks);
+          getStepsAndDistances(dateRef.current, newDailyWalks);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else if (Array.isArray(currentDailyWalks)) {
       let newTodaysWalk = {
         steps: 0,
@@ -114,60 +107,55 @@ export default function HomeScreen({navigation}) {
       }
       setTodaysWalk(newTodaysWalk);
     }
-  };
+  }
 
-  const getTotalSteps = () => {
+  async function getTotalSteps() {
     setTotalSteps(null);
     /// get current contest
-    Realm.getContest()
-      .then(newContest => {
-        const now = moment();
-        let from = null,
-          to = null;
-        /// check if we're in/outside the contest period
-        if (newContest && newContest.isDuringContest) {
-          /// get total from start of contest until now
-          from = moment(newContest.start);
-          to = now;
-        } else {
-          /// get total from start of month
-          from = moment().startOf('month');
-          to = now;
+    const newContest = await Realm.getContest();
+    const now = moment();
+    let from = null,
+      to = null;
+    /// check if we're in/outside the contest period
+    if (newContest && newContest.isDuringContest) {
+      /// get total from start of contest until now
+      from = moment(newContest.start);
+      to = now;
+    } else {
+      /// get total from start of month
+      from = moment().startOf('month');
+      to = now;
+    }
+    if (from && to) {
+      let newTotalSteps = 0;
+      try {
+        const steps = await Fitness.getSteps(from, to);
+        for (let step of steps) {
+          newTotalSteps += step.quantity;
         }
-        return [from, to];
-      })
-      .then(([from, to]) => {
-        if (from && to) {
-          let newTotalSteps = 0;
-          Fitness.getSteps(from, to)
-            .then(steps => {
-              for (let step of steps) {
-                newTotalSteps += step.quantity;
-              }
-            })
-            .finally(() => setTotalSteps(newTotalSteps));
-        } else {
-          /// no range, just show 0
-          setTotalSteps(0);
-        }
-      });
-  };
-
-  const getRecordedWalks = queryDate => {
-    Realm.open().then(realm => {
-      const newRecordedWalks = realm
-        .objects('IntentionalWalk')
-        .filtered(
-          'start>=$0 AND end<$1',
-          queryDate.toDate(),
-          moment(queryDate).add(1, 'd').toDate(),
-        )
-        .sorted([['end', true]]);
-      if (dateRef.current.isSame(queryDate)) {
-        setRecordedWalks(newRecordedWalks);
+      } finally {
+        setTotalSteps(newTotalSteps);
       }
-    });
-  };
+    } else {
+      /// no range, just show 0
+      setTotalSteps(0);
+    }
+  }
+
+  async function getRecordedWalks(queryDate) {
+    const realm = await Realm.open();
+    const newRecordedWalks = realm
+      .objects('IntentionalWalk')
+      .filtered(
+        'start>=$0 AND end<$1',
+        queryDate.toDate(),
+        moment(queryDate).add(1, 'd').toDate(),
+      )
+      .sorted([['end', true]]);
+    if (dateRef.current.isSame(queryDate)) {
+      setRecordedWalks(newRecordedWalks);
+    }
+  }
 
   const setDateAndGetDailySteps = newDate => {
     const oldDate = dateRef.current;
