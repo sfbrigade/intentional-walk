@@ -104,7 +104,7 @@ export default function LoHOriginScreen({ navigation, route }) {
             >
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={2} totalPages={6} />
+            <PaginationDots currentPage={2} totalPages={7} />
           </View>
         </View>
       </ScrollView>

@@ -176,7 +176,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                         >
                             {Strings.common.next}
                         </Button>
-                        <PaginationDots currentPage={3} totalPages={6} />
+                        <PaginationDots currentPage={3} totalPages={7} />
                     </View>
                 </View>
             </ScrollView>

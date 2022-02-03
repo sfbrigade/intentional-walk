@@ -81,7 +81,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
             })
             .then(user => {
                 setLoading(false);
-                navigation.navigate('Info');
+                navigation.navigate('WhatIsSexualIdentity');
             })
             .catch(error => {
                 setLoading(false);
@@ -167,7 +167,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                         >
                             {Strings.common.next}
                         </Button>
-                        <PaginationDots currentPage={4} totalPages={6} />
+                        <PaginationDots currentPage={4} totalPages={7} />
                     </View>
                 </View>
             </ScrollView>
