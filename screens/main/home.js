@@ -157,7 +157,7 @@ export default function HomeScreen({navigation}) {
     }
   }
 
-  const setDateAndGetDailySteps = newDate => {
+  function setDateAndGetDailySteps(newDate) {
     const oldDate = dateRef.current;
     dateRef.current = newDate;
     setDate(newDate);
@@ -168,9 +168,9 @@ export default function HomeScreen({navigation}) {
     }
     getStepsAndDistances(newDate, newDailyWalks);
     getRecordedWalks(newDate);
-  };
+  }
 
-  const refresh = () => {
+  function refresh() {
     const today = moment().startOf('day');
     dateRef.current = moment(dateRef.current);
     if (dateRef.current.isAfter(today)) {
@@ -181,7 +181,7 @@ export default function HomeScreen({navigation}) {
     getTotalSteps();
     getRecordedWalks(dateRef.current);
     saveStepsAndDistances();
-  };
+  }
 
   /// one time setup for some data store listeners
   useEffect(() => {
