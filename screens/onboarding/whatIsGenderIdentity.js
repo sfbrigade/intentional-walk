@@ -23,6 +23,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
     const [genderOther, setGenderOther] = useState('');
 
     const [checked, setChecked] = useState(0);
+    const [isOtherInvalid, setOtherInvalid] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
@@ -31,6 +32,13 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
 
     const onNextPress = () => {
         setLoading(true);
+
+        if (genderOther.trim() === '' && checked === 98) {
+            setOtherInvalid(true);
+            setGenderOther('');
+            setLoading(false);
+            return;
+        }
 
         Realm.getUser()
             .then(x => {
@@ -92,11 +100,11 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
     };
 
     const isValid = () => {
-        let filled = true;
-        if (genderOther.trim() === '' && checked === 98) {
-            filled = false;
-        }
-        return !isLoading && checked > 0 && filled;
+        // let filled = true;
+        // if (genderOther.trim() === '' && checked === 98) {
+        //     filled = false;
+        // }
+        return !isLoading && checked > 0;
     };
 
     const options = [
@@ -139,14 +147,15 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                             editable={!isLoading}
                         />
                         <Input
-                            placeholder={Strings.whatIsYourGenderIdentity.otherSub}
+                            // TODO: Replace placeholder string when translations are available
+                            placeholder={isOtherInvalid ? 'This field cannot be empty' : Strings.whatIsYourGenderIdentity.otherSub}
                             onChangeText={newValue => setGenderOther(newValue)}
                             returnKeyType="next"
                             style={[
                                 (checked === 98 ? { display: 'flex' } : { display: 'none' }),
-                                styles.input,
+                                (isOtherInvalid ? styles.invalidInput : styles.input),
                             ]}
-                            placeholderTextColor={'#C3C3C3'}
+                            placeholderTextColor={isOtherInvalid ? Colors.secondary.red : '#C3C3C3'}
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
@@ -202,6 +211,14 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: Colors.primary.purple,
+        marginTop: 16,
+        marginBottom: 16,
+        paddingLeft: 16,
+    },
+    invalidInput: {
+        borderRadius: 4,
+        borderWidth: 2.5,
+        borderColor: Colors.secondary.red,
         marginTop: 16,
         marginBottom: 16,
         paddingLeft: 16,

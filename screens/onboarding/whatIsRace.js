@@ -21,6 +21,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
     const [raceOther, setRaceOther] = useState('');
 
     const [checked, setChecked] = useState([]);
+    const [isOtherInvalid, setOtherInvalid] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
@@ -29,6 +30,13 @@ export default function WhatIsRaceScreen({ navigation, route }) {
 
     const onNextPress = () => {
         setLoading(true);
+
+        if (raceOther.trim() === '' && checked.indexOf(98) >= 0) {
+            setOtherInvalid(true);
+            setRaceOther('');
+            setLoading(false);
+            return;
+        }
 
         Realm.getUser()
             .then(x => {
@@ -92,11 +100,11 @@ export default function WhatIsRaceScreen({ navigation, route }) {
     };
 
     const isValid = () => {
-        let filled = true;
-        if (raceOther.trim() === '' && checked.indexOf(98) >= 0) {
-            filled = false;
-        }
-        return !isLoading && checked.length > 0 && filled;
+        // let filled = true;
+        // if (raceOther.trim() === '' && checked.indexOf(98) >= 0) {
+        //     filled = false;
+        // }
+        return !isLoading && checked.length > 0;
     };
 
     const options = [
@@ -151,14 +159,18 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                             editable={!isLoading}
                         />
                         <Input
-                            placeholder={Strings.whatIsYourRace.otherSub}
-                            onChangeText={newValue => setRaceOther(newValue)}
+                            // TODO: Replace placeholder string when translations are available
+                            placeholder={isOtherInvalid ? 'This field cannot be empty' : Strings.whatIsYourRace.otherSub}
+                            onChangeText={newValue => {
+                                setRaceOther(newValue);
+                                setOtherInvalid(false);
+                            }}
                             returnKeyType="next"
                             style={[
                                 (checked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
-                                styles.input,
+                                (isOtherInvalid ? styles.invalidInput : styles.input),
                             ]}
-                            placeholderTextColor={'#C3C3C3'}
+                            placeholderTextColor={isOtherInvalid ? Colors.secondary.red : '#C3C3C3'}
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
@@ -211,6 +223,14 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: Colors.primary.purple,
+        marginTop: 16,
+        marginBottom: 16,
+        paddingLeft: 16,
+    },
+    invalidInput: {
+        borderRadius: 4,
+        borderWidth: 2.5,
+        borderColor: Colors.secondary.red,
         marginTop: 16,
         marginBottom: 16,
         paddingLeft: 16,
