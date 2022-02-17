@@ -147,8 +147,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                             editable={!isLoading}
                         />
                         <Input
-                            // TODO: Replace placeholder string when translations are available
-                            placeholder={isOtherInvalid ? 'This field cannot be empty' : Strings.whatIsYourGenderIdentity.otherSub}
+                            placeholder={isOtherInvalid ? Strings.whatIsYourGenderIdentity.cannotBeEmpty : Strings.whatIsYourGenderIdentity.otherSub}
                             onChangeText={newValue => setGenderOther(newValue)}
                             returnKeyType="next"
                             style={[

@@ -159,8 +159,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                             editable={!isLoading}
                         />
                         <Input
-                            // TODO: Replace placeholder string when translations are available
-                            placeholder={isOtherInvalid ? 'This field cannot be empty' : Strings.whatIsYourRace.otherSub}
+                            placeholder={isOtherInvalid ? Strings.whatIsYourRace.cannotBeEmpty : Strings.whatIsYourRace.otherSub}
                             onChangeText={newValue => {
                                 setRaceOther(newValue);
                                 setOtherInvalid(false);

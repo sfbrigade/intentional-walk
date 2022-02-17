@@ -43,12 +43,11 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
     return !isLoading && checked > 0;
   };
 
-  // TODO: Update Values and Text w/ translation when available
   const options = [
-    { id: 1, value: '00', text: 'Bisexual' },
-    { id: 2, value: '01', text: 'Gay/Lesbian/Same-\nGender Loving' },
-    { id: 3, value: '02', text: 'Question/Unsure' },
-    { id: 4, value: '03', text: 'Straight/Heterosexual' },
+    { id: 1, value: 'BS', text: Strings.whatIsYourSexualIdentity.bisexual },
+    { id: 2, value: 'SG', text: Strings.whatIsYourSexualIdentity.sameGenderLoving },
+    { id: 3, value: 'QU', text: Strings.whatIsYourSexualIdentity.unsure },
+    { id: 4, value: 'HS', text: Strings.whatIsYourSexualIdentity.heterosexual },
   ];
 
   return (
@@ -56,9 +55,8 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
       <ScrollView style={GlobalStyles.container}>
         <View style={styles.content}>
           <MultipleChoiceQuestion
-            // TODO: Update Text w/ translation when available
-            text={'How do you describe your sexual orientation or sexual identy?'}
-            // subText={}
+            text={Strings.whatIsYourSexualIdentity.question}
+            subText={Strings.whatIsYourSexualIdentity.questionSub}
             style={styles.content}
           >
             {options.map(o =>
@@ -84,8 +82,7 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
               editable={!isLoading}
             />
             <Input
-              // TODO: Replace placeholder string when translations are available
-              placeholder={isOtherInvalid ? 'This field cannot be empty' : Strings.whatIsYourSexualIdentity.otherSub}
+              placeholder={isOtherInvalid ? Strings.whatIsYourSexualIdentity.cannotBeEmpty : Strings.whatIsYourSexualIdentity.otherSub}
               onChangeText={newValue => setSexualIdentityOther(newValue)}
               returnKeyType="next"
               style={[
