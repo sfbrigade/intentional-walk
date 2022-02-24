@@ -10,7 +10,7 @@ import {
   LoHOriginScreen,
   WhatIsRaceScreen,
   WhatIsGenderIdentityScreen,
-  WhatIsSexualIdentityScreen
+  WhatIsSexualIdentityScreen,
 } from '../screens/onboarding';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
@@ -34,15 +34,25 @@ export default function OnboardingStack() {
           android: GlobalStyles.androidNavHeaderCentered,
         }),
       }}>
-      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{headerLeft: null}} />
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{headerLeft: null}}
+      />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
       <Stack.Screen name="Permissions" component={PermissionsScreen} />
 
       <Stack.Screen name="LoHOrigin" component={LoHOriginScreen} />
       <Stack.Screen name="WhatIsRace" component={WhatIsRaceScreen} />
-      <Stack.Screen name="WhatIsGenderIdentity" component={WhatIsGenderIdentityScreen} />
-      <Stack.Screen name="WhatIsSexualIdentity" component={WhatIsSexualIdentityScreen} />
+      <Stack.Screen
+        name="WhatIsGenderIdentity"
+        component={WhatIsGenderIdentityScreen}
+      />
+      <Stack.Screen
+        name="WhatIsSexualIdentity"
+        component={WhatIsSexualIdentityScreen}
+      />
     </Stack.Navigator>
   );
 }

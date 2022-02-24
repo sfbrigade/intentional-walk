@@ -126,7 +126,7 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
         </View>
       </Popup>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
