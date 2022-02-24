@@ -34,7 +34,7 @@ export default function OnboardingStack() {
           android: GlobalStyles.androidNavHeaderCentered,
         }),
       }}>
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{headerLeft: null}} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
       <Stack.Screen name="Permissions" component={PermissionsScreen} />
