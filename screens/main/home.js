@@ -42,8 +42,8 @@ export default function HomeScreen({navigation}) {
       let from = null;
       let to = null;
       /// check if we're in/after the contest period
-      if (!newContest.isBeforeStartDate) {
-        from = moment(newContest.start);
+      if (!newContest.isBeforeBaselineDate) {
+        from = moment(newContest.startBaseline);
         /// check if we're in the contest period
         if (newContest.isAfterEndDate) {
           to = moment(newContest.end);
