@@ -16,7 +16,6 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
   const [sexualIdentityOther, setSexualIdentityOther] = useState('');
 
   const [checked, setChecked] = useState(0);
-  const [isOtherInvalid, setOtherInvalid] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -26,21 +25,18 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
   const onNextPress = () => {
     setLoading(true);
 
-    if (sexualIdentityOther.trim() === '' && checked === 98) {
-      setOtherInvalid(true);
-      setSexualIdentityOther('');
-      setLoading(false);
-      return;
-    }
+    //
+
+    setLoading(false);
     navigation.navigate('Info');
   };
 
   const isValid = () => {
-    // let filled = true;
-    // if (sexualIdentityOther.trim() === '' && checked === 98) {
-    //   filled = false;
-    // }
-    return !isLoading && checked > 0;
+    let filled = true;
+    if (sexualIdentityOther.trim() === '' && checked === 98) {
+      filled = false;
+    }
+    return !isLoading && checked > 0 && filled;
   };
 
   const options = [
@@ -73,7 +69,7 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
             )}
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualIdentity.other}
-              subText={Strings.whatIsYourSexualIdentity.otherSub}
+              // subText={Strings.whatIsYourSexualIdentity.otherSub}
               checked={checked === 98}
               onPress={() => {
                 setChecked(98);
@@ -82,14 +78,13 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
               editable={!isLoading}
             />
             <Input
-              placeholder={isOtherInvalid ? Strings.whatIsYourSexualIdentity.cannotBeEmpty : Strings.whatIsYourSexualIdentity.otherSub}
+              placeholder={Strings.whatIsYourSexualIdentity.otherSub}
               onChangeText={newValue => setSexualIdentityOther(newValue)}
               returnKeyType="next"
               style={[
                 (checked === 98 ? { display: 'flex' } : { display: 'none' }),
-                (isOtherInvalid ? styles.invalidInput : styles.input),
               ]}
-              placeholderTextColor={isOtherInvalid ? Colors.secondary.red : '#C3C3C3'}
+              placeholderTextColor="#C3C3C3"
               editable={!isLoading}
             />
             <MultipleChoiceAnswer
@@ -145,14 +140,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: Colors.primary.purple,
-    marginTop: 16,
-    marginBottom: 16,
-    paddingLeft: 16,
-  },
-  invalidInput: {
-    borderRadius: 4,
-    borderWidth: 2.5,
-    borderColor: Colors.secondary.red,
     marginTop: 16,
     marginBottom: 16,
     paddingLeft: 16,
