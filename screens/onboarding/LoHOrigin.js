@@ -12,10 +12,6 @@ import { GlobalStyles } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function LoHOriginScreen({ navigation, route }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [zip, setZip] = useState('');
-  const [age, setAge] = useState('');
   const [lohOrigin, setLohOrigin] = useState(null);
 
   const [checked, setChecked] = useState(0);
@@ -25,48 +21,28 @@ export default function LoHOriginScreen({ navigation, route }) {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
-  const isValid = () => {
+  function isValid() {
     return !isLoading && checked > 0;
-  };
+  }
 
-  const onNextPress = () => {
+  async function onNextPress() {
     setLoading(true);
-    Realm.getUser()
-      .then(x => {
-        setName(x.name);
-        setEmail(x.email);
-        setZip(x.zip);
-        setAge(x.age);
-        return Api.appUser.create(
-          x.name,
-          x.email,
-          x.zip,
-          x.age,
-          x.id,
-          lohOrigin,
-        );
-      })
-      .then(response => {
-        return Realm.createUser(
-          response.data.payload.account_id,
-          name,
-          email,
-          zip,
-          age,
-          lohOrigin,
-        );
-      })
-      .then(user => {
-        setLoading(false);
-        navigation.navigate('WhatIsRace');
-      })
-      .catch(error => {
-        setLoading(false);
-        setAlertTitle(Strings.common.serverErrorTitle);
-        setAlertMessage(Strings.common.serverErrorMessage);
-        setShowAlert(true);
-      });
-  };
+    try {
+      // get the user object from Realm
+      const user = await Realm.getUser();
+      // update the user object with the new survey value
+      await Realm.write(() => user.is_latino = lohOrigin);
+      // send the value to the server
+      await Api.appUser.update(user.id, { is_latino: user.is_latino });
+      setLoading(false);
+      navigation.navigate('WhatIsRace');
+    } catch {
+      setLoading(false);
+      setAlertTitle(Strings.common.serverErrorTitle);
+      setAlertMessage(Strings.common.serverErrorMessage);
+      setShowAlert(true);
+    }
+  }
 
   const options = [
     { id: 1, lohOrigin: true, text: Strings.latinOrHispanicOrigin.yes },
