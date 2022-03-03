@@ -11,9 +11,9 @@ import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, Pagination
 import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
-export default function WhatIsSexualdentityScreen({ navigation, route }) {
-  const [sexualIdentity, setSexualIdentity] = useState(null);
-  const [sexualIdentityOther, setSexualIdentityOther] = useState('');
+export default function WhatIsSexualOrientationScreen({ navigation, route }) {
+  const [sexualOrientation, setSexualIOrientation] = useState(null);
+  const [sexualOrientationOther, setSexualOrientationOther] = useState('');
 
   const [checked, setChecked] = useState(0);
   const [isLoading, setLoading] = useState(false);
@@ -33,17 +33,17 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
 
   const isValid = () => {
     let filled = true;
-    if (sexualIdentityOther.trim() === '' && checked === 98) {
+    if (sexualOrientationOther.trim() === '' && checked === 98) {
       filled = false;
     }
     return !isLoading && checked > 0 && filled;
   };
 
   const options = [
-    { id: 1, value: 'BS', text: Strings.whatIsYourSexualIdentity.bisexual },
-    { id: 2, value: 'SG', text: Strings.whatIsYourSexualIdentity.sameGenderLoving },
-    { id: 3, value: 'QU', text: Strings.whatIsYourSexualIdentity.unsure },
-    { id: 4, value: 'HS', text: Strings.whatIsYourSexualIdentity.heterosexual },
+    { id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual },
+    { id: 2, value: 'SG', text: Strings.whatIsYourSexualOrientation.sameGenderLoving },
+    { id: 3, value: 'QU', text: Strings.whatIsYourSexualOrientation.unsure },
+    { id: 4, value: 'HS', text: Strings.whatIsYourSexualOrientation.heterosexual },
   ];
 
   return (
@@ -51,8 +51,8 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
       <ScrollView style={GlobalStyles.container}>
         <View style={styles.content}>
           <MultipleChoiceQuestion
-            text={Strings.whatIsYourSexualIdentity.question}
-            subText={Strings.whatIsYourSexualIdentity.questionSub}
+            text={Strings.whatIsYourSexualOrientation.question}
+            subText={Strings.whatIsYourSexualOrientation.questionSub}
             style={styles.content}
           >
             {options.map(o =>
@@ -62,24 +62,24 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
                 checked={checked === o.id}
                 onPress={() => {
                   setChecked(o.id);
-                  setSexualIdentity(o.value);
+                  setSexualIOrientation(o.value);
                 }}
                 editable={!isLoading}
               />
             )}
             <MultipleChoiceAnswer
-              text={Strings.whatIsYourSexualIdentity.other}
-              // subText={Strings.whatIsYourSexualIdentity.otherSub}
+              text={Strings.whatIsYourSexualOrientation.other}
+              // subText={Strings.whatIsYourSexualOrientation.otherSub}
               checked={checked === 98}
               onPress={() => {
                 setChecked(98);
-                setSexualIdentity('OT');
+                setSexualIOrientation('OT');
               }}
               editable={!isLoading}
             />
             <Input
-              placeholder={Strings.whatIsYourSexualIdentity.otherSub}
-              onChangeText={newValue => setSexualIdentityOther(newValue)}
+              placeholder={Strings.whatIsYourSexualOrientation.otherSub}
+              onChangeText={newValue => setSexualOrientationOther(newValue)}
               returnKeyType="next"
               style={[
                 (checked === 98 ? { display: 'flex' } : { display: 'none' }),
@@ -88,11 +88,11 @@ export default function WhatIsSexualdentityScreen({ navigation, route }) {
               editable={!isLoading}
             />
             <MultipleChoiceAnswer
-              text={Strings.whatIsYourSexualIdentity.declineToAnswer}
+              text={Strings.whatIsYourSexualOrientation.declineToAnswer}
               checked={checked === 99}
               onPress={() => {
                 setChecked(99);
-                setSexualIdentity(null);
+                setSexualIOrientation(null);
               }}
               editable={!isLoading}
             />

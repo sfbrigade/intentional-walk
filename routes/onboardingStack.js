@@ -10,7 +10,7 @@ import {
   LoHOriginScreen,
   WhatIsRaceScreen,
   WhatIsGenderIdentityScreen,
-  WhatIsSexualIdentityScreen,
+  WhatIsSexualOrientationScreen,
 } from '../screens/onboarding';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
@@ -50,8 +50,8 @@ export default function OnboardingStack() {
         component={WhatIsGenderIdentityScreen}
       />
       <Stack.Screen
-        name="WhatIsSexualIdentity"
-        component={WhatIsSexualIdentityScreen}
+        name="WhatIsSexualOrientation"
+        component={WhatIsSexualOrientationScreen}
       />
     </Stack.Navigator>
   );

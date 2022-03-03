@@ -81,7 +81,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
             })
             .then(user => {
                 setLoading(false);
-                navigation.navigate('WhatIsSexualIdentity');
+                navigation.navigate('WhatIsSexualOrientation');
             })
             .catch(error => {
                 setLoading(false);
