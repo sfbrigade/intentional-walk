@@ -21,6 +21,14 @@ export default function WhatIsRaceScreen({ navigation, route }) {
     const [alertTitle, setAlertTitle] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
 
+    const options = [
+        { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
+        { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
+        { id: 3, value: 'BL', text: Strings.whatIsYourRace.black },
+        { id: 4, value: 'PI', text: Strings.whatIsYourRace.pacificIsl },
+        { id: 5, value: 'WH', text: Strings.whatIsYourRace.white },
+    ];
+
     function isValid() {
         let filled = true;
         if (raceOther.trim() === '' && raceID.indexOf(98) >= 0) {
@@ -79,14 +87,6 @@ export default function WhatIsRaceScreen({ navigation, route }) {
         }
         setRaceID(whatsChecked);
     };
-
-    const options = [
-        { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
-        { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
-        { id: 3, value: 'BL', text: Strings.whatIsYourRace.black },
-        { id: 4, value: 'PI', text: Strings.whatIsYourRace.pacificIsl },
-        { id: 5, value: 'WH', text: Strings.whatIsYourRace.white },
-    ];
 
     return (
         <SafeAreaView style={GlobalStyles.container}>

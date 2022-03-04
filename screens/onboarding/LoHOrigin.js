@@ -12,17 +12,22 @@ import { GlobalStyles } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function LoHOriginScreen({ navigation, route }) {
-  const [lohOrigin, setLohOrigin] = useState(null);
+  const [lohOrigin, setLohOrigin] = useState(undefined);
 
-  const [checked, setChecked] = useState(0);
   const [isLoading, setLoading] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
+  const options = [
+    { id: 1, lohOrigin: true, text: Strings.latinOrHispanicOrigin.yes },
+    { id: 2, lohOrigin: false, text: Strings.latinOrHispanicOrigin.no },
+    { id: 3, lohOrigin: null, text: Strings.latinOrHispanicOrigin.declineToAnswer },
+  ];
+
   function isValid() {
-    return !isLoading && checked > 0;
+    return !isLoading && (lohOrigin !== undefined);
   }
 
   async function onNextPress() {
@@ -44,12 +49,6 @@ export default function LoHOriginScreen({ navigation, route }) {
     }
   }
 
-  const options = [
-    { id: 1, lohOrigin: true, text: Strings.latinOrHispanicOrigin.yes },
-    { id: 2, lohOrigin: false, text: Strings.latinOrHispanicOrigin.no },
-    { id: 3, lohOrigin: null, text: Strings.latinOrHispanicOrigin.declineToAnswer },
-  ];
-
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView style={GlobalStyles.container}>
@@ -63,9 +62,8 @@ export default function LoHOriginScreen({ navigation, route }) {
               <MultipleChoiceAnswer
                 key={o.id}
                 text={o.text}
-                checked={checked === o.id}
+                checked={lohOrigin === o.lohOrigin}
                 onPress={() => {
-                  setChecked(o.id);
                   setLohOrigin(o.lohOrigin);
                 }}
                 editable={!isLoading}
@@ -103,6 +101,10 @@ const styles = StyleSheet.create({
   content: {
     ...GlobalStyles.content,
     alignItems: 'center',
+  },
+  alertText: {
+    textAlign: 'center',
+    marginBottom: 48,
   },
   button: {
     width: 180,

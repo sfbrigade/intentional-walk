@@ -12,22 +12,29 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function WhatIsGenderIdentityScreen({ navigation, route }) {
-    const [gender, setGender] = useState(null);
+    const [gender, setGender] = useState(undefined);
     const [genderOther, setGenderOther] = useState('');
 
-    const [checked, setChecked] = useState(0);
     const [isLoading, setLoading] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertTitle, setAlertTitle] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
 
+    const options = [
+        { id: 1, value: 'CF', text: Strings.whatIsYourGenderIdentity.female },
+        { id: 2, value: 'CM', text: Strings.whatIsYourGenderIdentity.male },
+        { id: 3, value: 'TF', text: Strings.whatIsYourGenderIdentity.transFemale },
+        { id: 4, value: 'TM', text: Strings.whatIsYourGenderIdentity.transMale },
+        { id: 5, value: 'NB', text: Strings.whatIsYourGenderIdentity.nonBinary },
+    ];
+
     function isValid() {
         let filled = true;
-        if (genderOther.trim() === '' && checked === 98) {
+        if (genderOther.trim() === '' && gender === 'OT') {
             filled = false;
         }
-        return !isLoading && checked > 0 && filled;
+        return !isLoading && (gender !== undefined) && filled;
     }
 
     async function onNextPress() {
@@ -36,7 +43,7 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
             const user = await Realm.getUser();
             await Realm.write(() => {
                 user.gender = gender;
-                user.gender_other = checked === 98 ? genderOther.trim() : '';
+                user.gender_other = gender === 'OT' ? genderOther.trim() : '';
             });
             await Api.appUser.update(user.id, {
                 gender: user.gender,
@@ -52,14 +59,6 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
         }
     }
 
-    const options = [
-        { id: 1, value: 'CF', text: Strings.whatIsYourGenderIdentity.female },
-        { id: 2, value: 'CM', text: Strings.whatIsYourGenderIdentity.male },
-        { id: 3, value: 'TF', text: Strings.whatIsYourGenderIdentity.transFemale },
-        { id: 4, value: 'TM', text: Strings.whatIsYourGenderIdentity.transMale },
-        { id: 5, value: 'NB', text: Strings.whatIsYourGenderIdentity.nonBinary },
-    ];
-
     return (
         <SafeAreaView style={GlobalStyles.container}>
             <ScrollView style={GlobalStyles.container}>
@@ -73,9 +72,8 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                             <MultipleChoiceAnswer
                                 key={o.id}
                                 text={o.text}
-                                checked={checked === o.id}
+                                checked={gender === o.value}
                                 onPress={() => {
-                                    setChecked(o.id);
                                     setGender(o.value);
                                 }}
                                 editable={!isLoading}
@@ -84,9 +82,8 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.other}
                             // subText={Strings.whatIsYourGenderIdentity.otherSub}
-                            checked={checked === 98}
+                            checked={gender === 'OT'}
                             onPress={() => {
-                                setChecked(98);
                                 setGender('OT');
                             }}
                             editable={!isLoading}
@@ -96,16 +93,15 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                             onChangeText={newValue => setGenderOther(newValue)}
                             returnKeyType="next"
                             style={[
-                                (checked === 98 ? { display: 'flex' } : { display: 'none' }),
+                                (gender === 'OT' ? { display: 'flex' } : { display: 'none' }),
                             ]}
                             placeholderTextColor="#C3C3C3"
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.declineToAnswer}
-                            checked={checked === 99}
+                            checked={gender === null}
                             onPress={() => {
-                                setChecked(99);
                                 setGender(null);
                             }}
                             editable={!isLoading}

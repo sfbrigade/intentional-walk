@@ -12,15 +12,29 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function WhatIsSexualOrientationScreen({ navigation, route }) {
-  const [sexualOrientation, setSexualIOrientation] = useState(null);
+  const [sexualOrientation, setSexualIOrientation] = useState(undefined);
   const [sexualOrientationOther, setSexualOrientationOther] = useState('');
 
-  const [checked, setChecked] = useState(0);
   const [isLoading, setLoading] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+
+  const options = [
+    { id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual },
+    { id: 2, value: 'SG', text: Strings.whatIsYourSexualOrientation.sameGenderLoving },
+    { id: 3, value: 'QU', text: Strings.whatIsYourSexualOrientation.unsure },
+    { id: 4, value: 'HS', text: Strings.whatIsYourSexualOrientation.heterosexual },
+  ];
+
+  function isValid() {
+    let filled = true;
+    if (sexualOrientationOther.trim() === '' && sexualOrientation === 'OT') {
+      filled = false;
+    }
+    return !isLoading && (sexualOrientation !== undefined) && filled;
+  }
 
   async function onNextPress() {
     setLoading(true);
@@ -36,21 +50,6 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
     }
   }
 
-  function isValid() {
-    let filled = true;
-    if (sexualOrientationOther.trim() === '' && checked === 98) {
-      filled = false;
-    }
-    return !isLoading && checked > 0 && filled;
-  }
-
-  const options = [
-    { id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual },
-    { id: 2, value: 'SG', text: Strings.whatIsYourSexualOrientation.sameGenderLoving },
-    { id: 3, value: 'QU', text: Strings.whatIsYourSexualOrientation.unsure },
-    { id: 4, value: 'HS', text: Strings.whatIsYourSexualOrientation.heterosexual },
-  ];
-
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <ScrollView style={GlobalStyles.container}>
@@ -64,9 +63,8 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
               <MultipleChoiceAnswer
                 key={o.id}
                 text={o.text}
-                checked={checked === o.id}
+                checked={sexualOrientation === o.value}
                 onPress={() => {
-                  setChecked(o.id);
                   setSexualIOrientation(o.value);
                 }}
                 editable={!isLoading}
@@ -75,9 +73,8 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualOrientation.other}
               // subText={Strings.whatIsYourSexualOrientation.otherSub}
-              checked={checked === 98}
+              checked={sexualOrientation === 'OT'}
               onPress={() => {
-                setChecked(98);
                 setSexualIOrientation('OT');
               }}
               editable={!isLoading}
@@ -87,16 +84,15 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
               onChangeText={newValue => setSexualOrientationOther(newValue)}
               returnKeyType="next"
               style={[
-                (checked === 98 ? { display: 'flex' } : { display: 'none' }),
+                (sexualOrientation === 'OT' ? { display: 'flex' } : { display: 'none' }),
               ]}
               placeholderTextColor="#C3C3C3"
               editable={!isLoading}
             />
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualOrientation.declineToAnswer}
-              checked={checked === 99}
+              checked={sexualOrientation === null}
               onPress={() => {
-                setChecked(99);
                 setSexualIOrientation(null);
               }}
               editable={!isLoading}
