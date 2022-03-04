@@ -12,13 +12,6 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function WhatIsGenderIdentityScreen({ navigation, route }) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [zip, setZip] = useState('');
-    const [age, setAge] = useState('');
-    const [lohOrigin, setLohOrigin] = useState(null);
-    const [race, setRace] = useState([]);
-    const [raceOther, setRaceOther] = useState('');
     const [gender, setGender] = useState(null);
     const [genderOther, setGenderOther] = useState('');
 
@@ -29,75 +22,35 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
     const [alertTitle, setAlertTitle] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
 
-    const onNextPress = () => {
-        setLoading(true);
-
-        Realm.getUser()
-            .then(x => {
-                setName(x.name);
-                setEmail(x.email);
-                setZip(x.zip);
-                setAge(x.age);
-                setLohOrigin(x.is_latino);
-                setRace(x.race);
-                setRaceOther(x.race_other);
-
-                let filled = '';
-                if (checked === 98) {
-                    filled = genderOther;
-                }
-
-                return Api.appUser.create(
-                    x.name,
-                    x.email,
-                    x.zip,
-                    x.age,
-                    x.id,
-                    x.is_latino,
-                    x.race,
-                    x.race_other,
-                    gender,
-                    filled,
-                );
-            })
-            .then(response => {
-                let filled = '';
-                if (checked === 98) {
-                    filled = genderOther;
-                }
-
-                return Realm.createUser(
-                    response.data.payload.account_id,
-                    name,
-                    email,
-                    zip,
-                    age,
-                    lohOrigin,
-                    race,
-                    raceOther,
-                    gender,
-                    filled,
-                );
-            })
-            .then(user => {
-                setLoading(false);
-                navigation.navigate('WhatIsSexualOrientation');
-            })
-            .catch(error => {
-                setLoading(false);
-                setAlertTitle(Strings.common.serverErrorTitle);
-                setAlertMessage(Strings.common.serverErrorMessage);
-                setShowAlert(true);
-            });
-    };
-
-    const isValid = () => {
+    function isValid() {
         let filled = true;
         if (genderOther.trim() === '' && checked === 98) {
             filled = false;
         }
         return !isLoading && checked > 0 && filled;
-    };
+    }
+
+    async function onNextPress() {
+        setLoading(true);
+        try {
+            const user = await Realm.getUser();
+            await Realm.write(() => {
+                user.gender = gender;
+                user.gender_other = checked === 98 ? genderOther.trim() : '';
+            });
+            await Api.appUser.update(user.id, {
+                gender: user.gender,
+                gender_other: user.gender_other,
+            });
+            setLoading(false);
+            navigation.navigate('WhatIsSexualOrientation');
+        } catch {
+            setLoading(false);
+            setAlertTitle(Strings.common.serverErrorTitle);
+            setAlertMessage(Strings.common.serverErrorMessage);
+            setShowAlert(true);
+        }
+    }
 
     const options = [
         { id: 1, value: 'CF', text: Strings.whatIsYourGenderIdentity.female },

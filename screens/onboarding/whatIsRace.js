@@ -12,103 +12,58 @@ import { GlobalStyles, Colors } from '../../styles';
 import { Api, Realm, Strings } from '../../lib';
 
 export default function WhatIsRaceScreen({ navigation, route }) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [zip, setZip] = useState('');
-    const [age, setAge] = useState('');
-    const [lohOrigin, setLohOrigin] = useState(null);
-    const [race, setRace] = useState([]);
+    const [raceID, setRaceID] = useState([]);
     const [raceOther, setRaceOther] = useState('');
 
-    const [checked, setChecked] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertTitle, setAlertTitle] = useState('');
     const [alertMessage, setAlertMessage] = useState('');
 
-    const onNextPress = () => {
-        setLoading(true);
-
-        Realm.getUser()
-            .then(x => {
-                setName(x.name);
-                setEmail(x.email);
-                setZip(x.zip);
-                setAge(x.age);
-                setLohOrigin(x.is_latino);
-
-                const values = [];
-                let filledIn = '';
-                options.map(o => {
-                    if (checked.indexOf(o.id) >= 0) {
-                        values.push(o.value);
-                    }
-                });
-                if (checked.indexOf(98) >= 0) {
-                    values.push('OT');
-                    filledIn = raceOther.trim();
-                }
-                setRace(values);
-
-                return Api.appUser.create(
-                    x.name,
-                    x.email,
-                    x.zip,
-                    x.age,
-                    x.id,
-                    x.is_latino,
-                    values,
-                    filledIn,
-                );
-            })
-            .then(response => {
-                let filledIn = '';
-                if (checked.indexOf(98) >= 0) {
-                    filledIn = raceOther;
-                }
-
-                return Realm.createUser(
-                    response.data.payload.account_id,
-                    name,
-                    email,
-                    zip,
-                    age,
-                    lohOrigin,
-                    race,
-                    filledIn,
-                );
-            })
-            .then(user => {
-                setLoading(false);
-                navigation.navigate('WhatIsGenderIdentity');
-            })
-            .catch(error => {
-                setLoading(false);
-                setAlertTitle(Strings.common.serverErrorTitle);
-                setAlertMessage(Strings.common.serverErrorMessage);
-                setShowAlert(true);
-            });
-    };
-
-    const isValid = () => {
+    function isValid() {
         let filled = true;
-        if (raceOther.trim() === '' && checked.indexOf(98) >= 0) {
+        if (raceOther.trim() === '' && raceID.indexOf(98) >= 0) {
             filled = false;
         }
-        return !isLoading && checked.length > 0 && filled;
-    };
+        return !isLoading && raceID.length > 0 && filled;
+    }
 
-    const options = [
-        { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
-        { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
-        { id: 3, value: 'BL', text: Strings.whatIsYourRace.black },
-        { id: 4, value: 'PI', text: Strings.whatIsYourRace.pacificIsl },
-        { id: 5, value: 'WH', text: Strings.whatIsYourRace.white },
-    ];
+    async function onNextPress() {
+        setLoading(true);
 
-    const pressCheck = (id) => {
-        let whatsChecked = [...checked];
+        const values = [];
+        options.map(o => {
+            if (raceID.indexOf(o.id) >= 0) {
+                values.push(o.value);
+            }
+        });
+        if (raceID.indexOf(98) >= 0) {
+            values.push('OT');
+        }
+
+        try {
+            const user = await Realm.getUser();
+            await Realm.write(() => {
+                user.race = values;
+                user.race_other = raceID.indexOf(98) >= 0 ? raceOther.trim() : '';
+            });
+            await Api.appUser.update(user.id, {
+                race: user.race,
+                race_other: user.race_other,
+            });
+            setLoading(false);
+            navigation.navigate('WhatIsGenderIdentity');
+        } catch {
+            setLoading(false);
+            setAlertTitle(Strings.common.serverErrorTitle);
+            setAlertMessage(Strings.common.serverErrorMessage);
+            setShowAlert(true);
+        }
+    }
+
+    function pressCheck(id) {
+        let whatsChecked = [...raceID];
         const declinedID = 99;
         if (id === declinedID) {
             whatsChecked = [declinedID];
@@ -122,8 +77,16 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                 whatsChecked.splice(whatsChecked.indexOf(declinedID), 1);
             }
         }
-        setChecked(whatsChecked);
+        setRaceID(whatsChecked);
     };
+
+    const options = [
+        { id: 1, value: 'NA', text: Strings.whatIsYourRace.americanNative },
+        { id: 2, value: 'AS', text: Strings.whatIsYourRace.asian },
+        { id: 3, value: 'BL', text: Strings.whatIsYourRace.black },
+        { id: 4, value: 'PI', text: Strings.whatIsYourRace.pacificIsl },
+        { id: 5, value: 'WH', text: Strings.whatIsYourRace.white },
+    ];
 
     return (
         <SafeAreaView style={GlobalStyles.container}>
@@ -138,7 +101,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                             <MultipleChoiceAnswer
                                 key={o.id}
                                 text={o.text}
-                                checked={checked.indexOf(o.id) >= 0}
+                                checked={raceID.indexOf(o.id) >= 0}
                                 onPress={() => pressCheck(o.id)}
                                 editable={!isLoading}
                             />
@@ -146,7 +109,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.other}
                             // subText={Strings.whatIsYourRace.otherSub}
-                            checked={checked.indexOf(98) >= 0}
+                            checked={raceID.indexOf(98) >= 0}
                             onPress={() => pressCheck(98)}
                             editable={!isLoading}
                         />
@@ -157,14 +120,14 @@ export default function WhatIsRaceScreen({ navigation, route }) {
                             }}
                             returnKeyType="next"
                             style={[
-                                (checked.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
+                                (raceID.indexOf(98) >= 0 ? { display: 'flex' } : { display: 'none' }),
                             ]}
                             placeholderTextColor="#C3C3C3"
                             editable={!isLoading}
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourRace.declineToAnswer}
-                            checked={checked.indexOf(99) >= 0}
+                            checked={raceID.indexOf(99) >= 0}
                             onPress={() => pressCheck(99)}
                             editable={!isLoading}
                         />

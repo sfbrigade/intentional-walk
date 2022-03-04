@@ -57,14 +57,12 @@ const styles = StyleSheet.create({
         elevation: GlobalStyles.boxShadow.elevation,
     },
     text: {
-        // fontFamily: 'Roboto',
         fontWeight: '700',
         fontSize: 17,
         color: Colors.primary.purple,
         paddingLeft: 12,
     },
     subText: {
-        // fontFamily: 'Roboto',
         fontWeight: '500',
         fontSize: 17,
         color: Colors.primary.purple,

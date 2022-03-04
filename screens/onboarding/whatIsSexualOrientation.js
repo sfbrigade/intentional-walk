@@ -22,22 +22,27 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
-  const onNextPress = () => {
+  async function onNextPress() {
     setLoading(true);
+    try {
 
-    //
+      setLoading(false);
+      navigation.navigate('Info');
+    } catch {
+      setLoading(false);
+      setAlertTitle(Strings.common.serverErrorTitle);
+      setAlertMessage(Strings.common.serverErrorMessage);
+      setShowAlert(true);
+    }
+  }
 
-    setLoading(false);
-    navigation.navigate('Info');
-  };
-
-  const isValid = () => {
+  function isValid() {
     let filled = true;
     if (sexualOrientationOther.trim() === '' && checked === 98) {
       filled = false;
     }
     return !isLoading && checked > 0 && filled;
-  };
+  }
 
   const options = [
     { id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual },
