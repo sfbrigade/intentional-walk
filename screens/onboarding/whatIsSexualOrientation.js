@@ -39,7 +39,15 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
   async function onNextPress() {
     setLoading(true);
     try {
-
+      const user = await Realm.getUser();
+      await Realm.write(() => {
+        user.sexual_orien = sexualOrientation;
+        user.sexual_orien_other = sexualOrientation === 'OT' ? sexualOrientationOther.trim() : '';
+      });
+      await Api.appUser.update(user.id, {
+        sexual_orien: user.sexual_orien,
+        sexual_orien_other: user.sexual_orien_other,
+      });
       setLoading(false);
       navigation.navigate('Info');
     } catch {
