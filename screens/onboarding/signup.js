@@ -79,7 +79,7 @@ export default function SignUpScreen({ navigation, route }) {
     }),
   );
 
-  const onSubmit = () => {
+  async function onSubmit() {
     /// validate email
     if (!email.trim().match(/^[^@ ]+@[^. ]+(?:\.[^. ]+)+$/)) {
       setAlertTitle(Strings.signUp.emailAlertTitle);
@@ -110,46 +110,41 @@ export default function SignUpScreen({ navigation, route }) {
       return;
     }
     setLoading(true);
-    Realm.getSettings()
-      .then(settings => {
-        return Api.appUser.create(
-          name.trim(),
-          email.trim(),
-          zip.trim(),
-          parsedAge,
-          settings.accountId,
-        );
-      })
-      .then(response => {
-        return Realm.createUser(
-          response.data.payload.account_id,
-          name.trim(),
-          email.trim(),
-          zip.trim(),
-          parsedAge,
-        );
-      })
-      .then(user => {
-        setLoading(false);
-        navigation.navigate('LoHOrigin');
-      })
-      .catch(error => {
-        setLoading(false);
-        setAlertTitle(Strings.common.serverErrorTitle);
-        setAlertMessage(Strings.common.serverErrorMessage);
-        setShowAlert(true);
-      });
-  };
+    try {
+      const settings = await Realm.getSettings();
+      const response = await Api.appUser.create(
+        name.trim(),
+        email.trim(),
+        zip.trim(),
+        parsedAge,
+        settings.accountId,
+      );
+      const user = await Realm.createUser(
+        response.data.payload.account_id,
+        name.trim(),
+        email.trim(),
+        zip.trim(),
+        parsedAge,
+      );
+      setLoading(false);
+      navigation.navigate('LoHOrigin');
+    } catch (error) {
+      setLoading(false);
+      setAlertTitle(Strings.common.serverErrorTitle);
+      setAlertMessage(Strings.common.serverErrorMessage);
+      setShowAlert(true);
+    }
+  }
 
-  const onPolicyPress = () => {
+  function onPolicyPress() {
     setShowPrivacyPolicy(true);
-  };
+  }
 
-  const onContestRulesPress = () => {
+  function onContestRulesPress() {
     setShowContestRules(true);
-  };
+  }
 
-  const isValid = () => {
+  function isValid() {
     return (
       name.trim() !== '' &&
       email.trim() !== '' &&
@@ -157,7 +152,7 @@ export default function SignUpScreen({ navigation, route }) {
       age.trim() !== '' &&
       termsAgreed
     );
-  };
+  }
 
   return (
     <SafeAreaView style={GlobalStyles.container}>

@@ -89,7 +89,7 @@ export default function WhatIsRaceScreen({ navigation, route }) {
             }
         }
         setRaceID(whatsChecked);
-    };
+    }
 
     return (
         <SafeAreaView style={GlobalStyles.container}>
