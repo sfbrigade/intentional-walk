@@ -100,9 +100,9 @@ export default function WhatIsGenderIdentityScreen({ navigation, route }) {
                         />
                         <MultipleChoiceAnswer
                             text={Strings.whatIsYourGenderIdentity.declineToAnswer}
-                            checked={gender === null}
+                            checked={gender === 'DA'}
                             onPress={() => {
-                                setGender(null);
+                                setGender('DA');
                             }}
                             editable={!isLoading}
                         />

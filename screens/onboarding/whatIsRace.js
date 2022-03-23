@@ -49,6 +49,9 @@ export default function WhatIsRaceScreen({ navigation, route }) {
         if (raceID.indexOf(98) >= 0) {
             values.push('OT');
         }
+        if (raceID.indexOf(99) >= 0) {
+            values.push('DA');
+        }
 
         try {
             const user = await Realm.getUser();

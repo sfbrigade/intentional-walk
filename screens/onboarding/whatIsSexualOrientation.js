@@ -99,9 +99,9 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
             />
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualOrientation.declineToAnswer}
-              checked={sexualOrientation === null}
+              checked={sexualOrientation === 'DA'}
               onPress={() => {
-                setSexualIOrientation(null);
+                setSexualIOrientation('DA');
               }}
               editable={!isLoading}
             />

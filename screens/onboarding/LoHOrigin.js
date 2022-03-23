@@ -21,9 +21,9 @@ export default function LoHOriginScreen({ navigation, route }) {
   const [alertMessage, setAlertMessage] = useState('');
 
   const options = [
-    { id: 1, lohOrigin: true, text: Strings.latinOrHispanicOrigin.yes },
-    { id: 2, lohOrigin: false, text: Strings.latinOrHispanicOrigin.no },
-    { id: 3, lohOrigin: null, text: Strings.latinOrHispanicOrigin.declineToAnswer },
+    { id: 1, lohOrigin: 'YE', text: Strings.latinOrHispanicOrigin.yes },
+    { id: 2, lohOrigin: 'NO', text: Strings.latinOrHispanicOrigin.no },
+    { id: 3, lohOrigin: 'DA', text: Strings.latinOrHispanicOrigin.declineToAnswer },
   ];
 
   function isValid() {
