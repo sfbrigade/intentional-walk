@@ -1,17 +1,17 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { Button, Input, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots, Popup } from '../../components';
-import { GlobalStyles, Colors } from '../../styles';
-import { Api, Realm, Strings } from '../../lib';
+  Button,
+  Input,
+  MultipleChoiceQuestion,
+  MultipleChoiceAnswer,
+  PaginationDots,
+  Popup,
+} from '../../components';
+import {GlobalStyles, Colors} from '../../styles';
+import {Api, Realm, Strings} from '../../lib';
 
-export default function WhatIsSexualOrientationScreen({ navigation, route }) {
+export default function WhatIsSexualOrientationScreen({navigation, route}) {
   const [sexualOrientation, setSexualIOrientation] = useState(undefined);
   const [sexualOrientationOther, setSexualOrientationOther] = useState('');
 
@@ -22,10 +22,18 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
   const [alertMessage, setAlertMessage] = useState('');
 
   const options = [
-    { id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual },
-    { id: 2, value: 'SG', text: Strings.whatIsYourSexualOrientation.sameGenderLoving },
-    { id: 3, value: 'QU', text: Strings.whatIsYourSexualOrientation.unsure },
-    { id: 4, value: 'HS', text: Strings.whatIsYourSexualOrientation.heterosexual },
+    {id: 1, value: 'BS', text: Strings.whatIsYourSexualOrientation.bisexual},
+    {
+      id: 2,
+      value: 'SG',
+      text: Strings.whatIsYourSexualOrientation.sameGenderLoving,
+    },
+    {id: 3, value: 'QU', text: Strings.whatIsYourSexualOrientation.unsure},
+    {
+      id: 4,
+      value: 'HS',
+      text: Strings.whatIsYourSexualOrientation.heterosexual,
+    },
   ];
 
   function isValid() {
@@ -33,7 +41,7 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
     if (sexualOrientationOther.trim() === '' && sexualOrientation === 'OT') {
       filled = false;
     }
-    return !isLoading && (sexualOrientation !== undefined) && filled;
+    return !isLoading && sexualOrientation !== undefined && filled;
   }
 
   async function onNextPress() {
@@ -42,7 +50,8 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
       const user = await Realm.getUser();
       await Realm.write(() => {
         user.sexual_orien = sexualOrientation;
-        user.sexual_orien_other = sexualOrientation === 'OT' ? sexualOrientationOther.trim() : '';
+        user.sexual_orien_other =
+          sexualOrientation === 'OT' ? sexualOrientationOther.trim() : '';
       });
       await Api.appUser.update(user.id, {
         sexual_orien: user.sexual_orien,
@@ -65,9 +74,8 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
           <MultipleChoiceQuestion
             text={Strings.whatIsYourSexualOrientation.question}
             subText={Strings.whatIsYourSexualOrientation.questionSub}
-            style={styles.content}
-          >
-            {options.map(o =>
+            style={styles.content}>
+            {options.map(o => (
               <MultipleChoiceAnswer
                 key={o.id}
                 text={o.text}
@@ -77,7 +85,7 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
                 }}
                 editable={!isLoading}
               />
-            )}
+            ))}
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualOrientation.other}
               // subText={Strings.whatIsYourSexualOrientation.otherSub}
@@ -87,16 +95,15 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
               }}
               editable={!isLoading}
             />
-            <Input
-              placeholder={Strings.whatIsYourSexualOrientation.otherSub}
-              onChangeText={newValue => setSexualOrientationOther(newValue)}
-              returnKeyType="next"
-              style={[
-                (sexualOrientation === 'OT' ? { display: 'flex' } : { display: 'none' }),
-              ]}
-              placeholderTextColor="#C3C3C3"
-              editable={!isLoading}
-            />
+            {sexualOrientation === 'OT' && (
+              <Input
+                placeholder={Strings.whatIsYourSexualOrientation.otherSub}
+                onChangeText={newValue => setSexualOrientationOther(newValue)}
+                returnKeyType="next"
+                placeholderTextColor="#C3C3C3"
+                editable={!isLoading}
+              />
+            )}
             <MultipleChoiceAnswer
               text={Strings.whatIsYourSexualOrientation.declineToAnswer}
               checked={sexualOrientation === 'DA'}
@@ -110,8 +117,7 @@ export default function WhatIsSexualOrientationScreen({ navigation, route }) {
             <Button
               style={styles.button}
               isEnabled={isValid()}
-              onPress={onNextPress}
-            >
+              onPress={onNextPress}>
               {Strings.common.next}
             </Button>
             <PaginationDots currentPage={5} totalPages={7} />

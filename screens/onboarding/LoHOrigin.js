@@ -1,17 +1,16 @@
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { Button, MultipleChoiceQuestion, MultipleChoiceAnswer, PaginationDots, Popup } from '../../components';
-import { GlobalStyles } from '../../styles';
-import { Api, Realm, Strings } from '../../lib';
+  Button,
+  MultipleChoiceQuestion,
+  MultipleChoiceAnswer,
+  PaginationDots,
+  Popup,
+} from '../../components';
+import {GlobalStyles} from '../../styles';
+import {Api, Realm, Strings} from '../../lib';
 
-export default function LoHOriginScreen({ navigation, route }) {
+export default function LoHOriginScreen({navigation, route}) {
   const [lohOrigin, setLohOrigin] = useState(undefined);
 
   const [isLoading, setLoading] = useState(false);
@@ -21,13 +20,17 @@ export default function LoHOriginScreen({ navigation, route }) {
   const [alertMessage, setAlertMessage] = useState('');
 
   const options = [
-    { id: 1, lohOrigin: 'YE', text: Strings.latinOrHispanicOrigin.yes },
-    { id: 2, lohOrigin: 'NO', text: Strings.latinOrHispanicOrigin.no },
-    { id: 3, lohOrigin: 'DA', text: Strings.latinOrHispanicOrigin.declineToAnswer },
+    {id: 1, lohOrigin: 'YE', text: Strings.latinOrHispanicOrigin.yes},
+    {id: 2, lohOrigin: 'NO', text: Strings.latinOrHispanicOrigin.no},
+    {
+      id: 3,
+      lohOrigin: 'DA',
+      text: Strings.latinOrHispanicOrigin.declineToAnswer,
+    },
   ];
 
   function isValid() {
-    return !isLoading && (lohOrigin !== undefined);
+    return !isLoading && lohOrigin !== undefined;
   }
 
   async function onNextPress() {
@@ -36,9 +39,9 @@ export default function LoHOriginScreen({ navigation, route }) {
       // get the user object from Realm
       const user = await Realm.getUser();
       // update the user object with the new survey value
-      await Realm.write(() => user.is_latino = lohOrigin);
+      await Realm.write(() => (user.is_latino = lohOrigin));
       // send the value to the server
-      await Api.appUser.update(user.id, { is_latino: user.is_latino });
+      await Api.appUser.update(user.id, {is_latino: user.is_latino});
       setLoading(false);
       navigation.navigate('WhatIsRace');
     } catch {
@@ -56,9 +59,8 @@ export default function LoHOriginScreen({ navigation, route }) {
           <MultipleChoiceQuestion
             text={Strings.latinOrHispanicOrigin.question}
             subText={Strings.latinOrHispanicOrigin.questionSub}
-            style={styles.content}
-          >
-            {options.map(o =>
+            style={styles.content}>
+            {options.map(o => (
               <MultipleChoiceAnswer
                 key={o.id}
                 text={o.text}
@@ -68,14 +70,13 @@ export default function LoHOriginScreen({ navigation, route }) {
                 }}
                 editable={!isLoading}
               />
-            )}
+            ))}
           </MultipleChoiceQuestion>
           <View style={styles.content}>
             <Button
               style={styles.button}
               isEnabled={isValid()}
-              onPress={onNextPress}
-            >
+              onPress={onNextPress}>
               {Strings.common.next}
             </Button>
             <PaginationDots currentPage={2} totalPages={7} />

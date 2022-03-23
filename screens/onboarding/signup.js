@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
   BackHandler,
@@ -11,9 +10,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import Autolink from 'react-native-autolink';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import loadLocalResource from 'react-native-local-resource';
 import moment from 'moment';
 
@@ -26,15 +25,15 @@ import {
   Popup,
   ScrollText,
 } from '../../components';
-import { Colors, GlobalStyles } from '../../styles';
-import { Api, Realm, Strings } from '../../lib';
+import {Colors, GlobalStyles} from '../../styles';
+import {Api, Realm, Strings} from '../../lib';
 
 import ContestRules from '../../assets/contestRules';
 import Privacy from '../../assets/privacy';
 import validZipCodes from '../../lib/validZipCodes';
 
-export default function SignUpScreen({ navigation, route }) {
-  const { contest } = route.params;
+export default function SignUpScreen({navigation, route}) {
+  const {contest} = route.params;
   const [focus, setFocus] = useState('');
 
   const [name, setName] = useState('');
@@ -206,7 +205,7 @@ export default function SignUpScreen({ navigation, route }) {
               style={styles.input}
               placeholder={Strings.signUp.zipCode}
               keyboardType="number-pad"
-              returnKeyType={Platform.select({ ios: 'done', android: 'next' })}
+              returnKeyType={Platform.select({ios: 'done', android: 'next'})}
               editable={!isLoading}
             />
             <View style={styles.spacer} />
@@ -264,7 +263,7 @@ export default function SignUpScreen({ navigation, route }) {
         onClose={() => setShowPrivacyPolicy(false)}>
         <View>
           <ScrollText
-            style={{ height: Math.round((screenDims.height - 100) * 0.8) }}>
+            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
             <Logo style={styles.privacyLogo} />
             <Text style={GlobalStyles.h1}>{Strings.common.privacyPolicy}</Text>
             <Autolink text={privacyText} style={styles.privacyText} />
@@ -276,7 +275,7 @@ export default function SignUpScreen({ navigation, route }) {
         onClose={() => setShowContestRules(false)}>
         <View>
           <ScrollText
-            style={{ height: Math.round((screenDims.height - 100) * 0.8) }}>
+            style={{height: Math.round((screenDims.height - 100) * 0.8)}}>
             <Logo style={styles.privacyLogo} />
             <Text style={GlobalStyles.h1}>{Strings.common.contestRules}</Text>
             <Autolink text={contestRulesText} style={styles.privacyText} />

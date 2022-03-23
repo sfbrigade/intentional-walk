@@ -1,17 +1,17 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Colors, GlobalStyles } from '../styles';
+import {StyleSheet, Text, View} from 'react-native';
+import {Colors, GlobalStyles} from '../styles';
 
 export default function MultipleChoiceQuestion(props) {
   return (
-    <View style={[{ width: '100%' }, props.style]}>
+    <View style={[styles.wrapper, props.style]}>
       <View style={styles.content}>
         <Text style={styles.text}>{props.text}</Text>
-        {props.subText ?
-          <Text style={styles.subText}>{props.subText}</Text> :
+        {props.subText ? (
+          <Text style={styles.subText}>{props.subText}</Text>
+        ) : (
           <></>
-        }
+        )}
       </View>
       {props.children}
     </View>
@@ -19,6 +19,9 @@ export default function MultipleChoiceQuestion(props) {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+  },
   content: {
     minHeight: 68,
     width: '100%',
