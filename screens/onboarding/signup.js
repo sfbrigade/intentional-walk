@@ -118,15 +118,16 @@ export default function SignUpScreen({navigation, route}) {
         parsedAge,
         settings.accountId,
       );
-      const user = await Realm.createUser(
-        response.data.payload.account_id,
-        name.trim(),
-        email.trim(),
-        zip.trim(),
-        parsedAge,
-      );
+      const user = await Realm.createUser({
+        ...response.data.payload,
+        id: response.data.payload.account_id,
+      });
       setLoading(false);
-      navigation.navigate('LoHOrigin');
+      if (user.isSurveyCompleted) {
+        navigation.navigate('LoHOrigin');
+      } else {
+        navigation.navigate('Info');
+      }
     } catch (error) {
       setLoading(false);
       setAlertTitle(Strings.common.serverErrorTitle);
