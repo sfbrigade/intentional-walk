@@ -7,6 +7,8 @@ export InfoBox from './infoBox';
 export Input from './input';
 export LinkButton from './linkButton';
 export Logo from './logo';
+export MultipleChoiceQuestion from './multipleChoiceQuestion';
+export MultipleChoiceAnswer from './multipleChoiceAnswer';
 export PageTitle from './pageTitle';
 export PaginationDots from './paginationDots';
 export Popup from './popup';

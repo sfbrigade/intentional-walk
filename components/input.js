@@ -36,7 +36,7 @@ export default function Input(props) {
         props.onSubmitEditing ? props.onSubmitEditing(nativeEvent) : null
       }
       placeholder={props.placeholder}
-      placeholderTextColor={Colors.primary.gray2}
+      placeholderTextColor={props.placeholderTextColor || Colors.primary.gray2}
       autoCapitalize={props.autoCapitalize || 'none'}
       autoCompleteType={props.autoCompleteType || 'off'}
       autoCorrect={props.autoCorrect || false}
