@@ -124,9 +124,9 @@ export default function SignUpScreen({navigation, route}) {
       });
       setLoading(false);
       if (user.isSurveyCompleted) {
-        navigation.navigate('LoHOrigin');
-      } else {
         navigation.navigate('Info');
+      } else {
+        navigation.navigate('LoHOrigin');
       }
     } catch (error) {
       setLoading(false);
