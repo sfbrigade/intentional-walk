@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     elevation: GlobalStyles.boxShadow.elevation,
   },
   text: {
-    fontWeight: '700',
+    fontWeight: 'bold',
     fontSize: 20,
     color: Colors.primary.lightGray,
   },
