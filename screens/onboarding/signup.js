@@ -36,7 +36,8 @@ export default function SignUpScreen({navigation, route}) {
   const {contest} = route.params;
   const [focus, setFocus] = useState('');
 
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [zip, setZip] = useState('');
   const [age, setAge] = useState('');
@@ -112,7 +113,8 @@ export default function SignUpScreen({navigation, route}) {
     try {
       const settings = await Realm.getSettings();
       const response = await Api.appUser.create(
-        name.trim(),
+        firstName.trim(),
+        lastName.trim(),
         email.trim(),
         zip.trim(),
         parsedAge,
@@ -146,7 +148,8 @@ export default function SignUpScreen({navigation, route}) {
 
   function isValid() {
     return (
-      name.trim() !== '' &&
+      firstName.trim() !== '' &&
+      lastName.trim() !== '' &&
       email.trim() !== '' &&
       zip.trim() !== '' &&
       age.trim() !== '' &&
@@ -179,15 +182,30 @@ export default function SignUpScreen({navigation, route}) {
               ),
             )}
           </Text>
-          <Input
-            onSubmitEditing={() => setFocus('email')}
-            onChangeText={newValue => setName(newValue)}
-            placeholder={Strings.signUp.name}
-            autoCapitalize="words"
-            autoCompleteType="name"
-            returnKeyType="next"
-            editable={!isLoading}
-          />
+          <View style={styles.row}>
+            <Input
+              onSubmitEditing={() => setFocus('last_name')}
+              onChangeText={newValue => setFirstName(newValue)}
+              style={styles.input}
+              placeholder={Strings.signUp.firstName}
+              autoCapitalize="words"
+              autoCompleteType="name"
+              returnKeyType="next"
+              editable={!isLoading}
+            />
+            <View style={styles.spacer} />
+            <Input
+              focused={focus === 'last_name'}
+              onSubmitEditing={() => setFocus('email')}
+              onChangeText={newValue => setLastName(newValue)}
+              style={styles.input}
+              placeholder={Strings.signUp.lastName}
+              autoCapitalize="words"
+              autoCompleteType="name"
+              returnKeyType="next"
+              editable={!isLoading}
+            />
+          </View>
           <Input
             focused={focus === 'email'}
             onSubmitEditing={() => setFocus('zip')}
