@@ -111,10 +111,10 @@ export default function SignUpScreen({ navigation, route }) {
     }
     setLoading(true);
     try {
-      const name = `${firstName.trim()} ${lastName.trim()}`;
       const settings = await Realm.getSettings();
       const response = await Api.appUser.create(
-        name.trim(),
+        firstName.trim(),
+        lastName.trim(),
         email.trim(),
         zip.trim(),
         parsedAge,
@@ -147,9 +147,9 @@ export default function SignUpScreen({ navigation, route }) {
   }
 
   function isValid() {
-    const name = `${firstName.trim()} ${lastName.trim()}`;
     return (
-      name.trim() !== '' &&
+      firstName.trim() !== '' &&
+      lastName.trim() !== '' &&
       email.trim() !== '' &&
       zip.trim() !== '' &&
       age.trim() !== '' &&
