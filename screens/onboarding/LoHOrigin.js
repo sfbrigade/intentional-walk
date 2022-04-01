@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {
   Button,
@@ -51,6 +51,12 @@ export default function LoHOriginScreen({navigation, route}) {
       setShowAlert(true);
     }
   }
+
+  useEffect(() => {
+    if (route.params.initial) {
+      navigation.setOptions({headerLeft: null});
+    }
+  }, [navigation, route]);
 
   return (
     <SafeAreaView style={GlobalStyles.container}>

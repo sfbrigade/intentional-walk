@@ -223,6 +223,11 @@ export default function HomeScreen({navigation}) {
       /// if no user, go to onboarding flow
       if (!user) {
         navigation.navigate('OnboardingStack');
+      } else if (!user.isSurveyCompleted) {
+        navigation.navigate('OnboardingStack', {
+          screen: 'LoHOrigin',
+          params: {initial: true},
+        });
       }
     });
     /// check for updated contest info
