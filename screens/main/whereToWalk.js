@@ -72,4 +72,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
+  button: {
+    minHeight: 48,
+    height: 'auto',
+  },
 });
