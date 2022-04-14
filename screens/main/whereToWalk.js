@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -13,6 +13,13 @@ import {GlobalStyles} from '../../styles';
 import {Strings} from '../../lib';
 
 export default function WhereToWalkScreen() {
+  const [buttonHeight, setButtonHeight] = useState();
+
+  const buttonStyle = {};
+  if (buttonHeight) {
+    buttonStyle.height = buttonHeight;
+  }
+
   const links = [
     {
       title: Strings.whereToWalk.parksAndRecCenters,
@@ -31,10 +38,18 @@ export default function WhereToWalkScreen() {
       url: 'https://apm.activecommunities.com/sfrecpark/Activity_Search',
     },
   ];
+
+  function onHeight(height) {
+    if (height > (buttonHeight ?? 0)) {
+      setButtonHeight(height);
+    }
+  }
+
   const linkBoxes = links.map((link, index) => (
     <LinkButton
       key={index}
-      style={styles.button}
+      onHeight={onHeight}
+      style={buttonStyle}
       title={link.title}
       url={link.url}
     />
@@ -71,9 +86,5 @@ const styles = StyleSheet.create({
   options: {
     textAlign: 'center',
     marginBottom: 16,
-  },
-  button: {
-    minHeight: 48,
-    height: 'auto',
   },
 });
