@@ -3,6 +3,11 @@ import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {Colors, GlobalStyles} from '../styles';
 
 export default function Button(props) {
+  function onLayout({nativeEvent}) {
+    if (props.onHeight) {
+      props.onHeight(nativeEvent.layout.height);
+    }
+  }
   return (
     <TouchableOpacity
       style={[
@@ -12,6 +17,7 @@ export default function Button(props) {
         props.isEnabled === false ? styles.buttonDisabled : {},
       ]}
       disabled={props.isEnabled === false}
+      onLayout={onLayout}
       onPress={() => props.onPress()}>
       {React.Children.map(props.children, c =>
         typeof c === 'string' ? (
@@ -36,8 +42,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'purple',
-    height: 48,
+    minHeight: 48,
     marginBottom: 16,
+    padding: 10,
   },
   buttonToggle: {
     backgroundColor: 'white',
@@ -51,6 +58,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 24,
+    lineHeight: 28,
     fontWeight: '500',
     textAlign: 'center',
   },
