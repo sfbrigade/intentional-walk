@@ -53,7 +53,7 @@ export default function LoHOriginScreen({navigation, route}) {
   }
 
   useEffect(() => {
-    if (route.params.initial) {
+    if (route?.params?.initial) {
       navigation.setOptions({headerLeft: null});
     }
   }, [navigation, route]);
