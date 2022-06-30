@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {Popup} from '../components';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -33,6 +34,7 @@ function HamburgerMenuItem(props) {
 
 export default function HamburgerMenu(props) {
   const [email, setEmail] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     Realm.getUser().then(user => {
@@ -123,6 +125,10 @@ export default function HamburgerMenu(props) {
           route="Partners">
           {Strings.common.programPartners}
         </HamburgerMenuItem>
+        <HamburgerMenuItem onPress={() => setShowPopup(true)} icon="delete">
+          {'Delete Account'}
+        </HamburgerMenuItem>
+        <View style={styles.spacer} />
         <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">
           {Strings.common.signOut}
         </HamburgerMenuItem>
@@ -132,6 +138,15 @@ export default function HamburgerMenu(props) {
           {DeviceInfo.getBuildNumber()}
         </Text>
       </ScrollView>
+      <Popup isVisible={showPopup} onClose={() => setShowPopup(false)}>
+        <View>
+          <Text>
+            {
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ipsum odio, pharetra ac nulla id, dapibus fermentum ipsum.'
+            }
+          </Text>
+        </View>
+      </Popup>
     </SafeAreaView>
   );
 }
