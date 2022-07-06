@@ -9,7 +9,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {Popup} from '../components';
+import {Popup, Button} from '../components';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -139,12 +139,19 @@ export default function HamburgerMenu(props) {
         </Text>
       </ScrollView>
       <Popup isVisible={showPopup} onClose={() => setShowPopup(false)}>
-        <View>
-          <Text>
-            {
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ipsum odio, pharetra ac nulla id, dapibus fermentum ipsum.'
-            }
+        <View style={GlobalStyles.centered}>
+          <Text style={GlobalStyles.h1}>
+            {'Are you sure you want to delete ALL of your saved data?'}
           </Text>
+          <View style={styles.popupButtons}>
+            <Button
+              style={styles.yesDeleteButton}
+              textStyle={styles.yesDeleteText}
+              onPress={() => setShowPopup(false)}>
+              {'Yes, Delete'}
+            </Button>
+            <Button onPress={() => setShowPopup(false)}>{'No, go back'}</Button>
+          </View>
         </View>
       </Popup>
     </SafeAreaView>
@@ -202,5 +209,17 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 60,
+  },
+  popupButtons: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  yesDeleteButton: {
+    ...GlobalStyles.boxShadow,
+    backgroundColor: Colors.primary.lightGray,
+  },
+  yesDeleteText: {
+    color: Colors.primary.purple,
   },
 });
