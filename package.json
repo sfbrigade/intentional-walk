@@ -19,7 +19,7 @@
     "@t2tx/react-native-universal-pedometer": "https://github.com/francisli/react-native-universal-pedometer#b50b4766de3bc487147d7c314fe36abc7763e730",
     "axios": "^0.21.1",
     "lodash": "^4.17.21",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "numeral": "^2.0.6",
     "react": "17.0.1",
     "react-moment": "^0.9.7",
