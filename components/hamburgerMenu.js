@@ -9,7 +9,6 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {Popup, Button} from '../components';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors, GlobalStyles} from '../styles';
@@ -34,7 +33,6 @@ function HamburgerMenuItem(props) {
 
 export default function HamburgerMenu(props) {
   const [email, setEmail] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     Realm.getUser().then(user => {
@@ -125,11 +123,13 @@ export default function HamburgerMenu(props) {
           route="Partners">
           {Strings.common.programPartners}
         </HamburgerMenuItem>
-        <HamburgerMenuItem onPress={() => setShowPopup(true)} icon="delete">
-          {'Delete Account'}
+        <HamburgerMenuItem
+          onPress={() => props.onShowDeleteUser()}
+          icon="delete">
+          {Strings.deleteUser.menuItem}
         </HamburgerMenuItem>
-        <View style={styles.spacer} />
-        <HamburgerMenuItem onPress={() => logout()} icon="exit-to-app">
+        <View style={styles.smallSpacer} />
+        <HamburgerMenuItem onPress={() => props.onLogout()} icon="exit-to-app">
           {Strings.common.signOut}
         </HamburgerMenuItem>
         <View style={styles.spacer} />
@@ -138,22 +138,6 @@ export default function HamburgerMenu(props) {
           {DeviceInfo.getBuildNumber()}
         </Text>
       </ScrollView>
-      <Popup isVisible={showPopup} onClose={() => setShowPopup(false)}>
-        <View style={GlobalStyles.centered}>
-          <Text style={GlobalStyles.h1}>
-            {'Are you sure you want to delete ALL of your saved data?'}
-          </Text>
-          <View style={styles.popupButtons}>
-            <Button
-              style={styles.yesDeleteButton}
-              textStyle={styles.yesDeleteText}
-              onPress={() => setShowPopup(false)}>
-              {'Yes, Delete'}
-            </Button>
-            <Button onPress={() => setShowPopup(false)}>{'No, go back'}</Button>
-          </View>
-        </View>
-      </Popup>
     </SafeAreaView>
   );
 }
@@ -210,16 +194,7 @@ const styles = StyleSheet.create({
   spacer: {
     height: 60,
   },
-  popupButtons: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  yesDeleteButton: {
-    ...GlobalStyles.boxShadow,
-    backgroundColor: Colors.primary.lightGray,
-  },
-  yesDeleteText: {
-    color: Colors.primary.purple,
+  smallSpacer: {
+    height: 24,
   },
 });
