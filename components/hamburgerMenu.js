@@ -56,16 +56,6 @@ export default function HamburgerMenu(props) {
     props.onDone();
   };
 
-  const logout = () => {
-    Realm.destroyUser().then(() => {
-      if (!isActiveRoute('Home')) {
-        navigationRef.current?.navigate('Home');
-      }
-      props.onDone();
-      navigationRef.current?.navigate('OnboardingStack');
-    });
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -81,6 +71,11 @@ export default function HamburgerMenu(props) {
           icon="home"
           route="Home">
           {Strings.common.home}
+        </HamburgerMenuItem>
+        <HamburgerMenuItem
+          onPress={() => props.onShowLogout()}
+          icon="exit-to-app">
+          {Strings.common.signOut}
         </HamburgerMenuItem>
         <HamburgerMenuItem
           onPress={() => onPress('RecordedWalks')}
@@ -126,11 +121,7 @@ export default function HamburgerMenu(props) {
         <HamburgerMenuItem
           onPress={() => props.onShowDeleteUser()}
           icon="delete">
-          {Strings.deleteUser.menuItem}
-        </HamburgerMenuItem>
-        <View style={styles.smallSpacer} />
-        <HamburgerMenuItem onPress={() => props.onLogout()} icon="exit-to-app">
-          {Strings.common.signOut}
+          {Strings.common.deleteUser}
         </HamburgerMenuItem>
         <View style={styles.spacer} />
         <Text style={styles.aboutText}>
@@ -193,8 +184,5 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 60,
-  },
-  smallSpacer: {
-    height: 24,
   },
 });

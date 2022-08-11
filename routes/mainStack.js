@@ -19,7 +19,7 @@ import {
   Popup,
   Button,
 } from '../components';
-import {Realm, Strings} from '../lib';
+import {Api, Realm, Strings} from '../lib';
 import {Colors, GlobalStyles} from '../styles';
 import {isActiveRoute, navigationRef} from '../screens/tracker';
 
@@ -27,7 +27,8 @@ const Stack = createStackNavigator();
 
 export default function MainStack() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupLogout, setShowPopupLogout] = useState(false);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
 
   const logout = () => {
     Realm.destroyUser().then(() => {
@@ -39,6 +40,12 @@ export default function MainStack() {
     });
   };
 
+  async function deleteUser() {
+    const appUser = await Realm.getUser();
+    await Api.appUser.delete(appUser.id);
+    await logout();
+  }
+
   return (
     <>
       <SideMenu
@@ -47,8 +54,8 @@ export default function MainStack() {
         menu={
           <HamburgerMenu
             onDone={() => setIsMenuOpen(false)}
-            onShowDeleteUser={() => setShowPopup(true)}
-            onLogout={logout}
+            onShowLogout={() => setShowPopupLogout(true)}
+            onShowDeleteUser={() => setShowPopupDelete(true)}
           />
         }>
         <Stack.Navigator
@@ -83,22 +90,47 @@ export default function MainStack() {
           <Stack.Screen name="WhereToWalk" component={WhereToWalkScreen} />
         </Stack.Navigator>
       </SideMenu>
-      <Popup isVisible={showPopup} onClose={() => setShowPopup(false)}>
+      <Popup
+        isVisible={showPopupLogout}
+        onClose={() => setShowPopupLogout(false)}>
+        <View style={GlobalStyles.centered}>
+          <Text style={GlobalStyles.h1}>{Strings.logout.popupText}</Text>
+          <View style={styles.popupButtonsContainer}>
+            <Button
+              style={[styles.popupConfirmButton, styles.popupButtons]}
+              textStyle={styles.popupConfirmText}
+              onPress={() => {
+                setShowPopupLogout(false);
+                logout();
+              }}>
+              {Strings.logout.yesDelete}
+            </Button>
+            <Button
+              style={styles.popupButtons}
+              onPress={() => setShowPopupLogout(false)}>
+              {Strings.logout.noGoBack}
+            </Button>
+          </View>
+        </View>
+      </Popup>
+      <Popup
+        isVisible={showPopupDelete}
+        onClose={() => setShowPopupDelete(false)}>
         <View style={GlobalStyles.centered}>
           <Text style={GlobalStyles.h1}>{Strings.deleteUser.popupText}</Text>
           <View style={styles.popupButtonsContainer}>
             <Button
-              style={[styles.yesDeleteButton, styles.popupButtons]}
-              textStyle={styles.yesDeleteText}
+              style={[styles.popupConfirmButton, styles.popupButtons]}
+              textStyle={styles.popupConfirmText}
               onPress={() => {
-                setShowPopup(false);
-                logout();
+                setShowPopupDelete(false);
+                deleteUser();
               }}>
               {Strings.deleteUser.yesDelete}
             </Button>
             <Button
               style={styles.popupButtons}
-              onPress={() => setShowPopup(false)}>
+              onPress={() => setShowPopupDelete(false)}>
               {Strings.deleteUser.noGoBack}
             </Button>
           </View>
@@ -118,11 +150,11 @@ const styles = StyleSheet.create({
   popupButtons: {
     width: '48%',
   },
-  yesDeleteButton: {
+  popupConfirmButton: {
     ...GlobalStyles.boxShadow,
     backgroundColor: Colors.primary.lightGray,
   },
-  yesDeleteText: {
+  popupConfirmText: {
     color: Colors.primary.purple,
   },
 });
