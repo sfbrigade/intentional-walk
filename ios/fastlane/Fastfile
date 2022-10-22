@@ -44,6 +44,7 @@ platform :ios do
     build_app(
       workspace: "IntentionalWalkApp.xcworkspace",
       scheme: "IntentionalWalkApp",
+      export_method: 'app-store',
       export_options: {
         provisioningProfiles: {
           "org.codeforsanfrancisco.intentionalwalk": "org.codeforsanfrancisco.intentionalwalk AppStore",
