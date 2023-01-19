@@ -257,12 +257,12 @@ PODS:
   - React-jsinspector (0.64.1)
   - react-native-fitness (0.5.3):
     - React-Core
-  - react-native-get-random-values (1.3.0):
-    - React
-  - react-native-safe-area-context (3.2.0):
+  - react-native-get-random-values (1.8.0):
     - React-Core
-  - react-native-splash-screen (3.2.0):
-    - React
+  - react-native-safe-area-context (3.4.1):
+    - React-Core
+  - react-native-splash-screen (3.3.0):
+    - React-Core
   - react-native-universal-pedometer (2.0.3):
     - React
   - React-perflogger (0.64.1)
@@ -329,20 +329,20 @@ PODS:
     - React-cxxreact (= 0.64.1)
     - React-jsi (= 0.64.1)
     - React-perflogger (= 0.64.1)
-  - ReactNativeLocalization (2.1.6):
-    - React
-  - RealmJS (10.4.1):
+  - ReactNativeLocalization (2.3.1):
+    - React-Core
+  - RealmJS (10.24.0):
     - GCDWebServer
     - React
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPushNotificationIOS (1.2.2):
-    - React
-  - RNDeviceInfo (5.5.4):
+  - RNCPushNotificationIOS (1.10.1):
+    - React-Core
+  - RNDeviceInfo (5.6.5):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNReanimated (2.2.0):
+  - RNReanimated (2.14.2):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -350,7 +350,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -368,13 +367,12 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.4.0):
+  - RNScreens (3.19.0):
     - React-Core
     - React-RCTImage
-  - RNVectorIcons (6.6.0):
+  - RNVectorIcons (6.7.0):
     - React
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -576,10 +574,10 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 124e8f99992490d0d13e0649d950d3e1aae06fe9
   React-jsinspector: 500a59626037be5b3b3d89c5151bc3baa9abf1a9
   react-native-fitness: a359b13e7d7a24e5611992f92ece32960943cd83
-  react-native-get-random-values: 6f638190cfaa202576b43ea9534d5cf88181f139
-  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
-  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-universal-pedometer: 874e0598c5aabdafe0636f94beba7aa8dd40314f
+  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
+  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
+  react-native-universal-pedometer: 5ee0100c8f6b6e673b0a01bc3317f26ad3b5d97f
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
   React-RCTActionSheet: fc376be462c9c8d6ad82c0905442fd77f82a9d2a
   React-RCTAnimation: ba0a1c3a2738be224a08092fa7f1b444ab77d309
@@ -592,15 +590,15 @@ SPEC CHECKSUMS:
   React-RCTVibration: 4b99a7f5c6c0abbc5256410cc5425fb8531986e1
   React-runtimeexecutor: ff951a0c241bfaefc4940a3f1f1a229e7cb32fa6
   ReactCommon: bedc99ed4dae329c4fcf128d0c31b9115e5365ca
-  ReactNativeLocalization: 9abfb1717d6c6f2e3a4e444c4402d52acbf784cc
-  RealmJS: 8a51eff2b9eaabf78b53a6819da6da6edde27467
-  RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
-  RNCPushNotificationIOS: 375feee5b89ad4aeee8a971f63fe4848902380b7
-  RNDeviceInfo: 82e0a23d22ec73b2f71bd686a95d3dd278f223d7
+  ReactNativeLocalization: 076497d7ca70341c751cd3b3e7c86187332a182d
+  RealmJS: 2e45ca6ed4c3732be369219b41816e890ce51024
+  RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
+  RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
+  RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
-  RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
-  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RNReanimated: cf2d7e4c230ca33f29cbe2c56690637b9b528fe3
+  RNScreens: ea4cd3a853063cda19a4e3c28d2e52180c80f4eb
+  RNVectorIcons: 368d6d8b8301224e5ffb6254191f4f8876c2be0d
   Yoga: a7de31c64fe738607e7a3803e3f591a4b1df7393
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
