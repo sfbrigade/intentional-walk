@@ -70,8 +70,8 @@
             
             More details of this installation after a failure can be found [here](https://github.com/google/android-emulator-hypervisor-driver-for-amd-processors/issues/10).
 
-         Within the AVD Manager (Android Studio -> Tools -> AVD Manager), create a virtual device if none are created.
-         We suggest using a recent Pixel phone. Use the AVD Manager to launch the emulator.
+         Within the AVD Manager (Android Studio -> Tools -> Device Manager), create a virtual device if none are created.
+         We suggest using a recent Pixel phone. Use the Device Manager to launch the emulator.
 
          Set the following in your environment variables:
 
