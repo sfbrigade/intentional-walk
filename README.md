@@ -54,7 +54,7 @@
       - For **Windows**, have the latest Android Studio installed. Note that this does include a JDK in its 
          installation, so there is no need to separately install a JDK.
          
-         Within the SDK Manager (Android Studio -> Preferences -> Appearance & Behavior -> 
+         Within the SDK Manager (Android Studio -> File -> Settings -> Appearance & Behavior -> 
          System Settings -> Android SDK -> SDK Tools), have the following tools installed: 
          - `Android SDK Build Tools `
          - `Android Emulator `
