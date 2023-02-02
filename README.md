@@ -77,7 +77,7 @@
 
          ```
          ANDROID_SDK_ROOT          C:\Users\<my username>\AppData\Local\Android\SDK
-         JAVA_HOME                 C:\Program Files\Android\Android Studio\jre
+         JAVA_HOME                 C:\Program Files\Android\Android Studio\jbr
 
          and within PATH    (new)  %ANDROID_SDK_ROOT%\platform-tools
                             (new)  %JAVA_HOME%\bin
