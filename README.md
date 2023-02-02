@@ -4,14 +4,15 @@
 
 1. Clone this repo to your computer.
 
-2. Install packages.
+2. Install Node.js (https://nodejs.org). On macOS, it is recommended to use Homebrew (https://brew.sh) to install Node.js. Then, install Node module dependencies for the project:
+
    ```
    intentional-walk % npm install
    ```
 
 3. Set up your mobile operating system tools
 
-   - For **iOS** development (Mac OS only), make sure you have Xcode and CocoaPods installed.
+   - For **iOS** development (macOS only), make sure you have Xcode and CocoaPods installed.
 
       https://developer.apple.com/xcode/
 
@@ -28,7 +29,7 @@
 
    - For **Android** development, first install Android Studio: https://developer.android.com/studio
 
-      - For **Mac OS X**, configure your shell environment to reference the newly installed
+      - For **macOS**, configure your shell environment to reference the newly installed
          developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
          your .bash_profile in your home directory and add the following (assuming
          default installation locations):
@@ -61,7 +62,8 @@
          - `Android SDK Platform-Tools `
          - `Google Play Licensing Library `
 
-            For **Intel** processors, having `Android Emulator` installed should be sufficient. 
+            For **Intel** processors, having `Android Emulator` installed should be sufficient, although you may wish to
+            install the Intel HAXM accelerator for improved performance.
             
             Although for **AMD** processors, `Android Emulator Hypervisor Driver for AMD Processors (installer)` also 
             must be installed. If the installation fails, check the following two items:
