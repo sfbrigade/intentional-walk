@@ -2,12 +2,19 @@
 
 ## Getting started with app development
 
-1. Clone this repo to your computer.
+1. Install Node.js (https://nodejs.org) **v16** (newer versions are not currently compatible). If you need to manage multiple versions of Node.js for different projects, use a Node Version Manager:
 
-2. Install Node.js (https://nodejs.org). On macOS, it is recommended to use Homebrew (https://brew.sh) to install Node.js. Then, install Node module dependencies for the project:
+   nvm (macOS)  
+   https://github.com/nvm-sh/nvm  
+   Can also be installed on macOS using Homebrew
+   
+   nvm-windows (Windows)  
+   https://github.com/coreybutler/nvm-windows
 
+2. Clone this repo to a directory on your computer, and navigate to the repo directory in Terminal (macOS) or PowerShell (Windows). Install the library dependencies with npm (installed with Node.js above):
+   
    ```
-   intentional-walk % npm install
+   npm install
    ```
 
 3. Set up your mobile operating system tools
