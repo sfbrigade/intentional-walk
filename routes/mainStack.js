@@ -10,6 +10,7 @@ import {
   ContestRulesScreen,
   PrivacyScreen,
   RecordedWalksScreen,
+  TopWalkersScreen,
   WhereToWalkScreen,
 } from '../screens/main';
 import {
@@ -87,6 +88,7 @@ export default function MainStack() {
           <Stack.Screen name="ContestRules" component={ContestRulesScreen} />
           <Stack.Screen name="Privacy" component={PrivacyScreen} />
           <Stack.Screen name="RecordedWalks" component={RecordedWalksScreen} />
+          <Stack.Screen name="TopWalkers" component={TopWalkersScreen} />
           <Stack.Screen name="WhereToWalk" component={WhereToWalkScreen} />
         </Stack.Navigator>
       </SideMenu>

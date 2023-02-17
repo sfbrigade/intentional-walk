@@ -362,6 +362,24 @@ export default function HomeScreen({navigation}) {
                 pointerEvents={isToday ? 'auto' : 'none'}>
                 <TouchableOpacity
                   style={styles.box}
+                  onPress={() => navigation.navigate('TopWalkers')}>
+                  <View style={styles.walkBox}>
+                    <Text style={styles.walkText}>
+                      {Strings.home.topWalkers}
+                    </Text>
+                    <Icon
+                      style={styles.walkChevron}
+                      name="chevron-right"
+                      size={30}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={[styles.row, isToday ? null : styles.hidden]}
+                pointerEvents={isToday ? 'auto' : 'none'}>
+                <TouchableOpacity
+                  style={styles.box}
                   onPress={() => navigation.navigate('WhereToWalk')}>
                   <View style={styles.walkBox}>
                     <Text style={styles.walkText}>
