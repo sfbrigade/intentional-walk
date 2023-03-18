@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,87 +7,73 @@ import {
   Text,
   Image,
 } from 'react-native';
-import { GlobalStyles, Colors } from '../../styles';
-import { Api, Realm, Strings } from '../../lib';
+import {GlobalStyles, Colors} from '../../styles';
+import {Api, Realm} from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
-  const [flyoutState, setFlyoutState] = useState(false);
-  const [uuid, setUUID] = useState('00000000-0000-0000-0000-000000000000');
-  const [user, setUser] = useState({id: '00000000-0000-0000-0000-000000000000', position: 1, steps: 1});
-  const [walkers, setWalkers] = useState([]);
+  const [deviceId, setDeviceId] = useState();
+  const [walkers, setWalkers] = useState();
 
-  const dummyData = [
-    { id: '7121e191-0b31-43a3-a7f0-000000000001', position: 1, steps: 999590355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000002', position: 2, steps: 71490355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000003', position: 3, steps: 5390355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000004', position: 4, steps: 3290355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000005', position: 5, steps: 1190355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000006', position: 6, steps: 1110355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000007', position: 7, steps: 1100355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000008', position: 8, steps: 1100055 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000009', position: 9, steps: 1100005 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000010', position: 10, steps: 190355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000011', position: 98, steps: 190255 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000012', position: 99, steps: 190155 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000013', position: 100, steps: 90055 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000014', position: 101, steps: 90005 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000015', position: 500, steps: 90000 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000016', position: 800, steps: 80355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000017', position: 9998, steps: 9035 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000018', position: 9999, steps: 8355 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000019', position: 10000, steps: 935 },
-    { id: '7121e191-0b31-43a3-a7f0-000000000020', position: 88888, steps: 355 },
-  ];
-
-  useEffect(async () => {
-    Realm.getUser().then(user => {
-      setUUID(user.id);
-      return user.id
-    }).then(id => {
-
-      // Api
-      dummyData[Math.floor(Math.random()*dummyData.length)].id = id;
-      setWalkers(dummyData);
-
-      const userData = dummyData.find(o => o.id === id);
-      setUser(userData);
-      if (userData && userData.position > 10) setFlyoutState(true);
-    })
+  useEffect(() => {
+    let isCancelled = false;
+    Promise.all([Realm.getUser(), Realm.getContest()])
+      .then(([user, contest]) => {
+        setDeviceId(user?.id);
+        return Api.leaderboard.get(user?.id, contest?.id);
+      })
+      .then(response => {
+        if (!isCancelled) {
+          const newWalkers = response.data?.payload?.leaderboard;
+          setWalkers(newWalkers);
+        }
+      });
+    return () => (isCancelled = true);
   }, []);
 
-  const positionFontSize = (num) => {
+  const positionFontSize = num => {
     const baseFontSize = 30;
     const fontSizeMultiplier = 4;
-    const numLength = num.toString().length;
+    const numLength = num?.toString().length ?? 1;
 
-    return (baseFontSize - ((numLength - 1) * fontSizeMultiplier));
-  }
+    return baseFontSize - (numLength - 1) * fontSizeMultiplier;
+  };
 
   const positionCard = (participant, userId, additionalStyles = {}) => {
-    return(
+    console.log(participant);
+    return (
       <View
-        key={participant.position}
-        style={[styles.walkerContainer, additionalStyles]}
-      >
+        key={participant.rank}
+        style={[styles.walkerContainer, additionalStyles]}>
         <View style={styles.walkerIndex}>
           <View style={styles.walkerIndexBorder}>
-            <Text style={[styles.walkerIndexFont, { fontSize: positionFontSize(participant.position) }]}>
-              {participant.position}
+            <Text
+              style={[
+                styles.walkerIndexFont,
+                {fontSize: positionFontSize(participant.rank)},
+              ]}>
+              {participant.rank}
             </Text>
           </View>
         </View>
         <View style={styles.walkerText}>
           <Text style={styles.walkerPosition}>
-            {`${participant.id === userId? "This is You!" : `Walker #${numeral(participant.position).format('0,0')}`}`}
+            {`${
+              participant.device_id === userId
+                ? 'This is You!'
+                : `Walker #${numeral(participant.rank).format('0,0')}`
+            }`}
           </Text>
           <Text style={styles.walkerScore}>
             {numeral(participant.steps).format('0,0')}
           </Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
+
+  const user = walkers?.find(o => o.device_id === deviceId);
+  let flyoutState = user && user.position > 10;
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
@@ -95,33 +81,28 @@ export default function TopWalkersScreen() {
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
-              style={{ resizeMode: 'contain', width: `${24}%` }}
+              style={{resizeMode: 'contain', width: `${24}%`}}
               source={require('../../assets/top_walkers_trophy.png')}
             />
             <Image
-              style={{ resizeMode: 'contain', width: `${72}%`, marginLeft: 16 }}
+              style={{resizeMode: 'contain', width: `${72}%`, marginLeft: 16}}
               source={require('../../assets/top_walkers.png')}
             />
           </View>
 
-          {walkers.map((participant) => {
-            const additionalStyles = (uuid === participant.id ? { backgroundColor: Colors.accent.teal } : {})
-            return positionCard(participant, uuid, additionalStyles);
+          {walkers?.map(participant => {
+            const additionalStyles =
+              deviceId === participant.device_id
+                ? {backgroundColor: Colors.accent.teal}
+                : {};
+            return positionCard(participant, deviceId, additionalStyles);
           })}
 
-          {flyoutState ?
-            <View
-              style={{ height: 64 }}
-            ></View>
-            : <></>}
-
+          {flyoutState && <View style={{height: 64}} />}
         </View>
       </ScrollView>
 
-      {flyoutState ?
-        positionCard(user, uuid, styles.flyout)
-        : <></>}
-
+      {flyoutState && positionCard(user, deviceId, styles.flyout)}
     </SafeAreaView>
   );
 }
@@ -135,7 +116,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 144
+    height: 144,
   },
   walkerContainer: {
     ...GlobalStyles.rounded,
@@ -168,14 +149,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   walkerIndexFont: {
     ...GlobalStyles.boxShadow,
     color: Colors.secondary.blue,
     fontWeight: 'bold',
     overflow: 'hidden',
-    position: "absolute"
+    position: 'absolute',
   },
   walkerText: {
     width: '76%',
@@ -197,6 +178,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     marginLeft: 16,
-    marginRight: 16
-  }
+    marginRight: 16,
+  },
 });
