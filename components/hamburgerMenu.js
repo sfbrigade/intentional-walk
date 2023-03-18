@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {ENV_NAME} from '@env';
+
 import {Colors, GlobalStyles} from '../styles';
 import {isActiveRoute, navigationRef} from '../screens/tracker';
 import {Realm, Strings} from '../lib';
@@ -125,8 +128,8 @@ export default function HamburgerMenu(props) {
         </HamburgerMenuItem>
         <View style={styles.spacer} />
         <Text style={styles.aboutText}>
-          {DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()} build{' '}
-          {DeviceInfo.getBuildNumber()}
+          {ENV_NAME} {DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()}{' '}
+          build {DeviceInfo.getBuildNumber()}
         </Text>
       </ScrollView>
     </SafeAreaView>
