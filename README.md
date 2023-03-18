@@ -96,12 +96,18 @@
          This should build and be installed into the emulator. Notes can be found in the following 
          [issue](https://github.com/sfbrigade/intentional-walk/issues/204).
 
-4. Start the React Native Metro Bundler and leave it running.
+4. Copy one of the environment files (`.env.dev`, `.env.staging`, `.env.prod`) to `.env` depending upon
+   which environment you wish to connect to. Note: currently, there are no "secrets" in our environment
+   variables, but please DO NOT COMMIT secrets into any of the environment files. Instead, put a
+   blank/empty placeholder, and store the value in a corresponding `.local` file which will be ignored
+   by git (i.e. `.env.dev.local`, `.env.staging.local`, `.env.prod.local`).
+
+5. Start the React Native Metro Bundler and leave it running.
    ```
    intentional-walk % npm start
    ```
 
-5. In another shell, build and run the app for your target platform.
+6. In another shell, build and run the app for your target platform.
    ```
    intentional-walk % npm run ios
    intentional-walk % npm run android
