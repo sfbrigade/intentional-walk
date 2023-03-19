@@ -40,7 +40,6 @@ export default function TopWalkersScreen() {
   };
 
   const positionCard = (participant, userId, additionalStyles = {}) => {
-    console.log(participant);
     return (
       <View
         key={participant.rank}
