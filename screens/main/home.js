@@ -363,7 +363,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity
                   style={styles.box}
                   onPress={() => navigation.navigate('TopWalkers')}>
-                  <View style={styles.walkBox}>
+                  <View style={[styles.walkBox, { overflow: 'hidden' }]}>
                     <Text style={styles.walkText}>
                       {Strings.home.topWalkers}
                     </Text>
@@ -371,6 +371,10 @@ export default function HomeScreen({navigation}) {
                       style={styles.walkChevron}
                       name="chevron-right"
                       size={30}
+                    />
+                    <Image
+                      style={{ position: "absolute", right: 44 , resizeMode: 'contain', width: `${18}%`}}
+                      source={require('../../assets/HomePageTopWalkers.png')}
                     />
                   </View>
                 </TouchableOpacity>
@@ -381,7 +385,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity
                   style={styles.box}
                   onPress={() => navigation.navigate('WhereToWalk')}>
-                  <View style={styles.walkBox}>
+                  <View style={[styles.walkBox, { overflow: 'hidden' }]}>
                     <Text style={styles.walkText}>
                       {Strings.home.whereToWalk}
                     </Text>
@@ -389,6 +393,10 @@ export default function HomeScreen({navigation}) {
                       style={styles.walkChevron}
                       name="chevron-right"
                       size={30}
+                    />
+                    <Image
+                      style={{ position: "absolute", right: 44, top: `${-115}%`, resizeMode: 'contain', width: `${18}%`}}
+                      source={require('../../assets/HomePageWhereToWalk.png')}
                     />
                   </View>
                 </TouchableOpacity>
