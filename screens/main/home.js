@@ -44,9 +44,11 @@ export default function HomeScreen({navigation}) {
       /// check if we're in/after the contest period
       if (!newContest.isBeforeBaselineDate) {
         from = moment(newContest.startBaseline);
-        /// check if we're in the contest period
+        /// check if we're in the contest period or the week after
         if (newContest.isAfterEndDate) {
-          to = moment(newContest.end);
+          if (newContest.isWeekAfterEndDate) {
+            to = moment(newContest.end);
+          }
         } else {
           to = today;
         }
@@ -357,13 +359,38 @@ export default function HomeScreen({navigation}) {
                   boxColor={Colors.accent.orange}
                 />
               </View>
+              {contest &&
+                (contest.isDuringContest || contest.isWeekAfterEndDate) && (
+                  <View
+                    style={[styles.row, isToday ? null : styles.hidden]}
+                    pointerEvents={isToday ? 'auto' : 'none'}>
+                    <TouchableOpacity
+                      style={styles.box}
+                      onPress={() => navigation.navigate('TopWalkers')}>
+                      <View style={[styles.walkBox]}>
+                        <Text style={styles.walkText}>
+                          {Strings.home.topWalkers}
+                        </Text>
+                        <Icon
+                          style={styles.walkChevron}
+                          name="chevron-right"
+                          size={30}
+                        />
+                        <Image
+                          style={[styles.walkWatermark]}
+                          source={require('../../assets/HomePageTopWalkers.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
               <View
                 style={[styles.row, isToday ? null : styles.hidden]}
                 pointerEvents={isToday ? 'auto' : 'none'}>
                 <TouchableOpacity
                   style={styles.box}
                   onPress={() => navigation.navigate('WhereToWalk')}>
-                  <View style={styles.walkBox}>
+                  <View style={[styles.walkBox]}>
                     <Text style={styles.walkText}>
                       {Strings.home.whereToWalk}
                     </Text>
@@ -371,6 +398,10 @@ export default function HomeScreen({navigation}) {
                       style={styles.walkChevron}
                       name="chevron-right"
                       size={30}
+                    />
+                    <Image
+                      style={[styles.walkWatermark, styles.walkWatermarkWhere]}
+                      source={require('../../assets/HomePageWhereToWalk.png')}
                     />
                   </View>
                 </TouchableOpacity>
@@ -474,6 +505,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    overflow: 'hidden',
   },
   walkIcon: {
     top: -15,
@@ -491,6 +523,15 @@ const styles = StyleSheet.create({
   walkChevron: {
     color: 'white',
     paddingRight: 10,
+  },
+  walkWatermark: {
+    position: 'absolute',
+    right: 44,
+    resizeMode: 'contain',
+    width: '18%',
+  },
+  walkWatermarkWhere: {
+    top: '-115%',
   },
   subtitle: {
     alignItems: 'center',
