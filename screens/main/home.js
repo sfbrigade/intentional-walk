@@ -357,35 +357,38 @@ export default function HomeScreen({navigation}) {
                   boxColor={Colors.accent.orange}
                 />
               </View>
-              <View
-                style={[styles.row, isToday ? null : styles.hidden]}
-                pointerEvents={isToday ? 'auto' : 'none'}>
-                <TouchableOpacity
-                  style={styles.box}
-                  onPress={() => navigation.navigate('TopWalkers')}>
-                  <View style={[styles.walkBox, { overflow: 'hidden' }]}>
-                    <Text style={styles.walkText}>
-                      {Strings.home.topWalkers}
-                    </Text>
-                    <Icon
-                      style={styles.walkChevron}
-                      name="chevron-right"
-                      size={30}
-                    />
-                    <Image
-                      style={{ position: "absolute", right: 44 , resizeMode: 'contain', width: `${18}%`}}
-                      source={require('../../assets/HomePageTopWalkers.png')}
-                    />
+              {contest &&
+                (contest.isDuringContest || contest.isWeekAfterEndDate) && (
+                  <View
+                    style={[styles.row, isToday ? null : styles.hidden]}
+                    pointerEvents={isToday ? 'auto' : 'none'}>
+                    <TouchableOpacity
+                      style={styles.box}
+                      onPress={() => navigation.navigate('TopWalkers')}>
+                      <View style={[styles.walkBox]}>
+                        <Text style={styles.walkText}>
+                          {Strings.home.topWalkers}
+                        </Text>
+                        <Icon
+                          style={styles.walkChevron}
+                          name="chevron-right"
+                          size={30}
+                        />
+                        <Image
+                          style={[styles.walkWatermark]}
+                          source={require('../../assets/HomePageTopWalkers.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
-              </View>
+                )}
               <View
                 style={[styles.row, isToday ? null : styles.hidden]}
                 pointerEvents={isToday ? 'auto' : 'none'}>
                 <TouchableOpacity
                   style={styles.box}
                   onPress={() => navigation.navigate('WhereToWalk')}>
-                  <View style={[styles.walkBox, { overflow: 'hidden' }]}>
+                  <View style={[styles.walkBox]}>
                     <Text style={styles.walkText}>
                       {Strings.home.whereToWalk}
                     </Text>
@@ -395,7 +398,7 @@ export default function HomeScreen({navigation}) {
                       size={30}
                     />
                     <Image
-                      style={{ position: "absolute", right: 44, top: `${-115}%`, resizeMode: 'contain', width: `${18}%`}}
+                      style={[styles.walkWatermark, styles.walkWatermarkWhere]}
                       source={require('../../assets/HomePageWhereToWalk.png')}
                     />
                   </View>
@@ -500,6 +503,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    overflow: 'hidden',
   },
   walkIcon: {
     top: -15,
@@ -517,6 +521,15 @@ const styles = StyleSheet.create({
   walkChevron: {
     color: 'white',
     paddingRight: 10,
+  },
+  walkWatermark: {
+    position: 'absolute',
+    right: 44,
+    resizeMode: 'contain',
+    width: '18%',
+  },
+  walkWatermarkWhere: {
+    top: '-115%',
   },
   subtitle: {
     alignItems: 'center',

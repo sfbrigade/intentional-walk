@@ -80,11 +80,11 @@ export default function TopWalkersScreen() {
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
-              style={{resizeMode: 'contain', width: `${24}%`}}
+              style={[styles.pageTitleIcon]}
               source={require('../../assets/top_walkers_trophy.png')}
             />
             <Image
-              style={{resizeMode: 'contain', width: `${72}%`, marginLeft: 16}}
+              style={[styles.pageTitleText]}
               source={require('../../assets/top_walkers.png')}
             />
           </View>
@@ -97,7 +97,7 @@ export default function TopWalkersScreen() {
             return positionCard(participant, deviceId, additionalStyles);
           })}
 
-          {flyoutState && <View style={{height: 64}} />}
+          {flyoutState && <View style={[styles.flyoutPlaceholder]} />}
         </View>
       </ScrollView>
 
@@ -116,6 +116,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 144,
+  },
+  pageTitleIcon: {
+    resizeMode: 'contain',
+    width: '24%',
+  },
+  pageTitleText: {
+    resizeMode: 'contain',
+    width: '72%',
+    marginLeft: 16,
   },
   walkerContainer: {
     ...GlobalStyles.rounded,
@@ -171,6 +180,9 @@ const styles = StyleSheet.create({
   walkerScore: {
     ...GlobalStyles.h2,
     color: Colors.accent.deepPurple,
+  },
+  flyoutPlaceholder: {
+    height: 64,
   },
   flyout: {
     backgroundColor: Colors.accent.teal,
