@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
-import {BackHandler} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
-
 import {
   ActivityIndicator,
+  BackHandler,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
   Text,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import {useFocusEffect} from '@react-navigation/native';
+
+import {ENV_NAME} from '@env';
+
 import {Button, Popup} from '../../components';
 import {Colors, GlobalStyles} from '../../styles';
 import {Realm, Strings} from '../../lib';
@@ -92,6 +95,10 @@ export default function WelcomeScreen({navigation}) {
               {Strings.welcome.start}
             </Button>
           )}
+          <Text style={styles.aboutText}>
+            {ENV_NAME} {DeviceInfo.getSystemName()} v{DeviceInfo.getVersion()}{' '}
+            build {DeviceInfo.getBuildNumber()}
+          </Text>
         </View>
       </ScrollView>
       <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
@@ -120,6 +127,14 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textAlign: 'center',
     marginBottom: 40,
+  },
+  aboutText: {
+    fontSize: 12,
+    color: Colors.primary.gray2,
+    textAlign: 'center',
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingTop: 64,
   },
   alertText: {
     textAlign: 'center',
