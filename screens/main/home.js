@@ -57,7 +57,7 @@ export default function HomeScreen({navigation, route}) {
       /// only save when within contest period
       if (from && to) {
         const newDailyWalks = await Fitness.getStepsAndDistances(from, to);
-        if (newDailyWalks && newDailyWalks.length > 0) {
+        if (newDailyWalks) {
           /// get user account, then save to server...!
           const user = await Realm.getUser();
           if (user) {
