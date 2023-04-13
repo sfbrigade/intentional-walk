@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
+  ActivityIndicator,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
   Text,
-  Image,
+  View,
 } from 'react-native';
-import {GlobalStyles, Colors} from '../../styles';
-import {Api, Realm, Strings} from '../../lib';
+import { GlobalStyles, Colors } from '../../styles';
+import { Api, Realm, Strings } from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
   const [deviceId, setDeviceId] = useState();
+  const [isLoading, setLoading] = useState(true);
   const [walkers, setWalkers] = useState();
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function TopWalkersScreen() {
         if (!isCancelled) {
           const newWalkers = response.data?.payload?.leaderboard;
           setWalkers(newWalkers);
+          setLoading(false);
         }
       });
     return () => (isCancelled = true);
@@ -88,11 +91,15 @@ export default function TopWalkersScreen() {
               source={require('../../assets/top_walkers.png')}
             />
           </View>
-
-          {walkers?.map(participant => {
+          {isLoading ? (
+            <ActivityIndicator 
+              size={200} 
+              color={Colors.primary.lightGray}
+            />
+          ) : walkers?.map(participant => {
             const additionalStyles =
               deviceId === participant.device_id
-                ? {backgroundColor: Colors.accent.teal}
+                ? { backgroundColor: Colors.accent.teal }
                 : {};
             return positionCard(participant, deviceId, additionalStyles);
           })}
