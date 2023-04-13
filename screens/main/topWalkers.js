@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {GlobalStyles, Colors} from '../../styles';
-import {Api, Realm} from '../../lib';
+import {Api, Realm, Strings} from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
@@ -57,11 +57,11 @@ export default function TopWalkersScreen() {
         </View>
         <View style={styles.walkerText}>
           <Text style={styles.walkerPosition}>
-            {`${
+            {
               participant.device_id === userId
-                ? 'This is You!'
-                : `Walker #${numeral(participant.rank).format('0,0')}`
-            }`}
+                ? Strings.leaderBoard.thisIsYou
+                : `${Strings.leaderBoard.walkerGeneral} #${numeral(participant.rank).format('0,0')}`
+            }
           </Text>
           <Text style={styles.walkerScore}>
             {numeral(participant.steps).format('0,0')}
