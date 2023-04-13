@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -14,25 +15,32 @@ import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
   const [deviceId, setDeviceId] = useState();
-  const [isLoading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [walkers, setWalkers] = useState();
 
+  const isCancelledRef = useRef(false);
+
   useEffect(() => {
-    let isCancelled = false;
+    fetchData();
+    return () => {isCancelledRef.current = true}
+  }, []);
+
+  const fetchData = () => {
+    setRefreshing(true);
+    isCancelledRef.current = false;
     Promise.all([Realm.getUser(), Realm.getContest()])
       .then(([user, contest]) => {
         setDeviceId(user?.id);
         return Api.leaderboard.get(user?.id, contest?.id);
       })
       .then(response => {
-        if (!isCancelled) {
+        if (!isCancelledRef.current) {
           const newWalkers = response.data?.payload?.leaderboard;
           setWalkers(newWalkers);
-          setLoading(false);
+          setRefreshing(false);
         }
       });
-    return () => (isCancelled = true);
-  }, []);
+  }
 
   const positionFontSize = num => {
     const baseFontSize = 30;
@@ -79,7 +87,11 @@ export default function TopWalkersScreen() {
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
+        }
+      >
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
@@ -91,7 +103,7 @@ export default function TopWalkersScreen() {
               source={require('../../assets/top_walkers.png')}
             />
           </View>
-          {isLoading ? (
+          {refreshing ? (
             <ActivityIndicator 
               size={200} 
               color={Colors.primary.lightGray}
