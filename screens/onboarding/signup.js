@@ -109,6 +109,11 @@ export default function SignUpScreen({navigation, route}) {
       setShowAlert(true);
       return;
     }
+    else if (parsedAge > 110) {
+      setAlertTitle(Strings.signUp.ageAlertTitle);
+      setAlertMessage(Strings.signUp.ageMaxMessage);
+      return;
+    }
     setLoading(true);
     try {
       const settings = await Realm.getSettings();
