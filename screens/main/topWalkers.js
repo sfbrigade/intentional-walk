@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -8,8 +8,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import { GlobalStyles, Colors } from '../../styles';
-import { Api, Realm, Strings } from '../../lib';
+import {GlobalStyles, Colors} from '../../styles';
+import {Api, Realm, Strings} from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
@@ -99,7 +99,7 @@ export default function TopWalkersScreen() {
           ) : walkers?.map(participant => {
             const additionalStyles =
               deviceId === participant.device_id
-                ? { backgroundColor: Colors.accent.teal }
+                ? {backgroundColor: Colors.accent.teal}
                 : {};
             return positionCard(participant, deviceId, additionalStyles);
           })}
