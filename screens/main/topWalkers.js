@@ -72,7 +72,7 @@ export default function TopWalkersScreen() {
   };
 
   const user = walkers?.find(o => o.device_id === deviceId);
-  let flyoutState = user && user.position > 10;
+  let flyoutState = user && user.rank > 10;
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
@@ -89,13 +89,21 @@ export default function TopWalkersScreen() {
             />
           </View>
 
-          {walkers?.map(participant => {
+          {walkers?.slice(0, 10).map((participant, index) => {
             const additionalStyles =
               deviceId === participant.device_id
-                ? {backgroundColor: Colors.accent.teal}
-                : {};
-            return positionCard(participant, deviceId, additionalStyles);
-          })}
+          ? {backgroundColor: Colors.accent.teal}
+            : {};
+            return positionCard(participant, deviceId, additionalStyles, index + 1);
+            })}
+
+          {walkers && walkers.length > 10 && (
+            <View style={styles.ellipsisContainer}>
+              <View style={styles.verticalEllipsis} />
+              <View style={styles.verticalEllipsis} />
+              <View style={styles.verticalEllipsis} />
+            </View>
+          )}
 
           {flyoutState && <View style={[styles.flyoutPlaceholder]} />}
         </View>
@@ -182,7 +190,7 @@ const styles = StyleSheet.create({
     color: Colors.accent.deepPurple,
   },
   flyoutPlaceholder: {
-    height: 64,
+    height: 80,
   },
   flyout: {
     backgroundColor: Colors.accent.teal,
@@ -190,5 +198,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     marginLeft: 16,
     marginRight: 16,
+  },
+  ellipsisContainer: {
+    marginRight: 'auto',
+    marginLeft: 43,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 20, 
+  },
+  verticalEllipsis: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.primary.lightGray,
+    marginBottom: 4, 
   },
 });
