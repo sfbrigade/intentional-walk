@@ -83,7 +83,7 @@ export default function TopWalkersScreen() {
   };
 
   const user = walkers?.find(o => o.device_id === deviceId);
-  let flyoutState = user && user.position > 10;
+  let flyoutState = user && user.rank > 10;
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
@@ -105,7 +105,8 @@ export default function TopWalkersScreen() {
           </View>
           {refreshing ? (
             <ActivityIndicator 
-              size={200} 
+              size="large"
+              style={[styles.spinner]}
               color={Colors.primary.lightGray}
             />
           ) : walkers?.map(participant => {
@@ -209,5 +210,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     marginLeft: 16,
     marginRight: 16,
+  },
+  spinner: {
+    paddingTop: 96,
   },
 });
