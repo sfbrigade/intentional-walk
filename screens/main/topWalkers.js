@@ -89,7 +89,7 @@ export default function TopWalkersScreen() {
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
       <ScrollView
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
+          <RefreshControl tintColor={Colors.primary.lightGray} refreshing={refreshing} onRefresh={fetchData} />
         }
       >
         <View style={GlobalStyles.content}>
