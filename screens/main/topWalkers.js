@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
+  Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
   Text,
-  Image,
+  View,
 } from 'react-native';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
@@ -13,23 +15,32 @@ import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
   const [deviceId, setDeviceId] = useState();
+  const [refreshing, setRefreshing] = useState(false);
   const [walkers, setWalkers] = useState();
 
+  const isCancelledRef = useRef(false);
+
   useEffect(() => {
-    let isCancelled = false;
+    fetchData();
+    return () => {isCancelledRef.current = true}
+  }, []);
+
+  const fetchData = () => {
+    setRefreshing(true);
+    isCancelledRef.current = false;
     Promise.all([Realm.getUser(), Realm.getContest()])
       .then(([user, contest]) => {
         setDeviceId(user?.id);
         return Api.leaderboard.get(user?.id, contest?.id);
       })
       .then(response => {
-        if (!isCancelled) {
+        if (!isCancelledRef.current) {
           const newWalkers = response.data?.payload?.leaderboard;
           setWalkers(newWalkers);
+          setRefreshing(false);
         }
       });
-    return () => (isCancelled = true);
-  }, []);
+  }
 
   const positionFontSize = num => {
     const baseFontSize = 30;
@@ -72,11 +83,15 @@ export default function TopWalkersScreen() {
   };
 
   const user = walkers?.find(o => o.device_id === deviceId);
-  let flyoutState = user && user.position > 10;
+  let flyoutState = user && user.rank > 10;
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl tintColor={Colors.primary.lightGray} refreshing={refreshing} onRefresh={fetchData} />
+        }
+      >
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
@@ -88,8 +103,13 @@ export default function TopWalkersScreen() {
               source={require('../../assets/top_walkers.png')}
             />
           </View>
-
-          {walkers?.map(participant => {
+          {refreshing ? (
+            <ActivityIndicator 
+              size="large"
+              style={[styles.spinner]}
+              color={Colors.primary.lightGray}
+            />
+          ) : walkers?.map(participant => {
             const additionalStyles =
               deviceId === participant.device_id
                 ? {backgroundColor: Colors.accent.teal}
@@ -190,5 +210,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     marginLeft: 16,
     marginRight: 16,
+  },
+  spinner: {
+    paddingTop: 96,
   },
 });
