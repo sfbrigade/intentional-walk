@@ -1,9 +1,9 @@
 'use strict';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {useFocusEffect} from '@react-navigation/native';
 import {
+  AppState,
   ScrollView,
   StyleSheet,
   View,
@@ -20,9 +20,10 @@ import {StatBox, RecordedWalk} from '../../components';
 import moment from 'moment';
 import numeral from 'numeral';
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({navigation, route}) {
   const safeAreaInsets = useSafeArea();
 
+  const appStateRef = useRef(AppState.currentState);
   const dateRef = useRef(moment().startOf('day'));
   const [date, setDate] = useState(dateRef.current);
 
@@ -56,7 +57,7 @@ export default function HomeScreen({navigation}) {
       /// only save when within contest period
       if (from && to) {
         const newDailyWalks = await Fitness.getStepsAndDistances(from, to);
-        if (newDailyWalks && newDailyWalks.length > 0) {
+        if (newDailyWalks) {
           /// get user account, then save to server...!
           const user = await Realm.getUser();
           if (user) {
@@ -71,7 +72,11 @@ export default function HomeScreen({navigation}) {
     }
   }
 
-  async function getStepsAndDistances(queryDate, currentDailyWalks) {
+  const getStepsAndDistances = useCallback(async function (
+    queryDate,
+    currentDailyWalks,
+  ) {
+    // async function getStepsAndDistances(queryDate, currentDailyWalks) {
     setTodaysWalk(null);
     if (currentDailyWalks == null) {
       setDailyWalks(true);
@@ -109,7 +114,8 @@ export default function HomeScreen({navigation}) {
       }
       setTodaysWalk(newTodaysWalk);
     }
-  }
+  },
+  []);
 
   async function getTotalSteps() {
     setTotalSteps(null);
@@ -172,18 +178,21 @@ export default function HomeScreen({navigation}) {
     getRecordedWalks(newDate);
   }
 
-  function refresh() {
-    const today = moment().startOf('day');
-    dateRef.current = moment(dateRef.current);
-    if (dateRef.current.isAfter(today)) {
-      dateRef.current = today;
-    }
-    setDate(dateRef.current);
-    getStepsAndDistances(dateRef.current, null);
-    getTotalSteps();
-    getRecordedWalks(dateRef.current);
-    saveStepsAndDistances();
-  }
+  const refresh = useCallback(
+    function () {
+      const today = moment().startOf('day');
+      dateRef.current = moment(dateRef.current);
+      if (dateRef.current.isAfter(today)) {
+        dateRef.current = today;
+      }
+      setDate(dateRef.current);
+      getStepsAndDistances(dateRef.current, null);
+      getTotalSteps();
+      getRecordedWalks(dateRef.current);
+      saveStepsAndDistances();
+    },
+    [getStepsAndDistances],
+  );
 
   /// one time setup for some data store listeners
   useEffect(() => {
@@ -203,7 +212,7 @@ export default function HomeScreen({navigation}) {
     );
     /// on cleanup, remove listeners
     return () => Realm.removeAllListeners();
-  }, []);
+  }, [refresh]);
 
   /// perform a bunch of other one-time checks/setup on app launch
   useEffect(() => {
@@ -230,17 +239,39 @@ export default function HomeScreen({navigation}) {
           screen: 'LoHOrigin',
           params: {initial: true},
         });
+      } else {
+        refresh();
       }
     });
     /// check for updated contest info
     Realm.updateContest();
-  }, []);
+  }, [navigation, refresh]);
 
-  useFocusEffect(
-    React.useCallback(() => {
+  useEffect(() => {
+    if (route?.params?.refresh) {
       refresh();
-    }, []),
+    }
+  }, [route, refresh]);
+
+  const onAppStateChange = useCallback(
+    function (newAppState) {
+      if (
+        appStateRef.current.match(/inactive|background/) &&
+        newAppState === 'active'
+      ) {
+        refresh();
+      }
+      appStateRef.current = newAppState;
+    },
+    [refresh],
   );
+
+  useEffect(() => {
+    AppState.addEventListener('change', onAppStateChange);
+    return () => {
+      AppState.removeEventListener('change', onAppStateChange);
+    };
+  }, [onAppStateChange]);
 
   const today = moment().startOf('day');
   const isToday = date.isSame(today);

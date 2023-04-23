@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
+  Image,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
   Text,
-  Image,
+  View,
 } from 'react-native';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
@@ -13,23 +15,34 @@ import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
   const [deviceId, setDeviceId] = useState();
+  const [refreshing, setRefreshing] = useState(false);
   const [walkers, setWalkers] = useState();
 
+  const isCancelledRef = useRef(false);
+
   useEffect(() => {
-    let isCancelled = false;
+    fetchData();
+    return () => {
+      isCancelledRef.current = true;
+    };
+  }, []);
+
+  const fetchData = () => {
+    setRefreshing(true);
+    isCancelledRef.current = false;
     Promise.all([Realm.getUser(), Realm.getContest()])
       .then(([user, contest]) => {
         setDeviceId(user?.id);
         return Api.leaderboard.get(user?.id, contest?.id);
       })
       .then(response => {
-        if (!isCancelled) {
+        if (!isCancelledRef.current) {
           const newWalkers = response.data?.payload?.leaderboard;
           setWalkers(newWalkers);
+          setRefreshing(false);
         }
       });
-    return () => (isCancelled = true);
-  }, []);
+  };
 
   const positionFontSize = num => {
     const baseFontSize = 30;
@@ -57,11 +70,11 @@ export default function TopWalkersScreen() {
         </View>
         <View style={styles.walkerText}>
           <Text style={styles.walkerPosition}>
-            {
-              participant.device_id === userId
-                ? Strings.leaderBoard.thisIsYou
-                : `${Strings.leaderBoard.walkerGeneral} #${numeral(participant.rank).format('0,0')}`
-            }
+            {participant.device_id === userId
+              ? Strings.leaderBoard.thisIsYou
+              : `${Strings.leaderBoard.walkerGeneral} #${numeral(
+                  participant.rank,
+                ).format('0,0')}`}
           </Text>
           <Text style={styles.walkerScore}>
             {numeral(participant.steps).format('0,0')}
@@ -76,7 +89,14 @@ export default function TopWalkersScreen() {
 
   return (
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            tintColor={Colors.primary.lightGray}
+            refreshing={refreshing}
+            onRefresh={fetchData}
+          />
+        }>
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
@@ -88,14 +108,26 @@ export default function TopWalkersScreen() {
               source={require('../../assets/top_walkers.png')}
             />
           </View>
-
-          {walkers?.slice(0, 10).map((participant, index) => {
-            const additionalStyles =
-              deviceId === participant.device_id
-          ? {backgroundColor: Colors.accent.teal}
-            : {};
-            return positionCard(participant, deviceId, additionalStyles, index + 1);
-            })}
+          {refreshing ? (
+            <ActivityIndicator
+              size="large"
+              style={[styles.spinner]}
+              color={Colors.primary.lightGray}
+            />
+          ) : (
+            walkers?.slice(0, 10).map((participant, index) => {
+              const additionalStyles =
+                deviceId === participant.device_id
+                  ? {backgroundColor: Colors.accent.teal}
+                  : {};
+              return positionCard(
+                participant,
+                deviceId,
+                additionalStyles,
+                index + 1,
+              );
+            })
+          )}
 
           {walkers && walkers.length > 10 && (
             <View style={styles.ellipsisContainer}>
@@ -204,13 +236,16 @@ const styles = StyleSheet.create({
     marginLeft: 43,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 20, 
+    height: 20,
   },
   verticalEllipsis: {
     width: 6,
     height: 6,
     borderRadius: 3,
     backgroundColor: Colors.primary.lightGray,
-    marginBottom: 4, 
+    marginBottom: 4,
+  },
+  spinner: {
+    paddingTop: 96,
   },
 });
