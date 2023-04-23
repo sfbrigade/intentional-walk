@@ -17,7 +17,10 @@ export default function InfoScreen({navigation}) {
   const onNextPress = () => {
     Fitness.requestPermissions().then(permitted => {
       if (permitted) {
-        navigation.navigate('MainStack');
+        navigation.navigate('MainStack', {
+          screen: 'Home',
+          params: {refresh: true},
+        });
       }
     });
   };
