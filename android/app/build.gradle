@@ -131,7 +131,7 @@ android {
         applicationId "org.codeforsanfrancisco.intentionalwalk"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 60
+        versionCode 61
         versionName "2.1.0"
     }
     splits {
@@ -151,9 +151,9 @@ android {
         }
         release {
             storeFile file('intentional-walk-upload-key.keystore')
-            storePassword System.getenv('UPLOAD_KEYSTORE_PASSWORD')
+            storePassword env.UPLOAD_KEYSTORE_PASSWORD.value
             keyAlias 'intentional-walk-upload-key'
-            keyPassword System.getenv('UPLOAD_KEYSTORE_PASSWORD')
+            keyPassword env.UPLOAD_KEYSTORE_PASSWORD.value
         }
     }
     buildTypes {
