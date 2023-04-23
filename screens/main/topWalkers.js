@@ -9,11 +9,14 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useSafeArea} from 'react-native-safe-area-context';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
+  const safeAreaInsets = useSafeArea();
+
   const [deviceId, setDeviceId] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [walkers, setWalkers] = useState();
@@ -22,7 +25,9 @@ export default function TopWalkersScreen() {
 
   useEffect(() => {
     fetchData();
-    return () => {isCancelledRef.current = true}
+    return () => {
+      isCancelledRef.current = true;
+    };
   }, []);
 
   const fetchData = () => {
@@ -40,7 +45,7 @@ export default function TopWalkersScreen() {
           setRefreshing(false);
         }
       });
-  }
+  };
 
   const positionFontSize = num => {
     const baseFontSize = 30;
@@ -68,11 +73,11 @@ export default function TopWalkersScreen() {
         </View>
         <View style={styles.walkerText}>
           <Text style={styles.walkerPosition}>
-            {
-              participant.device_id === userId
-                ? Strings.leaderBoard.thisIsYou
-                : `${Strings.leaderBoard.walkerGeneral} #${numeral(participant.rank).format('0,0')}`
-            }
+            {participant.device_id === userId
+              ? Strings.leaderBoard.thisIsYou
+              : `${Strings.leaderBoard.walkerGeneral} #${numeral(
+                  participant.rank,
+                ).format('0,0')}`}
           </Text>
           <Text style={styles.walkerScore}>
             {numeral(participant.steps).format('0,0')}
@@ -89,9 +94,12 @@ export default function TopWalkersScreen() {
     <SafeAreaView style={[GlobalStyles.container, styles.background]}>
       <ScrollView
         refreshControl={
-          <RefreshControl tintColor={Colors.primary.lightGray} refreshing={refreshing} onRefresh={fetchData} />
-        }
-      >
+          <RefreshControl
+            tintColor={Colors.primary.lightGray}
+            refreshing={refreshing}
+            onRefresh={fetchData}
+          />
+        }>
         <View style={GlobalStyles.content}>
           <View style={[styles.pageTitle]}>
             <Image
@@ -104,24 +112,43 @@ export default function TopWalkersScreen() {
             />
           </View>
           {refreshing ? (
-            <ActivityIndicator 
+            <ActivityIndicator
               size="large"
               style={[styles.spinner]}
               color={Colors.primary.lightGray}
             />
-          ) : walkers?.map(participant => {
-            const additionalStyles =
-              deviceId === participant.device_id
-                ? {backgroundColor: Colors.accent.teal}
-                : {};
-            return positionCard(participant, deviceId, additionalStyles);
-          })}
+          ) : (
+            walkers?.slice(0, 10).map((participant, index) => {
+              const additionalStyles =
+                deviceId === participant.device_id
+                  ? {backgroundColor: Colors.accent.teal}
+                  : {};
+              return positionCard(
+                participant,
+                deviceId,
+                additionalStyles,
+                index + 1,
+              );
+            })
+          )}
+
+          {walkers && walkers.length > 10 && (
+            <View style={styles.ellipsisContainer}>
+              <View style={styles.verticalEllipsis} />
+              <View style={styles.verticalEllipsis} />
+              <View style={styles.verticalEllipsis} />
+            </View>
+          )}
 
           {flyoutState && <View style={[styles.flyoutPlaceholder]} />}
         </View>
       </ScrollView>
 
-      {flyoutState && positionCard(user, deviceId, styles.flyout)}
+      {flyoutState &&
+        positionCard(user, deviceId, {
+          ...styles.flyout,
+          bottom: safeAreaInsets.bottom,
+        })}
     </SafeAreaView>
   );
 }
@@ -210,6 +237,21 @@ const styles = StyleSheet.create({
     bottom: 0,
     marginLeft: 16,
     marginRight: 16,
+  },
+  ellipsisContainer: {
+    marginRight: 'auto',
+    marginLeft: 43,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 30,
+    marginBottom: 16,
+  },
+  verticalEllipsis: {
+    ...GlobalStyles.boxShadow,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.primary.lightGray,
   },
   spinner: {
     paddingTop: 96,
