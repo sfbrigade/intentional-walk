@@ -31,7 +31,7 @@ export default function WhereToWalkScreen() {
     },
     {
       title: Strings.whereToWalk.guidedWalks,
-      url: 'https://sfrecpark.org/1244/Healthy-Parks-Healthy-People',
+      url: 'https://sfrecpark.org/1226/The-EcoCenter-at-Herons-Head-Park',
     },
     {
       title: Strings.whereToWalk.exerciseAndFitnessActivities,
