@@ -9,11 +9,14 @@ import {
   Text,
   View,
 } from 'react-native';
+import {useSafeArea} from 'react-native-safe-area-context';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
 import numeral from 'numeral';
 
 export default function TopWalkersScreen() {
+  const safeAreaInsets = useSafeArea();
+
   const [deviceId, setDeviceId] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [walkers, setWalkers] = useState();
@@ -141,7 +144,11 @@ export default function TopWalkersScreen() {
         </View>
       </ScrollView>
 
-      {flyoutState && positionCard(user, deviceId, styles.flyout)}
+      {flyoutState &&
+        positionCard(user, deviceId, {
+          ...styles.flyout,
+          bottom: safeAreaInsets.bottom,
+        })}
     </SafeAreaView>
   );
 }
@@ -222,7 +229,7 @@ const styles = StyleSheet.create({
     color: Colors.accent.deepPurple,
   },
   flyoutPlaceholder: {
-    height: 80,
+    height: 64,
   },
   flyout: {
     backgroundColor: Colors.accent.teal,
@@ -236,14 +243,15 @@ const styles = StyleSheet.create({
     marginLeft: 43,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 20,
+    height: 30,
+    marginBottom: 16,
   },
   verticalEllipsis: {
+    ...GlobalStyles.boxShadow,
     width: 6,
     height: 6,
     borderRadius: 3,
     backgroundColor: Colors.primary.lightGray,
-    marginBottom: 4,
   },
   spinner: {
     paddingTop: 96,
