@@ -102,6 +102,9 @@
    blank/empty placeholder, and store the value in a corresponding `.local` file which will be ignored
    by git (i.e. `.env.dev.local`, `.env.staging.local`, `.env.prod.local`).
 
+   If you change your environment settings, you'll need to reset the Metro Bundler cache. Close it, if
+   it is running, then restart it with: `npm start -- --reset-cache`
+
 5. Start the React Native Metro Bundler and leave it running.
    ```
    intentional-walk % npm start

@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
+
+import {ENV_NAME} from '@env';
+
 import {Api, Fitness, Realm, Strings} from '../../lib';
 import {DateNavigator, Recorder} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
@@ -217,34 +220,42 @@ export default function HomeScreen({navigation, route}) {
   /// perform a bunch of other one-time checks/setup on app launch
   useEffect(() => {
     SplashScreen.hide();
-    /// load settings
-    Realm.getSettings().then(settings => {
-      const lang = settings.lang;
-      if (lang) {
-        /// set language preference, if any
-        Strings.setLanguage(lang);
-        /// recreate the date in the current locale
-        moment.locale(lang);
-        dateRef.current = moment(dateRef.current);
-        setDate(dateRef.current);
-      }
-    });
-    /// get signed in user, if any
-    Realm.getUser().then(user => {
-      /// if no user, go to onboarding flow
-      if (!user) {
-        navigation.navigate('OnboardingStack');
-      } else if (!user.isSurveyCompleted) {
-        navigation.navigate('OnboardingStack', {
-          screen: 'LoHOrigin',
-          params: {initial: true},
-        });
-      } else {
-        refresh();
-      }
-    });
     /// check for updated contest info
     Realm.updateContest();
+    /// load settings
+    Realm.getSettings()
+      .then(settings => {
+        // make sure we're in the same environment, otherwise "log out"
+        if (settings.env !== ENV_NAME) {
+          return Realm.destroyUser().then(() => Realm.getSettings());
+        }
+        return Promise.resolve(settings);
+      })
+      .then(settings => {
+        const lang = settings.lang;
+        if (lang) {
+          /// set language preference, if any
+          Strings.setLanguage(lang);
+          /// recreate the date in the current locale
+          moment.locale(lang);
+          dateRef.current = moment(dateRef.current);
+          setDate(dateRef.current);
+        }
+        return Realm.getUser();
+      })
+      .then(user => {
+        /// if no user, go to onboarding flow
+        if (!user) {
+          navigation.navigate('OnboardingStack');
+        } else if (!user.isSurveyCompleted) {
+          navigation.navigate('OnboardingStack', {
+            screen: 'LoHOrigin',
+            params: {initial: true},
+          });
+        } else {
+          refresh();
+        }
+      });
   }, [navigation, refresh]);
 
   useEffect(() => {
