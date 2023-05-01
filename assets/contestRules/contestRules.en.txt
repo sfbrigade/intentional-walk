@@ -1,27 +1,29 @@
 Who Can Enter
 
-* Open to eligible CalFresh/Medi-Cal eligible SF residents. 
+* The program is open to CalFresh/Medi-Cal eligible San Francisco residents.
 
 How to Enter
 
-* Download the app to join
-   * In your app store, search, “Intentional Walk.”
-   * Register your information through the sign-up screens. Create a profile.
-   * Start walking! The app will track your steps via your phone’s health application.
-   * For more information on how to use the app: iwalk.c4sf.me
+* Download the FREE Intentional Walk App to join.
+* In your app store, search, “Intentional Walk.” 
+* Follow the instructions in the sign-up screens to create a profile. 
+* Start walking! It is optional to record your walks. The app will automatically track your steps via your phone’s health application (Apple Health or Google Fit).
+* For more information: iwalk.c4sf.me 
 
-* Date:
-   * Starts on {0} at 12:00 AM PST.
-   * Ends at 11:59 p.m. PST on {1}.
-   * The top ten walkers will be notified by email within one week after the contest ends.
+Program Dates
+
+* Starts: 06/01/2023, 12:00 AM PST.
+* Ends: 08/31/2023, 11:59 PM PST.
 
 The Prize(s)
 
-* Ten winners (by total steps) will be selected to receive SF Giants merchandise.
-* Each winner will be notified via email and must respond to claim their prize.
-* If a winner does not respond within three (3) days, then the prize will be awarded to the next runner up.
+* At the end of the program, the top 10 walkers will be contacted by email to claim their prize.
+* Unless otherwise stated, if a winner does not respond within three (3) days, we will award the prize to the next top walker.
+* Please note: The app updates a walker’s step count each time they open the app. The Top Walkers list is updated anytime a user opens the app. To have all of your steps counted, open the app on the final day of the contest, 08/31/2023.
 
 Miscellaneous
 
-* San Francisco Department of Public Health reserves the right to make rule changes, and change the program and prize dates.
-* This app uses data from your phone’s health application to count your steps.  Apple and Google are not a sponsor for this competition and are not responsible for the rules and results.
+* Intentional Walk is run by the SF Department of Public Health. It is funded by USDA SNAP, an equal opportunity provider and employer. Community partners include the California Department of Public Health, Code for San Francisco, San Francisco Giants, and the SF Recreation and Parks Department.
+* San Francisco Department of Public Health reserves the right to make rule changes and change the program and prize dates.
+* Privacy information can be found within the Privacy Policy.
+* Apple and Google are not sponsors for this competition and are not responsible for the rules and results.

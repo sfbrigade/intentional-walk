@@ -1,6 +1,6 @@
 To the Intentional Walk App User,
 
-By joining San Francisco Department of Public Health (SFDPH), California Department of Public Health (CDPH), Intentional Walk program (Program) and using the Intentional Walk Application (App) you will allow SFDPH/CDPH and Code for San Francisco to access the following data: passive steps (unrecorded steps), active steps (recorded steps), total steps, and distance for recorded walks during the contest and the 30-day period prior to the contest start date, user first and last name, email address, age, zip code of residence, race, sexual orientation, and gender identity. Once the App is uninstalled, and/or the Program concludes, additional data will no longer be collected. SFDPH/CDPH adheres to the following regarding personal information:
+Thank you for joining the San Francisco Department of Public Health (SFDPH) and California Department of Public Health (CDPH) Intentional Walk program (Program) and using the Intentional Walk Application (App). We would like to inform you that by participating in the Program, you allow SFDPH/CDPH and Code for San Francisco to access the following data: passive steps (unrecorded steps), active steps (recorded steps), total steps, and distance for recorded walks during the contest and the 30-day period prior to the contest start date, user first and last name, email address, age, zip code of residence, race, sexual orientation, and gender identity. Once the App is uninstalled, and/or the Program concludes, additional data will no longer be collected. To protect your personal information, SFDPH/CDPH adheres to the following rules and regulations:
 
 1. Personally identifiable information may only be obtained through lawful means disclosed herein.
 
@@ -10,17 +10,22 @@ By joining San Francisco Department of Public Health (SFDPH), California Departm
 
 4. Any personal data collected shall be relevant to the purpose for which it is needed or intended.
 
-5. Personal information is only accessible by a limited number of persons who have special access rights to such systems and are required to keep the information confidential. In addition, to maintain the safety of your personal information, SFDPH/CDPH maintains a variety of security measures when a user enters, submits, or accesses information. SFDPH/CDPH follows rules that protect the use of personal information as set forth by Federal guidelines. SFDPH/CDPH strictly follow these guidelines. 
+5. Personal information is only accessible by a limited number of persons who have special access rights to such systems and are required to keep the information confidential.
 
-6. The App collects personal information, including user first and last name, age, zip code, email address, race, sexual orientation, and gender identity, to establish an account on the system to connect the mobile access to the correct user record. The App does not store the actual location of where users are walking. SFDPH/CDPH uses data collected in the App for program improvement and evaluation, which also may include mobile device type, operating system version, carrier or network the device is using, and pages within the App that are visited. Users can contact SFDPH to request to delete their data (contact information is below). 
+6. In addition, to maintain the safety of your personal information, SFDPH/CDPH maintains security measures when a user enters, submits, or accesses information. Data is transmitted to the server using secure HTTPS encrypted protocols.
 
-7. The App will remain on the user’s device until deleted. The App may be deleted by uninstalling the mobile application.
+7. SFDPH/CDPH follows rules that protect the use of personal information as set forth by Federal guidelines. SFDPH/CDPH strictly follow these guidelines.
 
-8. The App user has the right to have any electronically collected personal information deleted by SFDPH/CDPH without reuse or distribution. Users of the App may request to have their electronically collected personal information deleted by contacting SFDPH at: intentionalwalk@sfdph.org.
+8. The App collects personal information, including user first and last name, age, zip code, email address, race, sexual orientation, and gender identity, to establish an account on the system to connect the mobile access to the correct user record. The App does not store the actual location of where users are walking. SFDPH/CDPH uses data collected in the App for program improvement and evaluation, which also may include mobile device type, operating system version, carrier or network the device is using, and pages within the App that are visited. Users can contact SFDPH to request to delete their data (contact information is below).
 
-9. SFDPH/CDPH will only collect walking and step-related data once the user has allowed the App access to the mobile device’s health tracker (Apple Health for iOS users, and Google Fit for Android users). Walking and step-related data from previous users (those currently enrolled who participated in the program in previous years) will be collected and linked to their current year’s data for evaluation purposes.  
+9. The App will remain on the user’s device until deleted. The App may be deleted by uninstalling the mobile application.
 
-10. Other parties will not collect personal information about the App user’s online activities and on different websites while using the App.
+10. SFDPH/CDPH will only collect walking and step-related data once the user has allowed the App access to the mobile device’s health tracker (Apple Health for iOS users, and Google Fit for Android users). Walking and step-related data from previous users (those currently enrolled who participated in the program in previous years) will be collected and linked to their current year’s data for evaluation purposes.
 
-11. If you have any questions or comments about this information, the Intentional Walk Program, or App, please contact SFDPH at: intentionalwalk@sfdph.org or CDPH Privacy Office at: Privacy@cdph.ca.gov. 
+11. The App user will be automatically added to the Top Walkers list (also known as the leaderboard). While the App user cannot opt out of the Top Walkers list, the App user will remain anonymous; first and last name will not be displayed.
 
+12. Other parties will not collect personal information about the App user’s online activities and on different websites while using the App.
+
+13. If you have any questions or comments about this information, the Intentional Walk Program, or App, please contact SFDPH at: intentionalwalk@sfdph.org or CDPH Privacy Office at: Privacy@cdph.ca.gov.
+
+14. The App user has the right to have any electronically collected personal information deleted by the SFDPH/CDPH without reuse or distribution. Users of the App may request to have their electronically collected personal information deleted by contacting SFDPH at: intentionalwalk@sfdph.org.
