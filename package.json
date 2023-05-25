@@ -24,7 +24,7 @@
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "patch-package": "^6.5.1",
-    "react": "17.0.1",
+    "react": "17.0.2",
     "react-moment": "^1.1.3",
     "react-native": "0.65.3",
     "react-native-autolink": "^3.0.0",
@@ -56,8 +56,9 @@
     "eslint": "^7.14.0",
     "eslint-watch": "^7.0.0",
     "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.64.0",
-    "react-test-renderer": "17.0.1"
+    "metro-react-native-babel-preset": "^0.66.0",
+    "react-native-codegen": "^0.0.7",
+    "react-test-renderer": "17.0.2"
   },
   "overrides": {
     "react-native-localization": {
