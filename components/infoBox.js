@@ -17,11 +17,13 @@ export default function InfoBox(props) {
         )}
         {props.image && <Image source={props.image} style={props.imageStyle} />}
       </View>
-      <View style={styles.text}>
+      <View style={[styles.text, props.textStyle]}>
         {props.title ? (
           <Text style={GlobalStyles.h2}>{props.title}</Text>
         ) : null}
-        <Text style={GlobalStyles.p2}>{props.children}</Text>
+        {props.children && (
+          <Text style={GlobalStyles.p2}>{props.children}</Text>
+        )}
       </View>
     </View>
   );

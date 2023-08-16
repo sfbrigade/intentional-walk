@@ -85,7 +85,7 @@ export default function LoHOriginScreen({navigation, route}) {
               onPress={onNextPress}>
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={2} totalPages={7} />
+            <PaginationDots currentPage={2} totalPages={8} />
           </View>
         </View>
       </ScrollView>

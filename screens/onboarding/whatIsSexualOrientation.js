@@ -58,7 +58,7 @@ export default function WhatIsSexualOrientationScreen({navigation, route}) {
         sexual_orien_other: user.sexual_orien_other,
       });
       setLoading(false);
-      navigation.navigate('Info');
+      navigation.navigate('SetYourStepGoal');
     } catch {
       setLoading(false);
       setAlertTitle(Strings.common.serverErrorTitle);
@@ -120,7 +120,7 @@ export default function WhatIsSexualOrientationScreen({navigation, route}) {
               onPress={onNextPress}>
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={5} totalPages={7} />
+            <PaginationDots currentPage={5} totalPages={8} />
           </View>
         </View>
       </ScrollView>

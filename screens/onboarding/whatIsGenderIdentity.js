@@ -112,7 +112,7 @@ export default function WhatIsGenderIdentityScreen({navigation, route}) {
               onPress={onNextPress}>
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={4} totalPages={7} />
+            <PaginationDots currentPage={4} totalPages={8} />
           </View>
         </View>
       </ScrollView>

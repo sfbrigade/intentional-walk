@@ -44,7 +44,7 @@ export default function InfoScreen({navigation}) {
           <Button style={styles.button} onPress={onNextPress}>
             {Strings.common.next}
           </Button>
-          <PaginationDots currentPage={6} totalPages={7} />
+          <PaginationDots currentPage={7} totalPages={8} />
         </View>
       </ScrollView>
     </SafeAreaView>
