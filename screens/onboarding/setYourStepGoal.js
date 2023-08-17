@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,7 +7,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import {Button, InfoBox, Input, PaginationDots, Popup} from '../../components';
+import {Button, InfoBox, PaginationDots, Popup} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
 
@@ -16,13 +16,19 @@ export default function SetYourStepTarget({navigation, route}) {
   const DAYS_CHANGE = 1;
   const stepInputRef = useRef(null);
   const daysInputRef = useRef(null);
-  const [stepGoal, setStepGoal] = useState('5,000');
-  const [daysGoal, setDaysGoal] = useState('5');
   const [isLoading, setLoading] = useState(false);
+  const [stepGoal, setStepGoal] = useState('5,000');
+  const [daysGoal, setDaysGoal] = useState('4');
+  const [isStepLowerLimit, setStepLowerLimit] = useState(false);
+  const [isDaysLowerLimit, setDaysLowerLimit] = useState(false);
+  const [isDaysUpperLimit, setDaysUpperLimit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+
+  const stepGoalAndChangeEqual = stepGoal === STEP_CHANGE.toLocaleString();
+  const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE.toString();
 
   function addNumberToString(str, num) {
     return (Number(str.replace(',', '')) + num).toLocaleString();
@@ -33,7 +39,7 @@ export default function SetYourStepTarget({navigation, route}) {
   }
 
   function onDecreaseSteps() {
-    if (isLoading || stepGoal === STEP_CHANGE.toLocaleString()) {
+    if (isLoading || stepGoalAndChangeEqual) {
       return;
     }
 
@@ -44,16 +50,17 @@ export default function SetYourStepTarget({navigation, route}) {
     if (isLoading) {
       return;
     }
-
     setStepGoal(addNumberToString(stepGoal, STEP_CHANGE));
+    setStepLowerLimit(false);
   }
 
   function onDecreaseDays() {
-    if (isLoading || daysGoal === DAYS_CHANGE.toString()) {
+    if (isLoading || daysGoalAndChangeEqual) {
       return;
     }
 
     setDaysGoal(subtractNumberFromString(daysGoal, DAYS_CHANGE));
+    setDaysUpperLimit(false);
   }
 
   function onIncreaseDays() {
@@ -62,6 +69,7 @@ export default function SetYourStepTarget({navigation, route}) {
     }
 
     setDaysGoal(addNumberToString(daysGoal, DAYS_CHANGE));
+    setDaysLowerLimit(false);
   }
 
   async function onNextPress() {
@@ -85,6 +93,20 @@ export default function SetYourStepTarget({navigation, route}) {
       setShowAlert(true);
     }
   }
+
+  useEffect(() => {
+    if (stepGoalAndChangeEqual) {
+      setStepLowerLimit(true);
+    }
+
+    if (daysGoalAndChangeEqual) {
+      setDaysLowerLimit(true);
+    }
+
+    if (daysGoal === '7') {
+      setDaysUpperLimit(true);
+    }
+  }, [stepGoalAndChangeEqual, daysGoalAndChangeEqual, daysGoal]);
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -118,9 +140,14 @@ export default function SetYourStepTarget({navigation, route}) {
               </View>
               <View style={styles.row}>
                 <Button
-                  style={styles.goalButton}
-                  textStyle={styles.goalButtonText}
-                  /* isEnabled={isValid()} */
+                  style={[
+                    styles.goalButton,
+                    isStepLowerLimit ? styles.disableGoalButton : {},
+                  ]}
+                  textStyle={[
+                    styles.goalButtonText,
+                    isStepLowerLimit ? styles.disableGoalButtonText : {},
+                  ]}
                   onPress={onDecreaseSteps}>
                   {Strings.setYourStepGoal.decreaseSteps}
                 </Button>
@@ -128,7 +155,6 @@ export default function SetYourStepTarget({navigation, route}) {
                 <Button
                   style={styles.goalButton}
                   textStyle={styles.goalButtonText}
-                  /* isEnabled={isValid()} */
                   onPress={onIncreaseSteps}>
                   {Strings.setYourStepGoal.increaseSteps}
                 </Button>
@@ -157,17 +183,27 @@ export default function SetYourStepTarget({navigation, route}) {
               </View>
               <View style={styles.row}>
                 <Button
-                  style={styles.goalButton}
-                  textStyle={styles.goalButtonText}
-                  /* isEnabled={isValid()} */
+                  style={[
+                    styles.goalButton,
+                    isDaysLowerLimit ? styles.disableGoalButton : {},
+                  ]}
+                  textStyle={[
+                    styles.goalButtonText,
+                    isDaysLowerLimit ? styles.disableGoalButtonText : {},
+                  ]}
                   onPress={onDecreaseDays}>
                   {Strings.setYourStepGoal.decreaseDays}
                 </Button>
                 <View style={styles.spacer} />
                 <Button
-                  style={styles.goalButton}
-                  textStyle={styles.goalButtonText}
-                  /* isEnabled={isValid()} */
+                  style={[
+                    styles.goalButton,
+                    isDaysUpperLimit ? styles.disableGoalButton : {},
+                  ]}
+                  textStyle={[
+                    styles.goalButtonText,
+                    isDaysUpperLimit ? styles.disableGoalButtonText : {},
+                  ]}
                   onPress={onIncreaseDays}>
                   {Strings.setYourStepGoal.increaseDays}
                 </Button>
@@ -242,10 +278,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.accent.yellow,
     height: 55,
   },
+  disableGoalButton: {
+    backgroundColor: Colors.accent.lightYellow,
+  },
   goalButtonText: {
     color: Colors.primary.gray2,
     fontSize: 18,
     fontWeight: '600',
+  },
+  disableGoalButtonText: {
+    color: Colors.primary.lightGray,
   },
   spacer: {
     width: 8,
@@ -259,6 +301,7 @@ const styles = StyleSheet.create({
   },
   inputHelpText: {
     position: 'absolute',
+    color: Colors.primary.gray2,
     top: 15,
     right: 5,
     zIndex: 10,

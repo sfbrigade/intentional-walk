@@ -17,5 +17,6 @@ export default {
     deepPurple: '#451B52',
     yellow: '#F7D211',
     blue: '#4D95B9',
+    lightYellow: '#F8F2D7',
   },
 };
