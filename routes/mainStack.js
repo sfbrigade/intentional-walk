@@ -12,7 +12,9 @@ import {
   RecordedWalksScreen,
   TopWalkersScreen,
   WhereToWalkScreen,
+  GoalProgressScreen,
 } from '../screens/main';
+import {SetYourStepGoal} from '../screens/onboarding';
 import {
   HamburgerButton,
   HamburgerMenu,
@@ -90,6 +92,8 @@ export default function MainStack() {
           <Stack.Screen name="RecordedWalks" component={RecordedWalksScreen} />
           <Stack.Screen name="TopWalkers" component={TopWalkersScreen} />
           <Stack.Screen name="WhereToWalk" component={WhereToWalkScreen} />
+          <Stack.Screen name="GoalProgress" component={GoalProgressScreen} />
+          <Stack.Screen name="SetYourStepGoal" component={SetYourStepGoal} />
         </Stack.Navigator>
       </SideMenu>
       <Popup
