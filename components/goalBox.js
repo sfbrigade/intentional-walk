@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import _ from 'lodash';
+import upperCase from 'lodash/upperCase';
 import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../styles';
@@ -22,7 +22,7 @@ export default function GoalBox(props) {
     <View style={styles.box}>
       <View style={[styles.box, styles.innerBox]}>
         <Text style={styles.myGoal}>
-          {_.upperCase(Strings.stepGoalProgress.myGoal)}
+          {upperCase(Strings.stepGoalProgress.myGoal)}
         </Text>
         <View style={styles.goalRow}>
           <Text style={styles.mainText}>
@@ -52,7 +52,7 @@ export default function GoalBox(props) {
                   styles.progressText,
                   progressClass === 'goalMet' ? styles.progressTextGoalMet : '',
                 ]}>
-                {_.upperCase(progressText)}
+                {upperCase(progressText)}
               </Text>
             </View>
           </View>
