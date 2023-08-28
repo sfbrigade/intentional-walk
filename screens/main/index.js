@@ -1,5 +1,6 @@
 export AboutScreen from './about';
 export ContestRulesScreen from './contestRules';
+export GoalProgressScreen from './goalProgress';
 export HomeScreen from './home';
 export PartnersScreen from './partners';
 export PrivacyScreen from './privacy';
