@@ -8,6 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import moment from 'moment';
+import {v4 as uuidv4} from 'uuid';
 import {Button, InfoBox, PaginationDots, Popup} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
@@ -87,7 +88,7 @@ export default function SetYourStepTarget({navigation, route}) {
       await Api.weeklyGoal.create(user.id, weeklyGoal);
       setLoading(false);
       if (route?.params?.fromProgress) {
-        navigation.navigate('GoalProgress');
+        navigation.navigate('GoalProgress', {refresh: uuidv4()});
       } else {
         navigation.navigate('Info');
       }
@@ -102,13 +103,9 @@ export default function SetYourStepTarget({navigation, route}) {
   useEffect(() => {
     // get current goal
     async function getWeeklyGoals() {
-      const user = await Realm.getUser();
-      const response = await Api.weeklyGoal.get(user.id);
-      if (
-        response?.data?.status === 'success' &&
-        response?.data?.payload?.length
-      ) {
-        const goal = response.data.payload[0];
+      const weeklyGoals = await Realm.getWeeklyGoals();
+      if (weeklyGoals.length) {
+        const goal = weeklyGoals[0];
         setStepGoal(goal.steps.toLocaleString());
         setDaysGoal(goal.days.toString());
       }
