@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
 } from 'react-native';
+import moment from 'moment';
 import {Button, InfoBox, PaginationDots, Popup} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
@@ -75,17 +76,21 @@ export default function SetYourStepTarget({navigation, route}) {
   async function onNextPress() {
     setLoading(true);
     try {
+      // create weekly goal
       const user = await Realm.getUser();
-      await Realm.write(() => {
-        user.step_goal = stepGoal;
-        user.days_goal = daysGoal;
-      });
-      await Api.appUser.update(user.id, {
-        step_goal: user.step_goal,
-        days_goal: user.days_goal,
-      });
+      const today = moment().format('YYYY-MM-DD');
+      const weeklyGoal = {
+        steps: Number(stepGoal.replace(',', '')),
+        days: daysGoal,
+        start_of_week: today,
+      };
+      await Api.weeklyGoal.create(user.id, weeklyGoal);
       setLoading(false);
-      navigation.navigate('Info');
+      if (route?.params?.fromProgress) {
+        navigation.navigate('GoalProgress');
+      } else {
+        navigation.navigate('Info');
+      }
     } catch {
       setLoading(false);
       setAlertTitle(Strings.common.serverErrorTitle);
@@ -93,6 +98,24 @@ export default function SetYourStepTarget({navigation, route}) {
       setShowAlert(true);
     }
   }
+
+  useEffect(() => {
+    // get current goal
+    async function getWeeklyGoals() {
+      const user = await Realm.getUser();
+      const response = await Api.weeklyGoal.get(user.id);
+      if (
+        response?.data?.status === 'success' &&
+        response?.data?.payload?.length
+      ) {
+        const goal = response.data.payload[0];
+        setStepGoal(goal.steps.toLocaleString());
+        setDaysGoal(goal.days.toString());
+      }
+    }
+
+    getWeeklyGoals();
+  }, []);
 
   useEffect(() => {
     if (stepGoalAndChangeEqual) {
@@ -215,9 +238,13 @@ export default function SetYourStepTarget({navigation, route}) {
               style={styles.button}
               /* isEnabled={isValid()} */
               onPress={onNextPress}>
-              {Strings.common.next}
+              {route.params.fromProgress
+                ? Strings.common.update
+                : Strings.common.next}
             </Button>
-            <PaginationDots currentPage={6} totalPages={8} />
+            {!route.params.fromProgress ?? (
+              <PaginationDots currentPage={6} totalPages={8} />
+            )}
           </View>
         </View>
       </ScrollView>

@@ -278,7 +278,7 @@ export default function SignUpScreen({navigation, route}) {
               {Strings.signUp.submit}
             </Button>
           )}
-          <PaginationDots currentPage={1} totalPages={7} />
+          <PaginationDots currentPage={1} totalPages={8} />
         </View>
       </KeyboardAwareScrollView>
       <Popup
