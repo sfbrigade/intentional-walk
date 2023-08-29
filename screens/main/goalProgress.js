@@ -287,7 +287,3 @@ const styles = StyleSheet.create({
   },
   chart: {},
 });
-
-const dummyWeekOne = [2500, 2301, 2501, 2487, 2545, 2503, 2300];
-const dummyWeekTwo = [2500, 2577, 2501, 2487, 2545, 2503, 2300];
-const dummyWeekThree = [2500, 2577, 508, '', '', '', ''];
