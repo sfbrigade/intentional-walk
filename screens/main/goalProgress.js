@@ -14,6 +14,7 @@ export default function GoalProgressScreen({route}) {
   const dateRef = useRef(moment().startOf('isoweek'));
   const [date, setDate] = useState(dateRef.current);
   const [steps, setSteps] = useState([]);
+  const [colors, setColors] = useState([]);
   const [goals, setGoals] = useState([]);
   const [goal, setGoal] = useState(null);
   const [inProgress, setInProgress] = useState(true);
@@ -163,6 +164,16 @@ export default function GoalProgressScreen({route}) {
     }
     const filteredSteps = steps.filter(day => day >= goal.steps);
     setGoalMet(filteredSteps.length >= Number(goal?.days));
+    // set colors for bar chart
+    const colorsPerDay = [];
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i] >= goal.steps) {
+        colorsPerDay.push(() => `${Colors.primary.purple}`);
+      } else {
+        colorsPerDay.push(() => `${Colors.accent.lightPurple}`);
+      }
+    }
+    setColors(colorsPerDay);
   }, [goal, steps]);
 
   return (
@@ -227,6 +238,7 @@ export default function GoalProgressScreen({route}) {
                 datasets: [
                   {
                     data: steps,
+                    colors: colors,
                   },
                 ],
               }}
@@ -243,17 +255,16 @@ export default function GoalProgressScreen({route}) {
                 backgroundGradientFrom: Colors.primary.lightGray,
                 backgroundGradientTo: Colors.primary.lightGray,
                 decimalPlaces: 0, // optional, defaults to 2dp
-                color: (opacity = 100) => `rgba(112, 43, 128, ${opacity})`,
+                color: () => Colors.primary.purple,
                 labelColor: (opacity = 1) => `rgba(79, 79, 79, ${opacity})`,
                 style: {
                   borderRadius: 16,
                 },
-                /* propsForDots: {
-                  r: '6',
-                  strokeWidth: '20',
-                  stroke: '#ffa726',
-                }, */
               }}
+              withCustomBarColorFromData={true}
+              flatColor={true}
+              showBarTops={false}
+              showValuesOnTopOfBars={false}
               style={styles.chart}
             />
           </View>

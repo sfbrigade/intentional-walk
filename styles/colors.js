@@ -21,5 +21,6 @@ export default {
     yellow: '#F7D211',
     blue: '#4D95B9',
     lightYellow: '#F8F2D7',
+    lightPurple: '#CCB7D1',
   },
 };
