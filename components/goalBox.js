@@ -140,12 +140,12 @@ const styles = StyleSheet.create({
   goalMet: {
     backgroundColor: Colors.primary.darkGreen,
     color: 'white',
-    padding: 2,
+    padding: 3,
   },
   goalNotMet: {
     color: Colors.primary.gray2,
     backgroundColor: Colors.accent.orange,
-    padding: 2,
+    padding: 3,
   },
   mainText: {
     fontSize: 24,

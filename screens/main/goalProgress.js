@@ -207,15 +207,23 @@ export default function GoalProgressScreen({route}) {
               </Text>
               <Text style={styles.overViewFooter}>
                 {progressClass === 'inProgress'
-                  ? 'more steps to go'
-                  : 'total steps this week'}
+                  ? Strings.stepGoalProgress.moreStepsToGo
+                  : Strings.stepGoalProgress.totalStepsThisWeek}
               </Text>
             </View>
           </View>
           <View style={styles.chartWrapper}>
             <BarChart
               data={{
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                labels: [
+                  Strings.stepGoalProgress.mon,
+                  Strings.stepGoalProgress.tue,
+                  Strings.stepGoalProgress.wed,
+                  Strings.stepGoalProgress.thu,
+                  Strings.stepGoalProgress.fri,
+                  Strings.stepGoalProgress.sat,
+                  Strings.stepGoalProgress.sun,
+                ],
                 datasets: [
                   {
                     data: steps,
