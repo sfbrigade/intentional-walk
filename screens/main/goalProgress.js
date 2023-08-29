@@ -32,7 +32,29 @@ export default function GoalProgressScreen({route}) {
       : moment(queryDate).add(1, 'week').subtract(1, 'second');
 
     const weeklySteps = await Fitness.getSteps(start, end);
-    setSteps(weeklySteps);
+
+    // fill in full week if no steps for dates
+    const weekMap = weeklySteps.reduce((acc, curr) => {
+      const weekday = moment(curr.startDate).day();
+      // make monday first day of week
+      const dayOfWeek = weekday === 0 ? 6 : weekday - 1;
+      acc[dayOfWeek] = curr.quantity;
+      return acc;
+    }, {});
+
+    for (let i = 0; i < 7; i++) {
+      if (weekMap[i] === undefined) {
+        weekMap[i] = 0;
+      }
+    }
+
+    const stepsPerDay = [];
+
+    for (const day in weekMap) {
+      stepsPerDay.push(weekMap[day]);
+    }
+
+    setSteps(stepsPerDay);
   }, []);
 
   const getStepsToGo = useCallback(
@@ -43,7 +65,7 @@ export default function GoalProgressScreen({route}) {
         return goal?.steps;
       }
 
-      return (goal.steps - steps[0].quantity).toLocaleString();
+      return (goal.steps - steps[0]).toLocaleString();
     },
     [goal, steps],
   );
@@ -53,8 +75,9 @@ export default function GoalProgressScreen({route}) {
       if (steps.length === 0) {
         return 0;
       }
-      const avgSteps =
-        steps.reduce((acc, curr) => acc + curr.quantity, 0) / steps.length;
+      const avgSteps = Math.ceil(
+        steps.reduce((acc, curr) => acc + curr, 0) / steps.length,
+      );
       return avgSteps.toLocaleString();
     },
     [steps],
@@ -66,7 +89,7 @@ export default function GoalProgressScreen({route}) {
         return 0;
       }
       if (inProgress) {
-        return steps[0]?.quantity?.toLocaleString() ?? 0;
+        return steps[0]?.toLocaleString() ?? 0;
       } else {
         return getAvgStepsPerWeek();
       }
@@ -80,9 +103,7 @@ export default function GoalProgressScreen({route}) {
         return 0;
       }
 
-      return steps
-        .reduce((acc, curr) => acc + curr.quantity, 0)
-        .toLocaleString();
+      return steps.reduce((acc, curr) => acc + curr, 0).toLocaleString();
     },
     [steps],
   );
@@ -123,6 +144,7 @@ export default function GoalProgressScreen({route}) {
   useEffect(() => {
     setInProgress(true);
     setGoalMet(false);
+    getSteps(moment().startOf('isoweek'), true);
     Realm.getWeeklyGoals().then(weeklyGoals => {
       if (weeklyGoals.length) {
         setGoals(weeklyGoals);
@@ -132,13 +154,14 @@ export default function GoalProgressScreen({route}) {
       }
     });
     // trigger a refresh when goal is updated
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route?.params?.refresh]);
 
   useEffect(() => {
     if (goal === null) {
       return;
     }
-    const filteredSteps = steps.filter(day => day.quantity >= goal.steps);
+    const filteredSteps = steps.filter(day => day >= goal.steps);
     setGoalMet(filteredSteps.length >= Number(goal?.days));
   }, [goal, steps]);
 
@@ -195,11 +218,7 @@ export default function GoalProgressScreen({route}) {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                 datasets: [
                   {
-                    data: inProgress
-                      ? dummyWeekThree
-                      : goalMet
-                      ? dummyWeekTwo
-                      : dummyWeekOne,
+                    data: steps,
                   },
                 ],
               }}
@@ -210,7 +229,7 @@ export default function GoalProgressScreen({route}) {
               yAxisInterval={1} // optional, defaults to 1
               fromZero={true}
               withOuterLines={false}
-              withInnerLines={true}
+              withInnerLines={false}
               chartConfig={{
                 backgroundColor: Colors.primary.lightGray,
                 backgroundGradientFrom: Colors.primary.lightGray,
