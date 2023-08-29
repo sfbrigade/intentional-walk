@@ -236,7 +236,7 @@ export default function SetYourStepTarget({navigation, route}) {
               /* isEnabled={isValid()} */
               onPress={onNextPress}>
               {route.params.fromProgress
-                ? Strings.common.update
+                ? Strings.common.save
                 : Strings.common.next}
             </Button>
             {!route.params.fromProgress ?? (
