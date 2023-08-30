@@ -26,19 +26,20 @@ export default function GoalProgressScreen({route}) {
     ? 'goalMet'
     : 'goalNotMet';
 
+  function getDayOfWeek(dt) {
+    const weekday = moment(dt).day();
+    // make monday first day of week
+    return weekday === 0 ? 6 : weekday - 1;
+  }
+
   const getSteps = useCallback(async function (queryDate, isInProgress) {
     const start = moment(queryDate);
-    const end = isInProgress
-      ? moment(queryDate).endOf('day')
-      : moment(queryDate).add(1, 'week').subtract(1, 'second');
-
+    const end = moment(queryDate).add(1, 'week').subtract(1, 'second');
     const weeklySteps = await Fitness.getSteps(start, end);
 
     // fill in full week if no steps for dates
     const weekMap = weeklySteps.reduce((acc, curr) => {
-      const weekday = moment(curr.startDate).day();
-      // make monday first day of week
-      const dayOfWeek = weekday === 0 ? 6 : weekday - 1;
+      const dayOfWeek = getDayOfWeek(curr.startDate);
       acc[dayOfWeek] = curr.quantity;
       return acc;
     }, {});
@@ -65,8 +66,8 @@ export default function GoalProgressScreen({route}) {
       } else if (steps.length === 0) {
         return goal?.steps;
       }
-
-      return (goal.steps - steps[0]).toLocaleString();
+      const dayOfWeek = getDayOfWeek(moment());
+      return (goal.steps - steps[dayOfWeek]).toLocaleString();
     },
     [goal, steps],
   );
