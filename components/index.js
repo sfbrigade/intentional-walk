@@ -16,3 +16,5 @@ export RecordedWalk from './recordedWalk';
 export Recorder from './recorder';
 export ScrollText from './scrollText';
 export StatBox from './statBox';
+export GoalBox from './goalBox';
+export WeekNavigator from './weekNavigator';

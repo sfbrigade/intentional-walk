@@ -11,7 +11,9 @@ import {
   WhatIsRaceScreen,
   WhatIsGenderIdentityScreen,
   WhatIsSexualOrientationScreen,
+  SetYourStepGoal,
 } from '../screens/onboarding';
+import {GoalProgressScreen} from '../screens/main';
 import {Logo} from '../components';
 import {Colors, GlobalStyles} from '../styles';
 import {Strings} from '../lib';
@@ -53,6 +55,8 @@ export default function OnboardingStack() {
         name="WhatIsSexualOrientation"
         component={WhatIsSexualOrientationScreen}
       />
+      <Stack.Screen name="SetYourStepGoal" component={SetYourStepGoal} />
+      <Stack.Screen name="GoalProgress" component={GoalProgressScreen} />
     </Stack.Navigator>
   );
 }

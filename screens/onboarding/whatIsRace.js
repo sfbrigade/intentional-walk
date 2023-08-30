@@ -140,7 +140,7 @@ export default function WhatIsRaceScreen({navigation}) {
               onPress={onNextPress}>
               {Strings.common.next}
             </Button>
-            <PaginationDots currentPage={3} totalPages={7} />
+            <PaginationDots currentPage={3} totalPages={8} />
           </View>
         </View>
       </ScrollView>

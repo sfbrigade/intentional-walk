@@ -401,6 +401,24 @@ export default function HomeScreen({navigation, route}) {
                   boxColor={Colors.accent.orange}
                 />
               </View>
+              <View style={styles.row}>
+                <TouchableOpacity
+                  style={styles.box}
+                  onPress={() => navigation.navigate('GoalProgress')}>
+                  <View style={[styles.walkBox]}>
+                    <Text style={styles.walkText}>{Strings.home.myGoals}</Text>
+                    <Icon
+                      style={styles.walkChevron}
+                      name="chevron-right"
+                      size={30}
+                    />
+                    <Image
+                      style={styles.goalWatermark}
+                      source={require('../../assets/HomePageMyGoals.png')}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
               {contest &&
                 (contest.isDuringContest || contest.isWeekAfterEndDate) && (
                   <View
@@ -574,6 +592,12 @@ const styles = StyleSheet.create({
   },
   walkWatermarkWhere: {
     top: '-115%',
+  },
+  goalWatermark: {
+    position: 'absolute',
+    right: 44,
+    resizeMode: 'contain',
+    width: '18%',
   },
   subtitle: {
     alignItems: 'center',
