@@ -91,7 +91,8 @@ export default function GoalProgressScreen({route}) {
         return 0;
       }
       if (inProgress) {
-        return steps[0]?.toLocaleString() ?? 0;
+        const dayOfWeek = getDayOfWeek(moment());
+        return steps[dayOfWeek]?.toLocaleString() ?? 0;
       } else {
         return getAvgStepsPerWeek();
       }
