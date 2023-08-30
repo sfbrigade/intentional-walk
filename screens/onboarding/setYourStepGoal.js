@@ -235,11 +235,11 @@ export default function SetYourStepTarget({navigation, route}) {
               style={styles.button}
               /* isEnabled={isValid()} */
               onPress={onNextPress}>
-              {route.params.fromProgress
+              {route.params?.fromProgress
                 ? Strings.common.save
                 : Strings.common.next}
             </Button>
-            {!route.params.fromProgress ?? (
+            {!route.params?.fromProgress ?? (
               <PaginationDots currentPage={6} totalPages={8} />
             )}
           </View>
