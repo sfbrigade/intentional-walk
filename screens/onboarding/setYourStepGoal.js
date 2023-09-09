@@ -19,9 +19,10 @@ export default function SetYourStepTarget({navigation, route}) {
   const stepInputRef = useRef(null);
   const daysInputRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
-  const [stepGoal, setStepGoal] = useState('5,000');
-  const [daysGoal, setDaysGoal] = useState('4');
+  const [stepGoal, setStepGoal] = useState(5000);
+  const [daysGoal, setDaysGoal] = useState(4);
   const [isStepLowerLimit, setStepLowerLimit] = useState(false);
+  const [isStepUpperLimit, setStepUpperLimit] = useState(false);
   const [isDaysLowerLimit, setDaysLowerLimit] = useState(false);
   const [isDaysUpperLimit, setDaysUpperLimit] = useState(false);
 
@@ -29,30 +30,23 @@ export default function SetYourStepTarget({navigation, route}) {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
-  const stepGoalAndChangeEqual = stepGoal === STEP_CHANGE.toLocaleString();
-  const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE.toString();
-
-  function addNumberToString(str, num) {
-    return (Number(str.replace(',', '')) + num).toLocaleString();
-  }
-
-  function subtractNumberFromString(str, num) {
-    return (Number(str.replace(',', '')) - num).toLocaleString();
-  }
+  const stepGoalAndChangeEqual = stepGoal === STEP_CHANGE;
+  const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE;
 
   function onDecreaseSteps() {
     if (isLoading || stepGoalAndChangeEqual) {
       return;
     }
 
-    setStepGoal(subtractNumberFromString(stepGoal, STEP_CHANGE));
+    setStepGoal(stepGoal - STEP_CHANGE);
+    setStepUpperLimit(false);
   }
 
   function onIncreaseSteps() {
-    if (isLoading) {
+    if (isLoading || stepGoal >= 99500) {
       return;
     }
-    setStepGoal(addNumberToString(stepGoal, STEP_CHANGE));
+    setStepGoal(stepGoal + STEP_CHANGE);
     setStepLowerLimit(false);
   }
 
@@ -61,16 +55,16 @@ export default function SetYourStepTarget({navigation, route}) {
       return;
     }
 
-    setDaysGoal(subtractNumberFromString(daysGoal, DAYS_CHANGE));
+    setDaysGoal(daysGoal - DAYS_CHANGE);
     setDaysUpperLimit(false);
   }
 
   function onIncreaseDays() {
-    if (isLoading || daysGoal === '7') {
+    if (isLoading || daysGoal >= 7) {
       return;
     }
 
-    setDaysGoal(addNumberToString(daysGoal, DAYS_CHANGE));
+    setDaysGoal(daysGoal + DAYS_CHANGE);
     setDaysLowerLimit(false);
   }
 
@@ -81,7 +75,7 @@ export default function SetYourStepTarget({navigation, route}) {
       const user = await Realm.getUser();
       const today = moment().format('YYYY-MM-DD');
       const weeklyGoal = {
-        steps: Number(stepGoal.replace(',', '')),
+        steps: stepGoal,
         days: daysGoal,
         start_of_week: today,
       };
@@ -106,8 +100,8 @@ export default function SetYourStepTarget({navigation, route}) {
       const weeklyGoals = await Realm.getWeeklyGoals();
       if (weeklyGoals.length) {
         const goal = weeklyGoals[0];
-        setStepGoal(goal.steps.toLocaleString());
-        setDaysGoal(goal.days.toString());
+        setStepGoal(goal.steps);
+        setDaysGoal(goal.days);
       }
     }
 
@@ -123,10 +117,14 @@ export default function SetYourStepTarget({navigation, route}) {
       setDaysLowerLimit(true);
     }
 
-    if (daysGoal === '7') {
+    if (daysGoal === 7) {
       setDaysUpperLimit(true);
     }
-  }, [stepGoalAndChangeEqual, daysGoalAndChangeEqual, daysGoal]);
+
+    if (stepGoal === 99500) {
+      setStepUpperLimit(true);
+    }
+  }, [stepGoalAndChangeEqual, daysGoalAndChangeEqual, daysGoal, stepGoal]);
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -153,8 +151,7 @@ export default function SetYourStepTarget({navigation, route}) {
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
-                  value={stepGoal}
-                  onChangeText={setStepGoal}
+                  value={stepGoal.toLocaleString('en-US')}
                   editable={false}
                 />
               </View>
@@ -173,8 +170,14 @@ export default function SetYourStepTarget({navigation, route}) {
                 </Button>
                 <View style={styles.spacer} />
                 <Button
-                  style={styles.goalButton}
-                  textStyle={styles.goalButtonText}
+                  style={[
+                    styles.goalButton,
+                    isStepUpperLimit ? styles.disableGoalButton : {},
+                  ]}
+                  textStyle={[
+                    styles.goalButtonText,
+                    isStepUpperLimit ? styles.disableGoalButtonText : {},
+                  ]}
                   onPress={onIncreaseSteps}>
                   {Strings.setYourStepGoal.increaseSteps}
                 </Button>
@@ -196,8 +199,7 @@ export default function SetYourStepTarget({navigation, route}) {
                 <TextInput
                   ref={daysInputRef}
                   style={styles.daysInput}
-                  value={daysGoal}
-                  onChangeText={setDaysGoal}
+                  value={daysGoal.toString()}
                   editable={false}
                 />
               </View>
