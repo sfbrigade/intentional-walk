@@ -67,7 +67,8 @@ export default function GoalProgressScreen({route}) {
         return goal?.steps;
       }
       const dayOfWeek = getDayOfWeek(moment());
-      return (goal.steps - steps[dayOfWeek]).toLocaleString();
+      const stepsToGo = goal.steps - steps[dayOfWeek];
+      return (stepsToGo < 0 ? 0 : stepsToGo).toLocaleString();
     },
     [goal, steps],
   );
