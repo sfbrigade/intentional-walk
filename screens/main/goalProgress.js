@@ -253,6 +253,7 @@ export default function GoalProgressScreen({route}) {
               fromZero={true}
               withOuterLines={false}
               withInnerLines={false}
+              segments={4}
               chartConfig={{
                 backgroundColor: Colors.primary.lightGray,
                 backgroundGradientFrom: Colors.primary.lightGray,
@@ -262,6 +263,9 @@ export default function GoalProgressScreen({route}) {
                 labelColor: (opacity = 1) => `rgba(79, 79, 79, ${opacity})`,
                 style: {
                   borderRadius: 16,
+                },
+                formatYLabel: val => {
+                  return (Math.ceil(val / 100) * 100).toLocaleString('en-US');
                 },
               }}
               withCustomBarColorFromData={true}
@@ -307,5 +311,7 @@ const styles = StyleSheet.create({
   chartWrapper: {
     marginTop: 24,
   },
-  chart: {},
+  chart: {
+    marginLeft: -10,
+  },
 });
