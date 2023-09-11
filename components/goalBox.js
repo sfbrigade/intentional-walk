@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: 15,
-    alignItems: 'center',
   },
   progressLeft: {
     borderTopLeftRadius: 5,
@@ -139,12 +138,14 @@ const styles = StyleSheet.create({
   },
   checkIcon: {
     marginRight: 2,
-    marginTop: 2,
+    marginTop: 1,
     marginLeft: 2,
   },
   progressText: {
     color: Colors.primary.gray2,
     fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 17,
   },
   progressTextGoalMet: {
     color: 'white',
