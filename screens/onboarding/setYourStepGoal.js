@@ -146,6 +146,12 @@ export default function SetYourStepTarget({navigation, route}) {
             />
             <View style={styles.content}>
               <View style={styles.inputBox}>
+                {Strings.setYourStepGoal.stepsPerDayBefore && (
+                  <Text
+                    style={[styles.inputHelpText, styles.inputHelpTextBefore]}>
+                    {Strings.setYourStepGoal.stepsPerDayBefore}
+                  </Text>
+                )}
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
@@ -269,7 +275,7 @@ const inputBoxStyle = {
   flexDirection: 'row',
   // justifyContent: 'space-between',
   alignItems: 'center',
-  width: 232,
+  width: 240,
   height: 56,
   backgroundColor: 'white',
   borderColor: Colors.primary.gray2,
@@ -328,13 +334,16 @@ const styles = StyleSheet.create({
   },
   inputDayBox: {
     ...inputBoxStyle,
-    width: 175,
+    width: 195,
   },
   inputHelpText: {
     color: Colors.primary.gray2,
     zIndex: 10,
     fontSize: 24,
     paddingLeft: 5,
+  },
+  inputHelpTextBefore: {
+    paddingRight: 5,
   },
   input: {
     fontSize: 32,

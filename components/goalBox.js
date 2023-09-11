@@ -33,6 +33,8 @@ export default function GoalBox(props) {
           {props?.goal?.steps && (
             <>
               <Text style={styles.mainText}>
+                {Strings.setYourStepGoal.stepsPerDayBefore &&
+                  Strings.setYourStepGoal.stepsPerDayBefore + ' '}
                 {numberWithCommas(props.goal.steps)}{' '}
                 {Strings.setYourStepGoal.stepsPerDay}
               </Text>
