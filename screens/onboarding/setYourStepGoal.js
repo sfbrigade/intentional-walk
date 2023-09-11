@@ -12,6 +12,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Button, InfoBox, PaginationDots, Popup} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
+import {numberWithCommas} from '../../lib/util';
 
 export default function SetYourStepTarget({navigation, route}) {
   const STEP_CHANGE = 500;
@@ -151,7 +152,7 @@ export default function SetYourStepTarget({navigation, route}) {
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
-                  value={stepGoal.toLocaleString('en-US')}
+                  value={numberWithCommas(stepGoal)}
                   editable={false}
                 />
               </View>

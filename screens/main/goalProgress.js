@@ -6,6 +6,7 @@ import upperCase from 'lodash/upperCase';
 import {BarChart} from 'react-native-chart-kit';
 import {GlobalStyles, Colors} from '../../styles';
 import {Fitness, Realm, Strings} from '../../lib';
+import {numberWithCommas} from '../../lib/util';
 import {GoalBox, WeekNavigator} from '../../components';
 
 export default function GoalProgressScreen({route}) {
@@ -69,7 +70,7 @@ export default function GoalProgressScreen({route}) {
       }
       const dayOfWeek = getDayOfWeek(moment());
       const stepsToGo = goal.steps - steps[dayOfWeek];
-      return (stepsToGo < 0 ? 0 : stepsToGo).toLocaleString();
+      return numberWithCommas(stepsToGo < 0 ? 0 : stepsToGo);
     },
     [goal, steps],
   );
@@ -82,7 +83,7 @@ export default function GoalProgressScreen({route}) {
       const avgSteps = Math.ceil(
         steps.reduce((acc, curr) => acc + curr, 0) / steps.length,
       );
-      return avgSteps.toLocaleString();
+      return numberWithCommas(avgSteps);
     },
     [steps],
   );
@@ -94,7 +95,7 @@ export default function GoalProgressScreen({route}) {
       }
       if (inProgress) {
         const dayOfWeek = getDayOfWeek(moment());
-        return steps[dayOfWeek]?.toLocaleString() ?? 0;
+        return numberWithCommas(steps[dayOfWeek]);
       } else {
         return getAvgStepsPerWeek();
       }
@@ -108,7 +109,7 @@ export default function GoalProgressScreen({route}) {
         return 0;
       }
 
-      return steps.reduce((acc, curr) => acc + curr, 0).toLocaleString();
+      return numberWithCommas(steps.reduce((acc, curr) => acc + curr, 0));
     },
     [steps],
   );
@@ -278,7 +279,7 @@ export default function GoalProgressScreen({route}) {
                   borderRadius: 16,
                 },
                 formatYLabel: val => {
-                  return (Math.ceil(val / 100) * 100).toLocaleString('en-US');
+                  return numberWithCommas(Math.ceil(val / 100) * 100);
                 },
               }}
               withCustomBarColorFromData={true}

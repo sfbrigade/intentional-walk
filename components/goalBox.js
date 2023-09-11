@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../styles';
 import {Strings} from '../lib';
+import {numberWithCommas} from '../lib/util';
 
 export default function GoalBox(props) {
   const navigation = useNavigation();
@@ -29,14 +30,21 @@ export default function GoalBox(props) {
           {upperCase(Strings.stepGoalProgress.myGoal)}
         </Text>
         <View style={styles.goalRow}>
-          <Text style={styles.mainText}>
-            {props?.goal?.steps?.toLocaleString()}{' '}
-            {Strings.setYourStepGoal.stepsPerDay}
-          </Text>
-          <Text style={styles.subText}> {Strings.stepGoalProgress.for} </Text>
-          <Text style={styles.mainText}>
-            {props?.goal?.days} {Strings.stepGoalProgress.days}
-          </Text>
+          {props?.goal?.steps && (
+            <>
+              <Text style={styles.mainText}>
+                {numberWithCommas(props.goal.steps)}{' '}
+                {Strings.setYourStepGoal.stepsPerDay}
+              </Text>
+              <Text style={styles.subText}>
+                {' '}
+                {Strings.stepGoalProgress.for}{' '}
+              </Text>
+              <Text style={styles.mainText}>
+                {props?.goal?.days} {Strings.stepGoalProgress.days}
+              </Text>
+            </>
+          )}
         </View>
         <View style={[styles.goalRow, styles.bottomRow]}>
           <View style={[styles.progressWrapper]}>
