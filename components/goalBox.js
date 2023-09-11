@@ -8,15 +8,19 @@ import {Strings} from '../lib';
 
 export default function GoalBox(props) {
   const navigation = useNavigation();
-  const progressText = props.inProgress
-    ? Strings.stepGoalProgress.inProgress
-    : props.goalMet
+  const progressText = props.goalMet
     ? Strings.stepGoalProgress.goalMet
+    : props.cantMeetGoal
+    ? Strings.stepGoalProgress.goalNotMet
+    : props.inProgress
+    ? Strings.stepGoalProgress.inProgress
     : Strings.stepGoalProgress.goalNotMet;
-  const progressClass = props.inProgress
-    ? 'inProgress'
-    : props.goalMet
+  const progressClass = props.goalMet
     ? 'goalMet'
+    : props.cantMeetGoal
+    ? 'goalNotMet'
+    : props.inProgress
+    ? 'inProgress'
     : 'goalNotMet';
   return (
     <View style={styles.box}>
@@ -113,6 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     marginTop: 15,
+    alignItems: 'center',
   },
   progressLeft: {
     borderTopLeftRadius: 5,

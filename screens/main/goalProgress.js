@@ -19,6 +19,7 @@ export default function GoalProgressScreen({route}) {
   const [goal, setGoal] = useState(null);
   const [inProgress, setInProgress] = useState(true);
   const [goalMet, setGoalMet] = useState(false);
+  const [cantMeetGoal, setCantMeetGoal] = useState(false);
 
   const progressClass = inProgress
     ? 'inProgress'
@@ -165,8 +166,15 @@ export default function GoalProgressScreen({route}) {
     if (goal === null) {
       return;
     }
+    let isGoalMet = false;
     const filteredSteps = steps.filter(day => day >= goal.steps);
-    setGoalMet(filteredSteps.length >= Number(goal?.days));
+    isGoalMet = filteredSteps.length >= Number(goal?.days);
+    setGoalMet(isGoalMet);
+    // check the number of days left in the week to see if it's possible to still meet the goal
+    const dayOfWeek = getDayOfWeek(moment());
+    // days left in week includes current day
+    const daysLeftInWeek = 6 - dayOfWeek + 1;
+    setCantMeetGoal(goal.days - filteredSteps.length > daysLeftInWeek);
     // set colors for bar chart
     const colorsPerDay = [];
     for (let i = 0; i < steps.length; i++) {
@@ -193,7 +201,12 @@ export default function GoalProgressScreen({route}) {
             setDate={setDateAndGetWeeklyStepsAndGoal}
           />
           <View style={styles.row}>
-            <GoalBox goal={goal} inProgress={inProgress} goalMet={goalMet} />
+            <GoalBox
+              goal={goal}
+              inProgress={inProgress}
+              goalMet={goalMet}
+              cantMeetGoal={cantMeetGoal}
+            />
           </View>
           <View style={styles.overview}>
             <View style={styles.overviewLeft}>
