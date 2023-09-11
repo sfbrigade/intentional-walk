@@ -146,15 +146,15 @@ export default function SetYourStepTarget({navigation, route}) {
             />
             <View style={styles.content}>
               <View style={styles.inputBox}>
-                <Text style={styles.inputHelpText}>
-                  {Strings.setYourStepGoal.stepsPerDay}
-                </Text>
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
                   value={numberWithCommas(stepGoal)}
                   editable={false}
                 />
+                <Text style={styles.inputHelpText}>
+                  {Strings.setYourStepGoal.stepsPerDay}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Button
@@ -193,16 +193,16 @@ export default function SetYourStepTarget({navigation, route}) {
               iconColor={Colors.primary.gray2}
             />
             <View style={styles.content}>
-              <View style={styles.inputBox}>
-                <Text style={styles.inputHelpText}>
-                  {Strings.setYourStepGoal.daysPerWeek}
-                </Text>
+              <View style={styles.inputDayBox}>
                 <TextInput
                   ref={daysInputRef}
-                  style={styles.daysInput}
+                  style={styles.input}
                   value={daysGoal.toString()}
                   editable={false}
                 />
+                <Text style={styles.inputHelpText}>
+                  {Strings.setYourStepGoal.daysPerWeek}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Button
@@ -263,19 +263,20 @@ export default function SetYourStepTarget({navigation, route}) {
   );
 }
 
-const inputStyle = {
+const inputBoxStyle = {
   ...GlobalStyles.rounded,
+  flex: 1,
+  flexDirection: 'row',
+  // justifyContent: 'space-between',
+  alignItems: 'center',
   width: 232,
   height: 56,
   backgroundColor: 'white',
   borderColor: Colors.primary.gray2,
   borderWidth: 0.5,
   marginBottom: 8,
-  fontSize: 32,
-  fontWeight: '500',
   paddingLeft: 12,
   paddingRight: 12,
-  color: Colors.primary.gray2,
 };
 
 const styles = StyleSheet.create({
@@ -323,21 +324,22 @@ const styles = StyleSheet.create({
     width: 180,
   },
   inputBox: {
-    position: 'relative',
-    alignItems: 'center',
+    ...inputBoxStyle,
+  },
+  inputDayBox: {
+    ...inputBoxStyle,
+    width: 175,
   },
   inputHelpText: {
-    position: 'absolute',
     color: Colors.primary.gray2,
-    top: 15,
-    right: 5,
     zIndex: 10,
     fontSize: 24,
+    paddingLeft: 5,
   },
-  input: inputStyle,
-  daysInput: {
-    ...inputStyle,
-    width: 153,
+  input: {
+    fontSize: 32,
+    fontWeight: '500',
+    color: Colors.primary.gray2,
   },
   row: {
     flex: 0,
