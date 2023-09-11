@@ -7,4 +7,4 @@ export LoHOriginScreen from './LoHOrigin';
 export WhatIsRaceScreen from './whatIsRace';
 export WhatIsGenderIdentityScreen from './whatIsGenderIdentity';
 export WhatIsSexualOrientationScreen from './whatIsSexualOrientation';
-export SetYourStepGoal from "./setYourStepGoal";
+export SetYourStepGoal from './setYourStepGoal';
