@@ -611,9 +611,9 @@ const styles = StyleSheet.create({
   },
   goalWatermark: {
     position: 'absolute',
-    right: 44,
+    right: 35,
     resizeMode: 'contain',
-    width: '18%',
+    width: '15%',
   },
   subtitle: {
     alignItems: 'center',
