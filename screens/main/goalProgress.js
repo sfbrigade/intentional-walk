@@ -6,6 +6,7 @@ import upperCase from 'lodash/upperCase';
 import {BarChart} from 'react-native-chart-kit';
 import {GlobalStyles, Colors} from '../../styles';
 import {Fitness, Realm, Strings} from '../../lib';
+import {numberWithCommas} from '../../lib/util';
 import {GoalBox, WeekNavigator} from '../../components';
 
 export default function GoalProgressScreen({route}) {
@@ -19,6 +20,7 @@ export default function GoalProgressScreen({route}) {
   const [goal, setGoal] = useState(null);
   const [inProgress, setInProgress] = useState(true);
   const [goalMet, setGoalMet] = useState(false);
+  const [cantMeetGoal, setCantMeetGoal] = useState(false);
 
   const progressClass = inProgress
     ? 'inProgress'
@@ -67,7 +69,8 @@ export default function GoalProgressScreen({route}) {
         return goal?.steps;
       }
       const dayOfWeek = getDayOfWeek(moment());
-      return (goal.steps - steps[dayOfWeek]).toLocaleString();
+      const stepsToGo = goal.steps - steps[dayOfWeek];
+      return numberWithCommas(stepsToGo < 0 ? 0 : stepsToGo);
     },
     [goal, steps],
   );
@@ -80,7 +83,7 @@ export default function GoalProgressScreen({route}) {
       const avgSteps = Math.ceil(
         steps.reduce((acc, curr) => acc + curr, 0) / steps.length,
       );
-      return avgSteps.toLocaleString();
+      return numberWithCommas(avgSteps);
     },
     [steps],
   );
@@ -92,7 +95,7 @@ export default function GoalProgressScreen({route}) {
       }
       if (inProgress) {
         const dayOfWeek = getDayOfWeek(moment());
-        return steps[dayOfWeek]?.toLocaleString() ?? 0;
+        return numberWithCommas(steps[dayOfWeek]);
       } else {
         return getAvgStepsPerWeek();
       }
@@ -106,7 +109,7 @@ export default function GoalProgressScreen({route}) {
         return 0;
       }
 
-      return steps.reduce((acc, curr) => acc + curr, 0).toLocaleString();
+      return numberWithCommas(steps.reduce((acc, curr) => acc + curr, 0));
     },
     [steps],
   );
@@ -164,8 +167,15 @@ export default function GoalProgressScreen({route}) {
     if (goal === null) {
       return;
     }
+    let isGoalMet = false;
     const filteredSteps = steps.filter(day => day >= goal.steps);
-    setGoalMet(filteredSteps.length >= Number(goal?.days));
+    isGoalMet = filteredSteps.length >= Number(goal?.days);
+    setGoalMet(isGoalMet);
+    // check the number of days left in the week to see if it's possible to still meet the goal
+    const dayOfWeek = getDayOfWeek(moment());
+    // days left in week includes current day
+    const daysLeftInWeek = 6 - dayOfWeek + 1;
+    setCantMeetGoal(goal.days - filteredSteps.length > daysLeftInWeek);
     // set colors for bar chart
     const colorsPerDay = [];
     for (let i = 0; i < steps.length; i++) {
@@ -192,7 +202,12 @@ export default function GoalProgressScreen({route}) {
             setDate={setDateAndGetWeeklyStepsAndGoal}
           />
           <View style={styles.row}>
-            <GoalBox goal={goal} inProgress={inProgress} goalMet={goalMet} />
+            <GoalBox
+              goal={goal}
+              inProgress={inProgress}
+              goalMet={goalMet}
+              cantMeetGoal={cantMeetGoal}
+            />
           </View>
           <View style={styles.overview}>
             <View style={styles.overviewLeft}>
@@ -252,6 +267,7 @@ export default function GoalProgressScreen({route}) {
               fromZero={true}
               withOuterLines={false}
               withInnerLines={false}
+              segments={4}
               chartConfig={{
                 backgroundColor: Colors.primary.lightGray,
                 backgroundGradientFrom: Colors.primary.lightGray,
@@ -261,6 +277,9 @@ export default function GoalProgressScreen({route}) {
                 labelColor: (opacity = 1) => `rgba(79, 79, 79, ${opacity})`,
                 style: {
                   borderRadius: 16,
+                },
+                formatYLabel: val => {
+                  return numberWithCommas(Math.ceil(val / 100) * 100);
                 },
               }}
               withCustomBarColorFromData={true}
@@ -306,5 +325,7 @@ const styles = StyleSheet.create({
   chartWrapper: {
     marginTop: 24,
   },
-  chart: {},
+  chart: {
+    marginLeft: -10,
+  },
 });

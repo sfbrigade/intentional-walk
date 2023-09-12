@@ -12,6 +12,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Button, InfoBox, PaginationDots, Popup} from '../../components';
 import {GlobalStyles, Colors} from '../../styles';
 import {Api, Realm, Strings} from '../../lib';
+import {numberWithCommas} from '../../lib/util';
 
 export default function SetYourStepTarget({navigation, route}) {
   const STEP_CHANGE = 500;
@@ -19,9 +20,10 @@ export default function SetYourStepTarget({navigation, route}) {
   const stepInputRef = useRef(null);
   const daysInputRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
-  const [stepGoal, setStepGoal] = useState('5,000');
-  const [daysGoal, setDaysGoal] = useState('4');
+  const [stepGoal, setStepGoal] = useState(5000);
+  const [daysGoal, setDaysGoal] = useState(4);
   const [isStepLowerLimit, setStepLowerLimit] = useState(false);
+  const [isStepUpperLimit, setStepUpperLimit] = useState(false);
   const [isDaysLowerLimit, setDaysLowerLimit] = useState(false);
   const [isDaysUpperLimit, setDaysUpperLimit] = useState(false);
 
@@ -29,30 +31,23 @@ export default function SetYourStepTarget({navigation, route}) {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
-  const stepGoalAndChangeEqual = stepGoal === STEP_CHANGE.toLocaleString();
-  const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE.toString();
-
-  function addNumberToString(str, num) {
-    return (Number(str.replace(',', '')) + num).toLocaleString();
-  }
-
-  function subtractNumberFromString(str, num) {
-    return (Number(str.replace(',', '')) - num).toLocaleString();
-  }
+  const stepGoalAndChangeEqual = stepGoal === STEP_CHANGE;
+  const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE;
 
   function onDecreaseSteps() {
     if (isLoading || stepGoalAndChangeEqual) {
       return;
     }
 
-    setStepGoal(subtractNumberFromString(stepGoal, STEP_CHANGE));
+    setStepGoal(stepGoal - STEP_CHANGE);
+    setStepUpperLimit(false);
   }
 
   function onIncreaseSteps() {
-    if (isLoading) {
+    if (isLoading || stepGoal >= 99500) {
       return;
     }
-    setStepGoal(addNumberToString(stepGoal, STEP_CHANGE));
+    setStepGoal(stepGoal + STEP_CHANGE);
     setStepLowerLimit(false);
   }
 
@@ -61,16 +56,16 @@ export default function SetYourStepTarget({navigation, route}) {
       return;
     }
 
-    setDaysGoal(subtractNumberFromString(daysGoal, DAYS_CHANGE));
+    setDaysGoal(daysGoal - DAYS_CHANGE);
     setDaysUpperLimit(false);
   }
 
   function onIncreaseDays() {
-    if (isLoading || daysGoal === '7') {
+    if (isLoading || daysGoal >= 7) {
       return;
     }
 
-    setDaysGoal(addNumberToString(daysGoal, DAYS_CHANGE));
+    setDaysGoal(daysGoal + DAYS_CHANGE);
     setDaysLowerLimit(false);
   }
 
@@ -81,7 +76,7 @@ export default function SetYourStepTarget({navigation, route}) {
       const user = await Realm.getUser();
       const today = moment().format('YYYY-MM-DD');
       const weeklyGoal = {
-        steps: Number(stepGoal.replace(',', '')),
+        steps: stepGoal,
         days: daysGoal,
         start_of_week: today,
       };
@@ -106,8 +101,8 @@ export default function SetYourStepTarget({navigation, route}) {
       const weeklyGoals = await Realm.getWeeklyGoals();
       if (weeklyGoals.length) {
         const goal = weeklyGoals[0];
-        setStepGoal(goal.steps.toLocaleString());
-        setDaysGoal(goal.days.toString());
+        setStepGoal(goal.steps);
+        setDaysGoal(goal.days);
       }
     }
 
@@ -123,10 +118,14 @@ export default function SetYourStepTarget({navigation, route}) {
       setDaysLowerLimit(true);
     }
 
-    if (daysGoal === '7') {
+    if (daysGoal === 7) {
       setDaysUpperLimit(true);
     }
-  }, [stepGoalAndChangeEqual, daysGoalAndChangeEqual, daysGoal]);
+
+    if (stepGoal === 99500) {
+      setStepUpperLimit(true);
+    }
+  }, [stepGoalAndChangeEqual, daysGoalAndChangeEqual, daysGoal, stepGoal]);
 
   return (
     <SafeAreaView style={GlobalStyles.container}>
@@ -147,16 +146,21 @@ export default function SetYourStepTarget({navigation, route}) {
             />
             <View style={styles.content}>
               <View style={styles.inputBox}>
-                <Text style={styles.inputHelpText}>
-                  {Strings.setYourStepGoal.stepsPerDay}
-                </Text>
+                {Strings.setYourStepGoal.stepsPerDayBefore && (
+                  <Text
+                    style={[styles.inputHelpText, styles.inputHelpTextBefore]}>
+                    {Strings.setYourStepGoal.stepsPerDayBefore}
+                  </Text>
+                )}
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
-                  value={stepGoal}
-                  onChangeText={setStepGoal}
+                  value={numberWithCommas(stepGoal)}
                   editable={false}
                 />
+                <Text style={styles.inputHelpText}>
+                  {Strings.setYourStepGoal.stepsPerDay}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Button
@@ -173,8 +177,14 @@ export default function SetYourStepTarget({navigation, route}) {
                 </Button>
                 <View style={styles.spacer} />
                 <Button
-                  style={styles.goalButton}
-                  textStyle={styles.goalButtonText}
+                  style={[
+                    styles.goalButton,
+                    isStepUpperLimit ? styles.disableGoalButton : {},
+                  ]}
+                  textStyle={[
+                    styles.goalButtonText,
+                    isStepUpperLimit ? styles.disableGoalButtonText : {},
+                  ]}
                   onPress={onIncreaseSteps}>
                   {Strings.setYourStepGoal.increaseSteps}
                 </Button>
@@ -189,17 +199,16 @@ export default function SetYourStepTarget({navigation, route}) {
               iconColor={Colors.primary.gray2}
             />
             <View style={styles.content}>
-              <View style={styles.inputBox}>
+              <View style={styles.inputDayBox}>
+                <TextInput
+                  ref={daysInputRef}
+                  style={styles.input}
+                  value={daysGoal.toString()}
+                  editable={false}
+                />
                 <Text style={styles.inputHelpText}>
                   {Strings.setYourStepGoal.daysPerWeek}
                 </Text>
-                <TextInput
-                  ref={daysInputRef}
-                  style={styles.daysInput}
-                  value={daysGoal}
-                  onChangeText={setDaysGoal}
-                  editable={false}
-                />
               </View>
               <View style={styles.row}>
                 <Button
@@ -260,19 +269,20 @@ export default function SetYourStepTarget({navigation, route}) {
   );
 }
 
-const inputStyle = {
+const inputBoxStyle = {
   ...GlobalStyles.rounded,
-  width: 232,
+  flex: 1,
+  flexDirection: 'row',
+  // justifyContent: 'space-between',
+  alignItems: 'center',
+  width: 240,
   height: 56,
   backgroundColor: 'white',
   borderColor: Colors.primary.gray2,
   borderWidth: 0.5,
   marginBottom: 8,
-  fontSize: 32,
-  fontWeight: '500',
   paddingLeft: 12,
   paddingRight: 12,
-  color: Colors.primary.gray2,
 };
 
 const styles = StyleSheet.create({
@@ -320,21 +330,25 @@ const styles = StyleSheet.create({
     width: 180,
   },
   inputBox: {
-    position: 'relative',
-    alignItems: 'center',
+    ...inputBoxStyle,
+  },
+  inputDayBox: {
+    ...inputBoxStyle,
+    width: 195,
   },
   inputHelpText: {
-    position: 'absolute',
     color: Colors.primary.gray2,
-    top: 15,
-    right: 5,
     zIndex: 10,
     fontSize: 24,
+    paddingLeft: 5,
   },
-  input: inputStyle,
-  daysInput: {
-    ...inputStyle,
-    width: 153,
+  inputHelpTextBefore: {
+    paddingRight: 5,
+  },
+  input: {
+    fontSize: 32,
+    fontWeight: '500',
+    color: Colors.primary.gray2,
   },
   row: {
     flex: 0,

@@ -38,6 +38,7 @@ export default function HomeScreen({navigation, route}) {
 
   const [recordedWalks, setRecordedWalks] = useState(null);
   const [activeWalk, setActiveWalk] = useState(null);
+  const [hasGoals, setHasGoals] = useState(false);
 
   async function saveStepsAndDistances() {
     const newContest = await Realm.getContest();
@@ -284,6 +285,15 @@ export default function HomeScreen({navigation, route}) {
     };
   }, [onAppStateChange]);
 
+  useEffect(() => {
+    async function getWeeklyGoals() {
+      const weeklyGoals = await Realm.getWeeklyGoals();
+      setHasGoals(weeklyGoals.length > 0);
+    }
+
+    getWeeklyGoals();
+  }, []);
+
   const today = moment().startOf('day');
   const isToday = date.isSame(today);
 
@@ -404,7 +414,13 @@ export default function HomeScreen({navigation, route}) {
               <View style={styles.row}>
                 <TouchableOpacity
                   style={styles.box}
-                  onPress={() => navigation.navigate('GoalProgress')}>
+                  onPress={() =>
+                    hasGoals
+                      ? navigation.navigate('GoalProgress')
+                      : navigation.navigate('SetYourStepGoal', {
+                          fromProgress: true,
+                        })
+                  }>
                   <View style={[styles.walkBox]}>
                     <Text style={styles.walkText}>{Strings.home.myGoals}</Text>
                     <Icon
@@ -595,9 +611,9 @@ const styles = StyleSheet.create({
   },
   goalWatermark: {
     position: 'absolute',
-    right: 44,
+    right: 35,
     resizeMode: 'contain',
-    width: '18%',
+    width: '15%',
   },
   subtitle: {
     alignItems: 'center',

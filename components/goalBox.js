@@ -5,18 +5,23 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from '../styles';
 import {Strings} from '../lib';
+import {numberWithCommas} from '../lib/util';
 
 export default function GoalBox(props) {
   const navigation = useNavigation();
-  const progressText = props.inProgress
-    ? Strings.stepGoalProgress.inProgress
-    : props.goalMet
+  const progressText = props.goalMet
     ? Strings.stepGoalProgress.goalMet
+    : props.cantMeetGoal
+    ? Strings.stepGoalProgress.goalNotMet
+    : props.inProgress
+    ? Strings.stepGoalProgress.inProgress
     : Strings.stepGoalProgress.goalNotMet;
-  const progressClass = props.inProgress
-    ? 'inProgress'
-    : props.goalMet
+  const progressClass = props.goalMet
     ? 'goalMet'
+    : props.cantMeetGoal
+    ? 'goalNotMet'
+    : props.inProgress
+    ? 'inProgress'
     : 'goalNotMet';
   return (
     <View style={styles.box}>
@@ -25,14 +30,23 @@ export default function GoalBox(props) {
           {upperCase(Strings.stepGoalProgress.myGoal)}
         </Text>
         <View style={styles.goalRow}>
-          <Text style={styles.mainText}>
-            {props?.goal?.steps?.toLocaleString()}{' '}
-            {Strings.setYourStepGoal.stepsPerDay}
-          </Text>
-          <Text style={styles.subText}> {Strings.stepGoalProgress.for} </Text>
-          <Text style={styles.mainText}>
-            {props?.goal?.days} {Strings.stepGoalProgress.days}
-          </Text>
+          {props?.goal?.steps && (
+            <>
+              <Text style={styles.mainText}>
+                {Strings.setYourStepGoal.stepsPerDayBefore &&
+                  Strings.setYourStepGoal.stepsPerDayBefore + ' '}
+                {numberWithCommas(props.goal.steps)}{' '}
+                {Strings.setYourStepGoal.stepsPerDay}
+              </Text>
+              <Text style={styles.subText}>
+                {' '}
+                {Strings.stepGoalProgress.for}{' '}
+              </Text>
+              <Text style={styles.mainText}>
+                {props?.goal?.days} {Strings.stepGoalProgress.days}
+              </Text>
+            </>
+          )}
         </View>
         <View style={[styles.goalRow, styles.bottomRow]}>
           <View style={[styles.progressWrapper]}>
@@ -124,12 +138,14 @@ const styles = StyleSheet.create({
   },
   checkIcon: {
     marginRight: 2,
-    marginTop: 2,
+    marginTop: 1,
     marginLeft: 2,
   },
   progressText: {
     color: Colors.primary.gray2,
     fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 17,
   },
   progressTextGoalMet: {
     color: 'white',
