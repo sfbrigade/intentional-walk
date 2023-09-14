@@ -4,8 +4,8 @@ buildscript {
     ext {
         buildToolsVersion = "28.0.3"
         minSdkVersion = 21
-        compileSdkVersion = 31
-        targetSdkVersion = 31
+        compileSdkVersion = 33
+        targetSdkVersion = 33
         authVersion = '18.0.0'
         fitnessVersion = '20.0.0'
         googlePlayServicesVersion = '17.0.0'
