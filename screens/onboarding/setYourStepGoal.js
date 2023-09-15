@@ -200,6 +200,12 @@ export default function SetYourStepTarget({navigation, route}) {
             />
             <View style={styles.content}>
               <View style={styles.inputDayBox}>
+                {Strings.setYourStepGoal.daysPerWeekBefore && (
+                  <Text
+                    style={[styles.inputHelpText, styles.inputHelpTextBefore]}>
+                    {Strings.setYourStepGoal.daysPerWeekBefore}
+                  </Text>
+                )}
                 <TextInput
                   ref={daysInputRef}
                   style={styles.input}

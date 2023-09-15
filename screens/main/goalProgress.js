@@ -259,7 +259,7 @@ export default function GoalProgressScreen({route}) {
                   },
                 ],
               }}
-              width={Dimensions.get('window').width - 36} // from react-native
+              width={Dimensions.get('window').width - 20} // from react-native
               height={264}
               yAxisLabel=""
               yAxisSuffix=""
@@ -280,6 +280,9 @@ export default function GoalProgressScreen({route}) {
                 },
                 formatYLabel: val => {
                   return numberWithCommas(Math.ceil(val / 100) * 100);
+                },
+                propsForVerticalLabels: {
+                  fontSize: 8,
                 },
               }}
               withCustomBarColorFromData={true}
@@ -317,15 +320,20 @@ const styles = StyleSheet.create({
     color: Colors.secondary.gray3,
     fontSize: 17,
     fontWeight: 'bold',
+
   },
-  overviewLeft: {},
+  overviewLeft: {
+    width: '40%',
+  },
   overviewRight: {
-    paddingTop: 17,
+    paddingTop: 18,
+    width: '40%',
   },
   chartWrapper: {
     marginTop: 24,
   },
   chart: {
-    marginLeft: -10,
+    marginLeft: -20,
+    fontSize: 8,
   },
 });
