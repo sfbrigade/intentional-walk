@@ -288,7 +288,8 @@ export default function GoalProgressScreen({route}) {
                   borderRadius: 16,
                 },
                 formatYLabel: val => {
-                  return numberWithCommas(Math.ceil(val / 100) * 100);
+                  // round up to nearest 500
+                  return numberWithCommas(Math.ceil(val / 500) * 500);
                 },
                 propsForVerticalLabels: {
                   fontSize: 8,
@@ -344,6 +345,5 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginLeft: -20,
-    fontSize: 8,
   },
 });
