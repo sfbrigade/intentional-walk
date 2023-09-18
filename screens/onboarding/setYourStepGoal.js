@@ -213,7 +213,9 @@ export default function SetYourStepTarget({navigation, route}) {
                   editable={false}
                 />
                 <Text style={styles.inputHelpText}>
-                  {Strings.setYourStepGoal.daysPerWeek}
+                  {daysGoal === 1
+                    ? Strings.setYourStepGoal.dayPerWeek
+                    : Strings.setYourStepGoal.daysPerWeek}
                 </Text>
               </View>
               <View style={styles.row}>

@@ -55,7 +55,10 @@ export default function GoalBox(props) {
                 {Strings.stepGoalProgress.for}{' '}
               </Text>
               <Text style={styles.mainText}>
-                {props?.goal?.days} {Strings.stepGoalProgress.days}
+                {props?.goal?.days}{' '}
+                {props?.goal?.days === 1
+                  ? Strings.stepGoalProgress.day
+                  : Strings.stepGoalProgress.days}
               </Text>
             </>
           )}
