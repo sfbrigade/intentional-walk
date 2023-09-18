@@ -282,6 +282,7 @@ export default function GoalProgressScreen({route}) {
                 backgroundGradientFrom: Colors.primary.lightGray,
                 backgroundGradientTo: Colors.primary.lightGray,
                 decimalPlaces: 0, // optional, defaults to 2dp
+                barPercentage: 0.7,
                 color: () => Colors.primary.purple,
                 labelColor: (opacity = 1) => `rgba(79, 79, 79, ${opacity})`,
                 style: {
@@ -344,6 +345,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   chart: {
-    marginLeft: -20,
+    marginLeft: -10,
   },
 });
