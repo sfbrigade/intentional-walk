@@ -64,6 +64,7 @@ platform :android do
       STDIN.getch
     end
     gradle(task: "clean assembleRelease")
+    ENV['SUPPLY_UPLOAD_MAX_RETRIES']='5'
     upload_to_play_store(track: 'internal', release_status: 'draft')
     # if successful, commit build version changes and tag
     if commit_after_upload
