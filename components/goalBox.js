@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import upperCase from 'lodash/upperCase';
 import {useNavigation} from '@react-navigation/native';
@@ -9,20 +9,32 @@ import {numberWithCommas} from '../lib/util';
 
 export default function GoalBox(props) {
   const navigation = useNavigation();
-  const progressText = props.goalMet
-    ? Strings.stepGoalProgress.goalMet
-    : props.cantMeetGoal
-    ? Strings.stepGoalProgress.goalNotMet
-    : props.inProgress
-    ? Strings.stepGoalProgress.inProgress
-    : Strings.stepGoalProgress.goalNotMet;
-  const progressClass = props.goalMet
-    ? 'goalMet'
-    : props.cantMeetGoal
-    ? 'goalNotMet'
-    : props.inProgress
-    ? 'inProgress'
-    : 'goalNotMet';
+  const [progressText, setProgressText] = useState(null);
+  const [progressClass, setProgressClass] = useState(null);
+
+  useEffect(() => {
+    if (props.loadingSteps) {
+      return;
+    }
+    const progressTextTemp = props.goalMet
+      ? Strings.stepGoalProgress.goalMet
+      : props.cantMeetGoal
+      ? Strings.stepGoalProgress.goalNotMet
+      : props.inProgress
+      ? Strings.stepGoalProgress.inProgress
+      : Strings.stepGoalProgress.goalNotMet;
+    const progressClassTemp = props.goalMet
+      ? 'goalMet'
+      : props.cantMeetGoal
+      ? 'goalNotMet'
+      : props.inProgress
+      ? 'inProgress'
+      : 'goalNotMet';
+
+    setProgressText(progressTextTemp);
+    setProgressClass(progressClassTemp);
+  }, [props.goalMet, props.inProgress, props.cantMeetGoal, props.loadingSteps]);
+
   return (
     <View style={styles.box}>
       <View style={[styles.box, styles.innerBox]}>
@@ -43,7 +55,10 @@ export default function GoalBox(props) {
                 {Strings.stepGoalProgress.for}{' '}
               </Text>
               <Text style={styles.mainText}>
-                {props?.goal?.days} {Strings.stepGoalProgress.days}
+                {props?.goal?.days}{' '}
+                {props?.goal?.days === 1
+                  ? Strings.stepGoalProgress.day
+                  : Strings.stepGoalProgress.days}
               </Text>
             </>
           )}
@@ -182,7 +197,7 @@ const styles = StyleSheet.create({
     top: 9,
   },
   changeGoalButton: {
-    marginTop: 18,
+    marginTop: 16,
   },
   changeGoalButtonText: {
     color: Colors.primary.gray2,

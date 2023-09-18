@@ -21,6 +21,7 @@ export default function GoalProgressScreen({route}) {
   const [inProgress, setInProgress] = useState(true);
   const [goalMet, setGoalMet] = useState(false);
   const [cantMeetGoal, setCantMeetGoal] = useState(false);
+  const [loadingSteps, setLoadingSteps] = useState(false);
 
   const progressClass = inProgress
     ? 'inProgress'
@@ -34,11 +35,11 @@ export default function GoalProgressScreen({route}) {
     return weekday === 0 ? 6 : weekday - 1;
   }
 
-  const getSteps = useCallback(async function (queryDate, isInProgress) {
+  const getSteps = useCallback(async function (queryDate) {
+    setLoadingSteps(true);
     const start = moment(queryDate);
     const end = moment(queryDate).add(1, 'week').subtract(1, 'second');
     const weeklySteps = await Fitness.getSteps(start, end);
-
     // fill in full week if no steps for dates
     const weekMap = weeklySteps.reduce((acc, curr) => {
       const dayOfWeek = getDayOfWeek(curr.startDate);
@@ -59,11 +60,14 @@ export default function GoalProgressScreen({route}) {
     }
 
     setSteps(stepsPerDay);
+    setLoadingSteps(false);
   }, []);
 
   const getStepsToGo = useCallback(
     function () {
-      if (!goal?.steps) {
+      if (loadingSteps) {
+        return null;
+      } else if (!goal?.steps) {
         return 'N/A';
       } else if (steps.length === 0) {
         return goal?.steps;
@@ -72,11 +76,14 @@ export default function GoalProgressScreen({route}) {
       const stepsToGo = goal.steps - steps[dayOfWeek];
       return numberWithCommas(stepsToGo < 0 ? 0 : stepsToGo);
     },
-    [goal, steps],
+    [goal, loadingSteps, steps],
   );
 
   const getAvgStepsPerWeek = useCallback(
     function () {
+      if (loadingSteps) {
+        return null;
+      }
       if (steps.length === 0) {
         return 0;
       }
@@ -85,22 +92,23 @@ export default function GoalProgressScreen({route}) {
       );
       return numberWithCommas(avgSteps);
     },
-    [steps],
+    [loadingSteps, steps],
   );
 
   const getProgressStepString = useCallback(
     function () {
-      if (steps.length === 0) {
+      if (loadingSteps) {
+        return null;
+      } else if (steps.length === 0) {
         return 0;
-      }
-      if (inProgress) {
+      } else if (inProgress) {
         const dayOfWeek = getDayOfWeek(moment());
         return numberWithCommas(steps[dayOfWeek]);
       } else {
         return getAvgStepsPerWeek();
       }
     },
-    [getAvgStepsPerWeek, inProgress, steps],
+    [getAvgStepsPerWeek, inProgress, loadingSteps, steps],
   );
 
   const getTotalSteps = useCallback(
@@ -164,7 +172,7 @@ export default function GoalProgressScreen({route}) {
   }, [route?.params?.refresh]);
 
   useEffect(() => {
-    if (goal === null) {
+    if (loadingSteps || goal === null) {
       return;
     }
     let isGoalMet = false;
@@ -186,7 +194,7 @@ export default function GoalProgressScreen({route}) {
       }
     }
     setColors(colorsPerDay);
-  }, [goal, steps]);
+  }, [goal, loadingSteps, steps]);
 
   return (
     <View style={GlobalStyles.container}>
@@ -207,6 +215,7 @@ export default function GoalProgressScreen({route}) {
               inProgress={inProgress}
               goalMet={goalMet}
               cantMeetGoal={cantMeetGoal}
+              loadingSteps={loadingSteps}
             />
           </View>
           <View style={styles.overview}>
@@ -259,7 +268,7 @@ export default function GoalProgressScreen({route}) {
                   },
                 ],
               }}
-              width={Dimensions.get('window').width - 36} // from react-native
+              width={Dimensions.get('window').width - 20} // from react-native
               height={264}
               yAxisLabel=""
               yAxisSuffix=""
@@ -273,13 +282,18 @@ export default function GoalProgressScreen({route}) {
                 backgroundGradientFrom: Colors.primary.lightGray,
                 backgroundGradientTo: Colors.primary.lightGray,
                 decimalPlaces: 0, // optional, defaults to 2dp
+                barPercentage: 0.7,
                 color: () => Colors.primary.purple,
                 labelColor: (opacity = 1) => `rgba(79, 79, 79, ${opacity})`,
                 style: {
                   borderRadius: 16,
                 },
                 formatYLabel: val => {
-                  return numberWithCommas(Math.ceil(val / 100) * 100);
+                  // round up to nearest 500
+                  return numberWithCommas(Math.ceil(val / 500) * 500);
+                },
+                propsForVerticalLabels: {
+                  fontSize: 8,
                 },
               }}
               withCustomBarColorFromData={true}
@@ -306,6 +320,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   overviewMain: {
+    minHeight: 48,
     fontSize: 40,
     fontWeight: 'bold',
     color: Colors.primary.gray2,
@@ -314,13 +329,17 @@ const styles = StyleSheet.create({
     color: Colors.accent.teal2,
   },
   overViewFooter: {
+    minHeight: 42,
     color: Colors.secondary.gray3,
     fontSize: 17,
     fontWeight: 'bold',
   },
-  overviewLeft: {},
+  overviewLeft: {
+    width: '40%',
+  },
   overviewRight: {
-    paddingTop: 17,
+    paddingTop: 18,
+    width: '40%',
   },
   chartWrapper: {
     marginTop: 24,

@@ -200,6 +200,12 @@ export default function SetYourStepTarget({navigation, route}) {
             />
             <View style={styles.content}>
               <View style={styles.inputDayBox}>
+                {Strings.setYourStepGoal.daysPerWeekBefore && (
+                  <Text
+                    style={[styles.inputHelpText, styles.inputHelpTextBefore]}>
+                    {Strings.setYourStepGoal.daysPerWeekBefore}
+                  </Text>
+                )}
                 <TextInput
                   ref={daysInputRef}
                   style={styles.input}
@@ -207,7 +213,9 @@ export default function SetYourStepTarget({navigation, route}) {
                   editable={false}
                 />
                 <Text style={styles.inputHelpText}>
-                  {Strings.setYourStepGoal.daysPerWeek}
+                  {daysGoal === 1
+                    ? Strings.setYourStepGoal.dayPerWeek
+                    : Strings.setYourStepGoal.daysPerWeek}
                 </Text>
               </View>
               <View style={styles.row}>
