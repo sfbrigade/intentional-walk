@@ -268,7 +268,7 @@ export default function GoalProgressScreen({route}) {
                   },
                 ],
               }}
-              width={Dimensions.get('window').width - 20} // from react-native
+              width={Dimensions.get('window').width - 50} // from react-native
               height={264}
               yAxisLabel=""
               yAxisSuffix=""
@@ -292,8 +292,11 @@ export default function GoalProgressScreen({route}) {
                   // round up to nearest 500
                   return numberWithCommas(Math.ceil(val / 500) * 500);
                 },
+                propsForHorizontalLabels: {
+                  fontSize: 14,
+                },
                 propsForVerticalLabels: {
-                  fontSize: 8,
+                  fontSize: 14,
                 },
               }}
               withCustomBarColorFromData={true}
