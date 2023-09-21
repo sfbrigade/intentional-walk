@@ -338,11 +338,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   overviewLeft: {
-    width: '40%',
+    width: '48%',
   },
   overviewRight: {
     paddingTop: 18,
-    width: '40%',
+    width: '48%',
   },
   chartWrapper: {
     marginTop: 24,
