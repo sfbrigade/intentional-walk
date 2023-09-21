@@ -121,13 +121,15 @@ export default function GoalProgressScreen({route}) {
 
   const getTotalSteps = useCallback(
     function () {
-      if (steps.length === 0) {
+      if (loadingSteps) {
+        return null;
+      } else if (steps.length === 0) {
         return 0;
       }
 
       return numberWithCommas(steps.reduce((acc, curr) => acc + curr, 0));
     },
-    [steps],
+    [loadingSteps, steps],
   );
 
   function getGoal(queryDate) {
