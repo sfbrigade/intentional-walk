@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import moment from 'moment';
 import {useSafeArea} from 'react-native-safe-area-context';
 import upperCase from 'lodash/upperCase';
@@ -22,6 +29,7 @@ export default function GoalProgressScreen({route}) {
   const [goalMet, setGoalMet] = useState(false);
   const [cantMeetGoal, setCantMeetGoal] = useState(false);
   const [loadingSteps, setLoadingSteps] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const progressClass = inProgress
     ? 'inProgress'
@@ -157,6 +165,7 @@ export default function GoalProgressScreen({route}) {
 
   useEffect(() => {
     // clear out data before fetching
+    setLoading(true);
     setInProgress(true);
     setGoalMet(false);
     setGoals([]);
@@ -169,6 +178,7 @@ export default function GoalProgressScreen({route}) {
         setGoals(weeklyGoals);
         setGoal(weeklyGoals[0]);
       }
+      setLoading(false);
     });
     // trigger a refresh when goal is updated
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,7 +210,7 @@ export default function GoalProgressScreen({route}) {
   }, [goal, loadingSteps, steps]);
 
   return (
-    <View style={GlobalStyles.container}>
+    <View style={[GlobalStyles.container]}>
       <ScrollView>
         <View
           style={[
@@ -309,6 +319,12 @@ export default function GoalProgressScreen({route}) {
               style={styles.chart}
             />
           </View>
+          {loading && (
+            <View style={styles.loader}>
+              <ActivityIndicator size="small" color={Colors.primary.purple} />
+              <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -352,5 +368,24 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginLeft: -10,
+  },
+  loader: {
+    position: 'absolute',
+    flexDirection: 'row',
+    height: '100%',
+    width: '105%',
+    left: 16,
+    top: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary.lightGray,
+    borderRadius: 5,
+    marginLeft: -10,
+  },
+  loaderText: {
+    color: Colors.primary.purple,
+    fontSize: 24,
+    fontWeight: '500',
+    marginLeft: 10,
   },
 });
