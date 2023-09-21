@@ -17,11 +17,13 @@ import {numberWithCommas} from '../../lib/util';
 export default function SetYourStepTarget({navigation, route}) {
   const STEP_CHANGE = 500;
   const DAYS_CHANGE = 1;
+  const DEFUALT_STEP_GOAL = 5000;
+  const DEFAULT_DAYS_GOAL = 4;
   const stepInputRef = useRef(null);
   const daysInputRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
-  const [stepGoal, setStepGoal] = useState(5000);
-  const [daysGoal, setDaysGoal] = useState(4);
+  const [stepGoal, setStepGoal] = useState(null);
+  const [daysGoal, setDaysGoal] = useState(null);
   const [isStepLowerLimit, setStepLowerLimit] = useState(false);
   const [isStepUpperLimit, setStepUpperLimit] = useState(false);
   const [isDaysLowerLimit, setDaysLowerLimit] = useState(false);
@@ -103,6 +105,9 @@ export default function SetYourStepTarget({navigation, route}) {
         const goal = weeklyGoals[0];
         setStepGoal(goal.steps);
         setDaysGoal(goal.days);
+      } else {
+        setStepGoal(DEFUALT_STEP_GOAL);
+        setDaysGoal(DEFAULT_DAYS_GOAL);
       }
     }
 
@@ -155,7 +160,7 @@ export default function SetYourStepTarget({navigation, route}) {
                 <TextInput
                   ref={stepInputRef}
                   style={styles.input}
-                  value={numberWithCommas(stepGoal)}
+                  value={stepGoal ? numberWithCommas(stepGoal) : ''}
                   editable={false}
                 />
                 <Text style={styles.inputHelpText}>
@@ -209,7 +214,7 @@ export default function SetYourStepTarget({navigation, route}) {
                 <TextInput
                   ref={daysInputRef}
                   style={styles.input}
-                  value={daysGoal.toString()}
+                  value={daysGoal?.toString()}
                   editable={false}
                 />
                 <Text style={styles.inputHelpText}>
