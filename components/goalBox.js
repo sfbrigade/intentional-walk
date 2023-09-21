@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   goalWatermark: {
     position: 'absolute',
     resizeMode: 'contain',
+    height: 107,
     zIndex: 1,
     top: 9,
   },
