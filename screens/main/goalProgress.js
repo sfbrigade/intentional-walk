@@ -156,15 +156,18 @@ export default function GoalProgressScreen({route}) {
   }
 
   useEffect(() => {
+    // clear out data before fetching
     setInProgress(true);
     setGoalMet(false);
+    setGoals([]);
+    setGoal(null);
     getSteps(moment().startOf('isoweek'), true);
+    // ensures date is set back to current week, if goal is changed
+    setDate(moment().startOf('isoweek'));
     Realm.getWeeklyGoals().then(weeklyGoals => {
       if (weeklyGoals.length) {
         setGoals(weeklyGoals);
         setGoal(weeklyGoals[0]);
-        // ensures date is set back to current week, if goal is changed
-        setDate(moment().startOf('isoweek'));
       }
     });
     // trigger a refresh when goal is updated
