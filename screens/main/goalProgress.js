@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import moment from 'moment';
 import {useSafeArea} from 'react-native-safe-area-context';
 import upperCase from 'lodash/upperCase';
@@ -22,6 +29,7 @@ export default function GoalProgressScreen({route}) {
   const [goalMet, setGoalMet] = useState(false);
   const [cantMeetGoal, setCantMeetGoal] = useState(false);
   const [loadingSteps, setLoadingSteps] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const progressClass = inProgress
     ? 'inProgress'
@@ -113,13 +121,15 @@ export default function GoalProgressScreen({route}) {
 
   const getTotalSteps = useCallback(
     function () {
-      if (steps.length === 0) {
+      if (loadingSteps) {
+        return null;
+      } else if (steps.length === 0) {
         return 0;
       }
 
       return numberWithCommas(steps.reduce((acc, curr) => acc + curr, 0));
     },
-    [steps],
+    [loadingSteps, steps],
   );
 
   function getGoal(queryDate) {
@@ -156,16 +166,21 @@ export default function GoalProgressScreen({route}) {
   }
 
   useEffect(() => {
+    // clear out data before fetching
+    setLoading(true);
     setInProgress(true);
     setGoalMet(false);
+    setGoals([]);
+    setGoal(null);
     getSteps(moment().startOf('isoweek'), true);
+    // ensures date is set back to current week, if goal is changed
+    setDate(moment().startOf('isoweek'));
     Realm.getWeeklyGoals().then(weeklyGoals => {
       if (weeklyGoals.length) {
         setGoals(weeklyGoals);
         setGoal(weeklyGoals[0]);
-        // ensures date is set back to current week, if goal is changed
-        setDate(moment().startOf('isoweek'));
       }
+      setLoading(false);
     });
     // trigger a refresh when goal is updated
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,7 +212,7 @@ export default function GoalProgressScreen({route}) {
   }, [goal, loadingSteps, steps]);
 
   return (
-    <View style={GlobalStyles.container}>
+    <View style={[GlobalStyles.container]}>
       <ScrollView>
         <View
           style={[
@@ -268,7 +283,7 @@ export default function GoalProgressScreen({route}) {
                   },
                 ],
               }}
-              width={Dimensions.get('window').width - 20} // from react-native
+              width={Dimensions.get('window').width - 50} // from react-native
               height={264}
               yAxisLabel=""
               yAxisSuffix=""
@@ -292,8 +307,11 @@ export default function GoalProgressScreen({route}) {
                   // round up to nearest 500
                   return numberWithCommas(Math.ceil(val / 500) * 500);
                 },
+                propsForHorizontalLabels: {
+                  fontSize: 14,
+                },
                 propsForVerticalLabels: {
-                  fontSize: 8,
+                  fontSize: 14,
                 },
               }}
               withCustomBarColorFromData={true}
@@ -303,6 +321,12 @@ export default function GoalProgressScreen({route}) {
               style={styles.chart}
             />
           </View>
+          {loading && (
+            <View style={styles.loader}>
+              <ActivityIndicator size="small" color={Colors.primary.purple} />
+              <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -335,16 +359,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   overviewLeft: {
-    width: '40%',
+    width: '48%',
   },
   overviewRight: {
     paddingTop: 18,
-    width: '40%',
+    width: '48%',
   },
   chartWrapper: {
     marginTop: 24,
   },
   chart: {
     marginLeft: -10,
+  },
+  loader: {
+    position: 'absolute',
+    flexDirection: 'row',
+    height: '100%',
+    width: '105%',
+    left: 16,
+    top: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary.lightGray,
+    borderRadius: 5,
+    marginLeft: -10,
+  },
+  loaderText: {
+    color: Colors.primary.purple,
+    fontSize: 24,
+    fontWeight: '500',
+    marginLeft: 10,
   },
 });
