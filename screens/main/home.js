@@ -394,7 +394,11 @@ export default function HomeScreen({navigation, route}) {
                 />
               </View>
               <View
-                style={[styles.row, isToday ? null : styles.hidden]}
+                style={[
+                  styles.row,
+                  isToday ? null : styles.hidden,
+                  isToday ? null : styles.noTotals,
+                ]}
                 pointerEvents={isToday ? 'auto' : 'none'}>
                 <StatBox
                   mainText={
@@ -537,6 +541,9 @@ export default function HomeScreen({navigation, route}) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+  },
+  noTotals: {
+    height: 20,
   },
   hidden: {
     opacity: 0,
