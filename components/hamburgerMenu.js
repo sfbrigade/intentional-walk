@@ -61,7 +61,7 @@ export default function HamburgerMenu(props) {
     }
 
     getInitialData();
-  });
+  }, []);
 
   const onPress = route => {
     if (!isActiveRoute(route)) {

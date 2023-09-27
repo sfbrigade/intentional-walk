@@ -182,6 +182,11 @@ export default function HomeScreen({navigation, route}) {
     getRecordedWalks(newDate);
   }
 
+  async function getWeeklyGoals() {
+    const weeklyGoals = await Realm.getWeeklyGoals();
+    setHasGoals(weeklyGoals.length > 0);
+  }
+
   const refresh = useCallback(
     function () {
       const today = moment().startOf('day');
@@ -194,6 +199,7 @@ export default function HomeScreen({navigation, route}) {
       getTotalSteps();
       getRecordedWalks(dateRef.current);
       saveStepsAndDistances();
+      getWeeklyGoals();
     },
     [getStepsAndDistances],
   );
@@ -284,15 +290,6 @@ export default function HomeScreen({navigation, route}) {
       AppState.removeEventListener('change', onAppStateChange);
     };
   }, [onAppStateChange]);
-
-  useEffect(() => {
-    async function getWeeklyGoals() {
-      const weeklyGoals = await Realm.getWeeklyGoals();
-      setHasGoals(weeklyGoals.length > 0);
-    }
-
-    getWeeklyGoals();
-  }, []);
 
   const today = moment().startOf('day');
   const isToday = date.isSame(today);
