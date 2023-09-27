@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -21,7 +22,7 @@ export default function SetYourStepTarget({navigation, route}) {
   const DEFAULT_DAYS_GOAL = 4;
   const stepInputRef = useRef(null);
   const daysInputRef = useRef(null);
-  const [isLoading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [stepGoal, setStepGoal] = useState(null);
   const [daysGoal, setDaysGoal] = useState(null);
   const [isStepLowerLimit, setStepLowerLimit] = useState(false);
@@ -37,7 +38,7 @@ export default function SetYourStepTarget({navigation, route}) {
   const daysGoalAndChangeEqual = daysGoal === DAYS_CHANGE;
 
   function onDecreaseSteps() {
-    if (isLoading || stepGoalAndChangeEqual) {
+    if (loading || stepGoalAndChangeEqual) {
       return;
     }
 
@@ -46,7 +47,7 @@ export default function SetYourStepTarget({navigation, route}) {
   }
 
   function onIncreaseSteps() {
-    if (isLoading || stepGoal >= 99500) {
+    if (loading || stepGoal >= 99500) {
       return;
     }
     setStepGoal(stepGoal + STEP_CHANGE);
@@ -54,7 +55,7 @@ export default function SetYourStepTarget({navigation, route}) {
   }
 
   function onDecreaseDays() {
-    if (isLoading || daysGoalAndChangeEqual) {
+    if (loading || daysGoalAndChangeEqual) {
       return;
     }
 
@@ -63,7 +64,7 @@ export default function SetYourStepTarget({navigation, route}) {
   }
 
   function onIncreaseDays() {
-    if (isLoading || daysGoal >= 7) {
+    if (loading || daysGoal >= 7) {
       return;
     }
 
@@ -98,6 +99,7 @@ export default function SetYourStepTarget({navigation, route}) {
   }
 
   useEffect(() => {
+    setLoading(true);
     // get current goal
     async function getWeeklyGoals() {
       const weeklyGoals = await Realm.getWeeklyGoals();
@@ -109,6 +111,7 @@ export default function SetYourStepTarget({navigation, route}) {
         setStepGoal(DEFUALT_STEP_GOAL);
         setDaysGoal(DEFAULT_DAYS_GOAL);
       }
+      setLoading(false);
     }
 
     getWeeklyGoals();
@@ -265,6 +268,12 @@ export default function SetYourStepTarget({navigation, route}) {
               <PaginationDots currentPage={6} totalPages={8} />
             )}
           </View>
+          {loading && (
+            <View style={styles.loader}>
+              <ActivityIndicator size="small" color={Colors.primary.purple} />
+              <Text style={styles.loaderText}>{Strings.common.pleaseWait}</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
       <Popup isVisible={showAlert} onClose={() => setShowAlert(false)}>
@@ -367,5 +376,24 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     marginBottom: 16,
+  },
+  loader: {
+    position: 'absolute',
+    flexDirection: 'row',
+    height: '100%',
+    width: '105%',
+    left: 16,
+    top: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary.lightGray,
+    borderRadius: 5,
+    marginLeft: -10,
+  },
+  loaderText: {
+    color: Colors.primary.purple,
+    fontSize: 24,
+    fontWeight: '500',
+    marginLeft: 10,
   },
 });
