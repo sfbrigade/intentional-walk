@@ -131,7 +131,7 @@ android {
         applicationId "org.codeforsanfrancisco.intentionalwalk"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 71
+        versionCode 72
         versionName "2.2.1"
     }
     splits {
