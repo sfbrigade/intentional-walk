@@ -111,6 +111,7 @@ export default function SignUpScreen({navigation, route}) {
     } else if (parsedAge > 110) {
       setAlertTitle(Strings.signUp.ageAlertTitle);
       setAlertMessage(Strings.signUp.ageMaxMessage);
+      setShowAlert(true);
       return;
     }
     setLoading(true);
