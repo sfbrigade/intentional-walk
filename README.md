@@ -36,13 +36,32 @@
 
    - For **Android** development, first install Android Studio: https://developer.android.com/studio
 
+      - Launch Android Studio. On the Welcome screen, choose "More Actions..." then "SDK Manager". Take note of your Android SDK Location.
+
+        - In the SDK Platforms tab, make sure at least one "Android SDK Platform ##" is checked.
+
+        - In the SDK Tools tab, make sure that "Android SDK Build-Tools", "Android SDK Command-line Tools", "Android Emulator", "Android SDK Platform-Tools", and "Google Play Licensing Library" are checked.
+
+        - Click on "Apply" or "OK" to save any changes.
+
+      - To use the Android Emulator, configure an Android Virtual Device: https://developer.android.com/studio/run/managing-avds
+
+      - For the version of React Native used by this codebase, also install an older version
+        of Java, such as OpenJDK 11.
+
+        On **macOS**, you can install and use Homebrew to install OpenJDK. Install Homebrew per the instructions on its website: https://brew.sh/. Then run `brew install openjdk@11`
+
+        On **Windows**, you can download installers for older versions of JDK from Microsoft:
+        https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-11. Download and run
+        the installer for OpenJDK 11.
+
       - For **macOS**, configure your shell environment to reference the newly installed
          developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
-         your .bash_profile in your home directory and add the following (assuming
+         your .zprofile in your home directory and add the following (assuming
          default installation locations):
 
          ```
-         export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
+         export JAVA_HOME=/opt/homebrew/opt/openjdk@11
          export ANDROID_SDK_ROOT=~/Library/Android/sdk
          export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
          export PATH=$PATH:$ANDROID_SDK_ROOT/tools
@@ -50,39 +69,13 @@
          export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
          ```
 
-         Close and re-open your Terminal, or run ```source ~/.bash_profile``` to
-         set the newly configured environment variables.
+         Close and re-open your Terminal shell to set the newly configured environment variables.
 
          If you are installing the tools for the very first time, you may need to
          accept the SDK license agreements. Run: ```sdkmanager --licenses```
-         to do so. If you get errors running sdkmanager, install Google Play Licensing Library
-         in Android Studio -> Preferences -> Appearance & Behavior -> System Settings -> Android SDK
-         -> SDK Tools.
+         to do so.
 
-      - For **Windows**, have the latest Android Studio installed. Note that this does include a JDK in its 
-         installation, so there is no need to separately install a JDK.
-         
-         Within the SDK Manager (Android Studio -> File -> Settings -> Appearance & Behavior -> 
-         System Settings -> Android SDK -> SDK Tools), have the following tools installed: 
-         - `Android SDK Build Tools `
-         - `Android Emulator `
-         - `Android SDK Platform-Tools `
-         - `Google Play Licensing Library `
-
-            For **Intel** processors, having `Android Emulator` installed should be sufficient, although you may wish to
-            install the Intel HAXM accelerator for improved performance.
-            
-            Although for **AMD** processors, `Android Emulator Hypervisor Driver for AMD Processors (installer)` also 
-            must be installed. If the installation fails, check the following two items:
-            1. Hyper-V must be disabled as a Windows feature.
-            2. CPU Virtualization must be enabled in the BIOS
-            
-            More details of this installation after a failure can be found [here](https://github.com/google/android-emulator-hypervisor-driver-for-amd-processors/issues/10).
-
-         Within the Device Manager (Android Studio -> Tools -> Device Manager), create a virtual device if none are created.
-         We suggest using a recent Pixel phone. Use the Device Manager to launch the emulator.
-
-         Set the following in your environment variables:
+      - For **Windows**, set the following in your environment variables:
 
          ```
          ANDROID_SDK_ROOT          C:\Users\<my username>\AppData\Local\Android\SDK
@@ -116,9 +109,11 @@
    intentional-walk % npm start
    ```
 
-6. In another shell, build and run the app for your target platform. For iOS, the default is to run in 
+6. In another shell, build and run the app for your target platform. For iOS, the default is to run in
    the iPhone 12 simulator, you should specify a newer version that is included with your installation
-   of Xcode.
+   of Xcode. For Android, it should launch the emulator running in a configured Android Virtual Device-
+   note that the installation may fail if the device is still booting, if so, wait for the emulator
+   to fully boot to the lock/home screen, and run the command again.
 
    ```
    intentional-walk % npm run ios -- --simulator="iPhone 15"
