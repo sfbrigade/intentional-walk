@@ -44,7 +44,8 @@
 
         - Click on "Apply" or "OK" to save any changes.
 
-      - To use the Android Emulator, configure an Android Virtual Device: https://developer.android.com/studio/run/managing-avds
+      - To use the Android Emulator, configure an Android Virtual Device if one was not already set up
+      by the installer: https://developer.android.com/studio/run/managing-avds
 
       - For the version of React Native used by this codebase, also install an older version
         of Java, such as OpenJDK 11.
@@ -86,11 +87,9 @@
                             (new)  %JAVA_HOME%\bin
          ```
 
-4. Copy one of the environment files (`.env.dev`, `.env.staging`, `.env.prod`) to `.env` depending upon
-   which environment you wish to connect to. Note: currently, there are no "secrets" in our environment
-   variables, but please DO NOT COMMIT secrets into any of the environment files. Instead, put a
-   blank/empty placeholder, and store the value in a corresponding `.local` file which will be ignored
-   by git (i.e. `.env.dev.local`, `.env.staging.local`, `.env.prod.local`).
+      - Finally, copy the `example.env` file in the android directory to `.env`.
+
+4. Copy one of the environment files in the project root directory (`.env.dev`, `.env.staging`, `.env.prod`) to `.env` depending upon which environment you wish to connect to. Note: currently, there are no "secrets" in our environment variables, but please DO NOT COMMIT secrets into any of the environment files. Instead, put a blank/empty placeholder, and store the value in a corresponding `.local` file which will be ignored by git (i.e. `.env.dev.local`, `.env.staging.local`, `.env.prod.local`).
 
    To start, use the `.env.staging` environment. Note that the staging server may go to sleep and take
    some seconds to start up again when connecting. The `.env.dev` environment is for developers who
@@ -106,13 +105,15 @@
    intentional-walk % npm start
    ```
 
-6. In another shell, build and run the app for your target platform. For iOS, the default is to run in
-   the iPhone 12 simulator, you should specify a newer version that is included with your installation
-   of Xcode. For Android, it should launch the emulator running in a configured Android Virtual Device-
-   note that the installation may fail if the device is still booting, if so, wait for the emulator
-   to fully boot to the lock/home screen, and run the command again.
+6. In another shell, build and run the app for your target platform.
 
    ```
    intentional-walk % npm run ios -- --simulator="iPhone 15"
    intentional-walk % npm run android
    ```
+
+   For iOS, the default is to run in the iPhone 12 simulator, you should specify a newer version that is included with your installation of Xcode. 
+
+   For Android, it should launch the emulator running in a configured Android Virtual Device. If not,
+   launch Android Studio, go to "More actions...", "Virtual Device Manager", and press the triangle
+   Play button next to a listed emulator. Note that the installation may fail if the device is still booting- if so, wait for the emulator to fully boot to the lock/home screen, and run the command again.
