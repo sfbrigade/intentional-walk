@@ -6,7 +6,7 @@
     "postinstall": "patch-package",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "NODE_OPTIONS=--openssl-legacy-provider react-native start",
+    "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
     "lint-watch": "esw -w --fix ."
