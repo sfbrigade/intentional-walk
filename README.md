@@ -53,7 +53,8 @@
 
         On **Windows**, you can download installers for older versions of JDK from Microsoft:
         https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-11. Download and run
-        the installer for OpenJDK 11.
+        the MSI installer for OpenJDK 11. Select the option in the installer to let it set
+        the JAVA_HOME environment variable.
 
       - For **macOS**, configure your shell environment to reference the newly installed
          developer tools. In the standard Mac OS Terminal, edit (or create, if needed)
@@ -75,19 +76,15 @@
          accept the SDK license agreements. Run: ```sdkmanager --licenses```
          to do so.
 
-      - For **Windows**, set the following in your environment variables:
+      - For **Windows**, make sure the following environment variables are set in either the System or User variables sections, if not add them:
 
          ```
-         ANDROID_SDK_ROOT          C:\Users\<my username>\AppData\Local\Android\SDK
-         JAVA_HOME                 C:\Program Files\Android\Android Studio\jbr
+         ANDROID_SDK_ROOT          C:\Users\<my username>\AppData\Local\Android\Sdk
+         JAVA_HOME                 C:\Program Files\Microsoft\jdk-11.0.21.9-hotspot
 
          and within PATH    (new)  %ANDROID_SDK_ROOT%\platform-tools
                             (new)  %JAVA_HOME%\bin
          ```
-
-         In Powershell, navigate to the repository and run `npm install`. Once installed run `npm run android`.
-         This should build and be installed into the emulator. Notes can be found in the following 
-         [issue](https://github.com/sfbrigade/intentional-walk/issues/204).
 
 4. Copy one of the environment files (`.env.dev`, `.env.staging`, `.env.prod`) to `.env` depending upon
    which environment you wish to connect to. Note: currently, there are no "secrets" in our environment
