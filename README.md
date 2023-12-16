@@ -102,6 +102,12 @@
    blank/empty placeholder, and store the value in a corresponding `.local` file which will be ignored
    by git (i.e. `.env.dev.local`, `.env.staging.local`, `.env.prod.local`).
 
+   To start, use the `.env.staging` environment. Note that the staging server may go to sleep and take
+   some seconds to start up again when connecting. The `.env.dev` environment is for developers who
+   are also running the server codebase on the same machine and wish to connect to it. The
+   `.env.prod` environment connects to the live production server. Please sign up with either the
+   first and/or last name "Tester" to have your account flagged as a test account on production.
+
    If you change your environment settings, you'll need to reset the Metro Bundler cache. Close it, if
    it is running, then restart it with: `npm start -- --reset-cache`
 
@@ -110,8 +116,11 @@
    intentional-walk % npm start
    ```
 
-6. In another shell, build and run the app for your target platform.
+6. In another shell, build and run the app for your target platform. For iOS, the default is to run in 
+   the iPhone 12 simulator, you should specify a newer version that is included with your installation
+   of Xcode.
+
    ```
-   intentional-walk % npm run ios
+   intentional-walk % npm run ios -- --simulator="iPhone 15"
    intentional-walk % npm run android
    ```
