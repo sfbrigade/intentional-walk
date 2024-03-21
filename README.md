@@ -1,5 +1,7 @@
 # Intentional Walk
 
+This repo is now archived! Please visit the new codebase at: https://github.com/sfbrigade/intentional-walk-client/
+
 ## Getting started with app development
 
 1. Install Node.js (https://nodejs.org) **v16** (newer versions are not currently compatible). If you need to manage multiple versions of Node.js for different projects, use a Node Version Manager:
